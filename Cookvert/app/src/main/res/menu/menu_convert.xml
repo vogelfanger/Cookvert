@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.cookvert.conversion.activities.ConvertActivity">
+    <item
+        android:id="@+id/action_scale_recipe"
+        android:orderInCategory="1"
+        android:title="@string/action_scale_recipe"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_load_recipe"
+        android:orderInCategory="2"
+        android:title="@string/action_load_recipe"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_new_recipe"
+        android:orderInCategory="8"
+        android:title="@string/action_new_recipe"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_new_shopping_list"
+        android:orderInCategory="9"
+        android:title="@string/action_new_shopping_list"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_main_menu"
+        android:orderInCategory="10"
+        android:title="@string/action_main_menu"
+        app:showAsAction="never" />
+
+
+
+</menu>

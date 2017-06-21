@@ -1,0 +1,187 @@
+<resources>
+    <string name="app_name">Cookvert</string>
+
+    <string name="action_scale_recipe">Scale recipe</string>
+    <string name="action_load_recipe">Load recipe</string>
+    <string name="action_new_recipe">New recipe</string>
+    <string name="action_new_shopping_list">New shopping list</string>
+    <string name="action_main_menu">Main menu</string>
+
+    <string name="all_ok">Ok</string>
+    <string name="all_done">Done</string>
+    <string name="all_cancel">Cancel</string>
+    <string name="all_edit">Edit</string>
+    <string name="all_delete">Delete</string>
+    <string name="all_no_amount">No amount</string>
+    <string name="all_no_name">No name</string>
+    <string name="all_change_unit">Change unit</string>
+    <string name="all_select_unit">SELECT UNIT</string>
+    <string name="all_multiplier">Multiplier:</string>
+    <string name="all_unit">Unit:</string>
+
+    <string name="error_no_amount">Amount is missing</string>
+    <string name="error_no_multiplier">Multiplier is missing</string>
+    <string name="error_no_name">Name is missing</string>
+    <string name="error_unit_piece_converted">Piece can\'t be converted</string>
+
+    <string name="hint_enter_amount">Enter amount</string>
+    <string name="hint_enter_name">Enter name</string>
+    <string name="hint_enter_multiplier">Enter multiplier</string>
+    <string name="hint_tap_to_edit">Tap to edit ingredient</string>
+
+    <string name="main_button_convert">CONVERT</string>
+    <string name="main_button_recipes">RECIPES</string>
+    <string name="main_button_shopping_lists">SHOPPING LISTS</string>
+    <string name="main_button_help">HELP</string>
+
+    <string name="title_activity_convert">Convert</string>
+    <string name="title_activity_recipes">Recipes</string>
+    <string name="title_activity_shoplists">Shopping Lists</string>
+    <string name="title_activity_shoplist">ShoplistActivity</string>
+    <string name="title_dialog_edit_ingredient">Edit ingredient</string>
+    <string name="title_dialog_new_ingredient">New ingredient</string>
+    <string name="title_dialog_scale_recipe">Scale recipe size</string>
+    <string name="title_dialog_delete_ingredient">Delete ingredient?</string>
+    <string name="title_pager_original_recipe">Original</string>
+    <string name="title_pager_converted_recipe">Converted</string>
+    <string name="title_pager_recipe_instructions">Instructions</string>
+
+    <!-- TODO: Not being used? -->
+    <string name="list_unit_gram">grams</string>
+    <string name="list_unit_kilogram">kg</string>
+    <string name="list_unit_ounce">oz</string>
+    <string name="list_unit_lb">pounds</string>
+    <string name="list_unit_stone">stones</string>
+    <string name="list_unit_liter">liters</string>
+    <string name="list_unit_milliliter">ml</string>
+    <string name="list_unit_cup">cups</string>
+    <string name="list_unit_tablespoon">tbs</string>
+    <string name="list_unit_teaspoon">ts</string>
+
+    <!-- whole names of each unit -->
+    <string name="array_unit_cup_uk">cup (UK)</string>
+    <string name="array_unit_cup_us">cup (US)</string>
+    <string name="array_unit_deciliter">deciliter</string>
+    <string name="array_unit_dessertspoon_eu">dessertspoon (EU)</string>
+    <string name="array_unit_dessertspoon_uk">dessertspoon (UK)</string>
+    <string name="array_unit_dessertspoon_us">dessertspoon (US)</string>
+    <string name="array_unit_fluid_ounce_uk">fluid ounce (UK)</string>
+    <string name="array_unit_fluid_ounce_us">fluid ounce (US)</string>
+    <string name="array_unit_gallon_uk">gallon (UK)</string>
+    <string name="array_unit_gallon_us">gallon (US)</string>
+    <string name="array_unit_gram">gram</string>
+    <string name="array_unit_kilogram">kilogram</string>
+    <string name="array_unit_liter">liter</string>
+    <string name="array_unit_milliliter">milliliter</string>
+    <string name="array_unit_ounce">ounce</string>
+    <string name="array_unit_piece">piece</string>
+    <string name="array_unit_pint_uk">pint (UK)</string>
+    <string name="array_unit_pint_us">pint (US)</string>
+    <string name="array_unit_pound">pound</string>
+    <string name="array_unit_quart_uk">quart (UK)</string>
+    <string name="array_unit_quart_us">quart (US)</string>
+    <string name="array_unit_tablespoon_eu">tablespoon (EU)</string>
+    <string name="array_unit_tablespoon_uk">tablespoon (UK)</string>
+    <string name="array_unit_tablespoon_us">tablespoon (US)</string>
+    <string name="array_unit_teaspoon_eu">teaspoon (EU)</string>
+    <string name="array_unit_teaspoon_uk">teaspoon (UK)</string>
+    <string name="array_unit_teaspoon_us">teaspoon (US)</string>
+
+    <!-- abbreviations for each unit -->
+    <!-- TODO test if these look better without space in between (US), (UK) etc. -->
+    <string name="array_unit_short_name_cup_uk">cup (UK)</string>
+    <string name="array_unit_short_name_cup_us">cup (US)</string>
+    <string name="array_unit_short_name_deciliter">dl</string>
+    <string name="array_unit_short_name_dessertspoon_eu">dsp (EU)</string>
+    <string name="array_unit_short_name_dessertspoon_uk">dsp (UK)</string>
+    <string name="array_unit_short_name_dessertspoon_us">dsp (US)</string>
+    <string name="array_unit_short_name_fluid_ounce_uk">fl.oz (UK)</string>
+    <string name="array_unit_short_name_fluid_ounce_us">fl.oz (US)</string>
+    <string name="array_unit_short_name_gallon_uk">gal (UK)</string>
+    <string name="array_unit_short_name_gallon_us">gal (US)</string>
+    <string name="array_unit_short_name_gram">g</string>
+    <string name="array_unit_short_name_kilogram">kg</string>
+    <string name="array_unit_short_name_liter">l</string>
+    <string name="array_unit_short_name_milliliter">ml</string>
+    <string name="array_unit_short_name_ounce">oz</string>
+    <string name="array_unit_short_name_piece">pc</string>
+    <string name="array_unit_short_name_pint_uk">pt (UK)</string>
+    <string name="array_unit_short_name_pint_us">pt (US)</string>
+    <string name="array_unit_short_name_pound">lb</string>
+    <string name="array_unit_short_name_quart_uk">qt (UK)</string>
+    <string name="array_unit_short_name_quart_us">qt (US)</string>
+    <string name="array_unit_short_name_tablespoon_eu">tbs (EU)</string>
+    <string name="array_unit_short_name_tablespoon_uk">tbs (UK)</string>
+    <string name="array_unit_short_name_tablespoon_us">tbs (US)</string>
+    <string name="array_unit_short_name_teaspoon_eu">tsp (EU)</string>
+    <string name="array_unit_short_name_teaspoon_uk">tsp (UK)</string>
+    <string name="array_unit_short_name_teaspoon_us">tsp (US)</string>
+
+    <string-array name="spinner_volume_units">
+        <item>@string/array_unit_cup_uk</item>
+        <item>@string/array_unit_cup_us</item>
+        <item>@string/array_unit_deciliter</item>
+        <item>@string/array_unit_dessertspoon_eu</item>
+        <item>@string/array_unit_dessertspoon_uk</item>
+        <item>@string/array_unit_dessertspoon_us</item>
+        <item>@string/array_unit_fluid_ounce_uk</item>
+        <item>@string/array_unit_fluid_ounce_us</item>
+        <item>@string/array_unit_gallon_uk</item>
+        <item>@string/array_unit_gallon_us</item>
+        <item>@string/array_unit_liter</item>
+        <item>@string/array_unit_milliliter</item>
+        <item>@string/array_unit_pint_uk</item>
+        <item>@string/array_unit_pint_us</item>
+        <item>@string/array_unit_quart_uk</item>
+        <item>@string/array_unit_quart_us</item>
+        <item>@string/array_unit_tablespoon_eu</item>
+        <item>@string/array_unit_tablespoon_uk</item>
+        <item>@string/array_unit_tablespoon_us</item>
+        <item>@string/array_unit_teaspoon_eu</item>
+        <item>@string/array_unit_teaspoon_uk</item>
+        <item>@string/array_unit_teaspoon_us</item>
+    </string-array>
+
+    <string-array name="spinner_mass_units">
+        <item>@string/array_unit_gram</item>
+        <item>@string/array_unit_kilogram</item>
+        <item>@string/array_unit_ounce</item>
+        <item>@string/array_unit_pound</item>
+    </string-array>
+
+    <string-array name="spinner_all_units">
+        <item>@string/array_unit_cup_uk</item>
+        <item>@string/array_unit_cup_us</item>
+        <item>@string/array_unit_deciliter</item>
+        <item>@string/array_unit_dessertspoon_eu</item>
+        <item>@string/array_unit_dessertspoon_uk</item>
+        <item>@string/array_unit_dessertspoon_us</item>
+        <item>@string/array_unit_fluid_ounce_uk</item>
+        <item>@string/array_unit_fluid_ounce_us</item>
+        <item>@string/array_unit_gallon_uk</item>
+        <item>@string/array_unit_gallon_us</item>
+        <item>@string/array_unit_gram</item>
+        <item>@string/array_unit_kilogram</item>
+        <item>@string/array_unit_liter</item>
+        <item>@string/array_unit_milliliter</item>
+        <item>@string/array_unit_ounce</item>
+        <item>@string/array_unit_piece</item>
+        <item>@string/array_unit_pint_uk</item>
+        <item>@string/array_unit_pint_us</item>
+        <item>@string/array_unit_pound</item>
+        <item>@string/array_unit_quart_uk</item>
+        <item>@string/array_unit_quart_us</item>
+        <item>@string/array_unit_tablespoon_eu</item>
+        <item>@string/array_unit_tablespoon_uk</item>
+        <item>@string/array_unit_tablespoon_us</item>
+        <item>@string/array_unit_teaspoon_eu</item>
+        <item>@string/array_unit_teaspoon_uk</item>
+        <item>@string/array_unit_teaspoon_us</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+</resources>
