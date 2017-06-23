@@ -2,10 +2,7 @@ package com.cookvert.conversion.activities;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -15,33 +12,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.conversion.fragments.ChangeUnitDialog;
 import com.cookvert.conversion.fragments.ConvertedRecipeFragment;
-import com.cookvert.conversion.fragments.DeleteIngredientDialog;
-import com.cookvert.conversion.fragments.EditIngredientDialog;
-import com.cookvert.conversion.fragments.InstructionFragment;
-import com.cookvert.conversion.fragments.MyConvertedIngredientRecyclerViewAdapter;
-import com.cookvert.conversion.fragments.MyIngredientRecyclerViewAdapter;
-import com.cookvert.conversion.fragments.NewIngredientDialog;
-import com.cookvert.conversion.fragments.OriginalRecipeFragment;
+import com.cookvert.recipes.fragments.EditIngredientDialog;
+import com.cookvert.recipes.fragments.InstructionFragment;
+import com.cookvert.conversion.adapters.MyConvertedIngredientRecyclerViewAdapter;
+import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
+import com.cookvert.recipes.fragments.NewIngredientDialog;
+import com.cookvert.recipes.fragments.OriginalRecipeFragment;
 import com.cookvert.conversion.fragments.ScaleRecipeDialog;
 import com.cookvert.menu.MainActivity;
-import com.cookvert.recipes.model.Ingredient;
-
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-import java.util.List;
 
 /**
  * TODO implement instructions page when recipe section is finished
@@ -53,7 +41,6 @@ public class ConvertActivity extends AppCompatActivity
                     PopupMenu.OnMenuItemClickListener,
                     NewIngredientDialog.OnNewIngredientListener,
                     EditIngredientDialog.OnEditIngredientListener,
-                    DeleteIngredientDialog.OnDeleteIngredientListener,
                     ScaleRecipeDialog.OnScaleRecipeListener,
                     ChangeUnitDialog.OnChangeUnitListener {
 
@@ -190,12 +177,6 @@ public class ConvertActivity extends AppCompatActivity
         ConvertManager.getInstance().editIngredient(amount, unitKey, name);
         originalAdapter.notifyDataSetChanged();
         convertedAdapter.notifyDataSetChanged();
-    }
-
-    //TODO DeleteIngredientDialog is to be removed
-    @Override
-    public void onDeleteIngredient() {
-        ConvertManager.getInstance().deleteIngredient();
     }
 
     @Override

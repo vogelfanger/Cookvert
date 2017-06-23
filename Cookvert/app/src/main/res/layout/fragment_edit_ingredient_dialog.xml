@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-    tools:context="com.cookvert.conversion.fragments.EditIngredientDialog">
+    tools:context=".recipes.fragments.EditIngredientDialog">
 
     <EditText
         android:id="@+id/text_amount_edit_ingredient_dialog"

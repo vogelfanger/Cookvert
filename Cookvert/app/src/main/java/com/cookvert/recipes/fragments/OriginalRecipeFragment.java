@@ -1,4 +1,4 @@
-package com.cookvert.conversion.fragments;
+package com.cookvert.recipes.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,39 +12,36 @@ import android.view.ViewGroup;
 
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
-import com.cookvert.conversion.adapters.MyConvertedIngredientRecyclerViewAdapter;
+import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.model.Ingredient;
 
 import java.util.List;
 
 /**
  * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnConvertedListFragmentInteractionListener}
+ * <p>
+ * Activities containing this fragment MUST implement the {@link OnOriginalListFragmentInteractionListener}
  * interface.
  */
-public class ConvertedRecipeFragment extends Fragment {
+public class OriginalRecipeFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_SECTION_NUMBER = "section_number";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-
-    private OnConvertedListFragmentInteractionListener mListener;
-    private RecyclerView recyclerView;
+    private OnOriginalListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ConvertedRecipeFragment() {
+    public OriginalRecipeFragment() {
     }
 
     // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ConvertedRecipeFragment newInstance(int sectionNumber, int columnCount) {
-        ConvertedRecipeFragment fragment = new ConvertedRecipeFragment();
+    public static OriginalRecipeFragment newInstance(int sectionNumber, int columnCount) {
+        OriginalRecipeFragment fragment = new OriginalRecipeFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -64,18 +61,19 @@ public class ConvertedRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_converted_ingredient_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
+            RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyConvertedIngredientRecyclerViewAdapter(getRecipeList(), mListener));
+            //New adapter parameter
+            recyclerView.setAdapter(new MyIngredientRecyclerViewAdapter(getRecipeList(), mListener));
         }
         return view;
     }
@@ -84,11 +82,11 @@ public class ConvertedRecipeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnConvertedListFragmentInteractionListener) {
-            mListener = (OnConvertedListFragmentInteractionListener) context;
+        if (context instanceof OnOriginalListFragmentInteractionListener) {
+            mListener = (OnOriginalListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnConvertedListFragmentInteractionListener");
+                    + " must implement OnListFragmentInteractionListener");
         }
     }
 
@@ -100,10 +98,10 @@ public class ConvertedRecipeFragment extends Fragment {
 
     /**
      * Help method that finds the right recipe list for the fragment instance.
-     * @return List of ingredients from the converted recipe
+     * @return List of ingredients from the original recipe
      */
     private List<Ingredient> getRecipeList(){
-            return ConvertManager.getInstance().getConvertedIngredientList();
+            return ConvertManager.getInstance().getOriginalIngredientList();
     }
 
     /**
@@ -111,13 +109,13 @@ public class ConvertedRecipeFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnConvertedListFragmentInteractionListener {
-        void onConvertedListFragmentInteraction(MyConvertedIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition);
-        void setConvertedRecipeAdapter(MyConvertedIngredientRecyclerViewAdapter adapter);
+    public interface OnOriginalListFragmentInteractionListener {
+        void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition);
+        void setOriginalRecipeAdapter(MyIngredientRecyclerViewAdapter adapter);
     }
 }
