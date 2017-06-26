@@ -3,6 +3,7 @@
 
     <string name="action_scale_recipe">Scale recipe</string>
     <string name="action_load_recipe">Load recipe</string>
+    <string name="action_new_category">New category</string>
     <string name="action_new_recipe">New recipe</string>
     <string name="action_new_shopping_list">New shopping list</string>
     <string name="action_main_menu">Main menu</string>
@@ -106,7 +107,6 @@
     <string name="title_pager_original_recipe">Original</string>
     <string name="title_pager_converted_recipe">Converted</string>
     <string name="title_pager_recipe_instructions">Instructions</string>
-
 
 
     <string-array name="spinner_volume_units">

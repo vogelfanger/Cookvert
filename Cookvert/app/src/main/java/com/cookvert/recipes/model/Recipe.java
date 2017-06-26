@@ -9,10 +9,12 @@ public class Recipe {
 
     private ArrayList<Ingredient> ingredients;
     private ArrayList<String> instructions;
+    public String name;
 
     public Recipe() {
         ingredients = new ArrayList<Ingredient>();
         instructions = new ArrayList<String>();
+        name = "";
     }
 
     public ArrayList<Ingredient> getIngredients() {
