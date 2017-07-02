@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Cookvert</string>
 
-    <string name="action_scale_recipe">Scale recipe</string>
+    <string name="action_delete_recipe">Delete recipe</string>
     <string name="action_load_recipe">Load recipe</string>
+    <string name="action_main_menu">Main menu</string>
     <string name="action_new_category">New category</string>
     <string name="action_new_recipe">New recipe</string>
     <string name="action_new_shopping_list">New shopping list</string>
-    <string name="action_main_menu">Main menu</string>
+    <string name="action_scale_recipe">Scale recipe</string>
 
     <!-- basic texts used in buttons, dialogs and menus -->
     <!-- TODO some of these may be old and unused -->
@@ -108,6 +109,7 @@
     <string name="title_pager_converted_recipe">Converted</string>
     <string name="title_pager_recipe_instructions">Instructions</string>
 
+    <string name="toast_recipe_deleted">Recipe deleted</string>
 
     <string-array name="spinner_volume_units">
         <item>@string/array_unit_cup_uk</item>

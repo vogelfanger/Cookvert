@@ -14,7 +14,7 @@ import com.cookvert.recipes.model.Ingredient;
 import java.util.List;
 
 /**
- *
+ * TODO Change name into IngredientRecycler....
  */
 public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngredientRecyclerViewAdapter.ViewHolder> {
 
@@ -54,13 +54,6 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return mValues.size();
-    }
-
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mAmountView;
@@ -76,9 +69,16 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
             mNameView = (TextView) view.findViewById(R.id.converted_name);
         }
 
+
+
         @Override
         public String toString() {
             return super.toString() + " '" + mAmountView.getText() + mUnitView.getText() + mNameView.getText() + "'";
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mValues.size();
     }
 }

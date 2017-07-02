@@ -78,7 +78,7 @@ public class ConvertActivity extends AppCompatActivity
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
@@ -312,7 +312,7 @@ public class ConvertActivity extends AppCompatActivity
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position){
                 case 0:
-                    return OriginalRecipeFragment.newInstance(1, 1);
+                    return OriginalRecipeFragment.newInstance(1);
                 case 1:
                     return ConvertedRecipeFragment.newInstance(2, 1);
                 case 2:

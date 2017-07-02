@@ -22,13 +22,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!-- Empty fragment layout, needed to replace fragments within the activity-->
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_container"
+    <!-- recipe list fragment -->
+    <fragment
+        android:name="com.cookvert.recipes.fragments.RecipeListFragment"
+        android:id="@+id/recipe_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </FrameLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

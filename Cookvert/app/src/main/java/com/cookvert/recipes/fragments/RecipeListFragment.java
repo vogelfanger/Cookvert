@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 
 import com.cookvert.R;
 import com.cookvert.recipes.RecipeManager;
@@ -70,14 +71,10 @@ public class RecipeListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
-
         //set adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new RecipeRecyclerViewAdapter(RecipeManager.getInstance().recipes, mListener));
-        }
+        ExpandableListView listView = (ExpandableListView) view.findViewById(R.id.expandable_recipe_list);
+        //TODO this is an issue when using the fragment in different places, use arguments instead
+        listView.setAdapter(new RecipeRecyclerViewAdapter(RecipeManager.getInstance().recipeCategories, mListener));
         return view;
     }
 
@@ -107,9 +104,10 @@ public class RecipeListFragment extends Fragment {
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
+     * TODO fix interaction to cover both parents and childen
      */
     public interface OnRecipeListFragmentInteractionListener {
-        void onRecipeListFragmentInteraction(RecipeRecyclerViewAdapter.ViewHolder item, int itemPosition);
+        void onRecipeListFragmentInteraction(int categoryPosition, int recipePosition);
         void setRecipeListAdapter(RecipeRecyclerViewAdapter adapter);
     }
 }

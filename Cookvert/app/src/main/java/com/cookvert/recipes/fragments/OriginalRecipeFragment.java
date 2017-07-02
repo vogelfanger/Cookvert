@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
+import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.model.Ingredient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,10 +28,8 @@ import java.util.List;
 public class OriginalRecipeFragment extends Fragment {
 
     // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private static final String ARG_ADAPTER_LIST = "adapter_list";
+    private List<Ingredient> adapterList; //argument list for the adapter
     private OnOriginalListFragmentInteractionListener mListener;
 
     /**
@@ -39,12 +39,15 @@ public class OriginalRecipeFragment extends Fragment {
     public OriginalRecipeFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    public static OriginalRecipeFragment newInstance(int sectionNumber, int columnCount) {
+    /**
+     * Instantiates a new fragment with parameters. Parameter determines whether which list is used for the list adapter
+     * @param adapterId 1 uses list from ConvertManager, 0 uses list from RecipeManager
+     * @return
+     */
+    public static OriginalRecipeFragment newInstance(int adapterId) {
         OriginalRecipeFragment fragment = new OriginalRecipeFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putInt(ARG_ADAPTER_LIST, adapterId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,9 +56,6 @@ public class OriginalRecipeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -67,11 +67,8 @@ public class OriginalRecipeFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
             //New adapter parameter
             recyclerView.setAdapter(new MyIngredientRecyclerViewAdapter(getRecipeList(), mListener));
         }
@@ -101,7 +98,16 @@ public class OriginalRecipeFragment extends Fragment {
      * @return List of ingredients from the original recipe
      */
     private List<Ingredient> getRecipeList(){
+        //if argument is 0, get list for EditRecipeActivity
+        if(getArguments().getInt(ARG_ADAPTER_LIST) == 0){
+            return RecipeManager.getInstance().getFocusedRecipe().getIngredients();
+        //if argument is 1, get list for ConvertActivity
+        }else if(getArguments().getInt(ARG_ADAPTER_LIST) == 1){
             return ConvertManager.getInstance().getOriginalIngredientList();
+        }else{
+            return new ArrayList<Ingredient>();
+        }
+
     }
 
     /**
