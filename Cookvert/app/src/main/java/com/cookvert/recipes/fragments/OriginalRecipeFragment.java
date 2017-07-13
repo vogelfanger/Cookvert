@@ -27,7 +27,6 @@ import java.util.List;
  */
 public class OriginalRecipeFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_ADAPTER_LIST = "adapter_list";
     private List<Ingredient> adapterList; //argument list for the adapter
     private OnOriginalListFragmentInteractionListener mListener;
@@ -100,6 +99,7 @@ public class OriginalRecipeFragment extends Fragment {
     private List<Ingredient> getRecipeList(){
         //if argument is 0, get list for EditRecipeActivity
         if(getArguments().getInt(ARG_ADAPTER_LIST) == 0){
+            //TODO this line causes error in RecipeManager
             return RecipeManager.getInstance().getFocusedRecipe().getIngredients();
         //if argument is 1, get list for ConvertActivity
         }else if(getArguments().getInt(ARG_ADAPTER_LIST) == 1){

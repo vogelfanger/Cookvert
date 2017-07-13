@@ -1,20 +1,29 @@
 package com.cookvert.recipes.model;
 
+import android.support.annotation.NonNull;
+
+import java.text.Collator;
 import java.util.ArrayList;
 
 /**
  * Represents a recipe containing ingredients and instructions.
  */
-public class Recipe {
+public class Recipe implements Comparable<Recipe>{
 
     private ArrayList<Ingredient> ingredients;
-    private ArrayList<String> instructions;
+    public String instructions;
     public String name;
 
     public Recipe() {
         ingredients = new ArrayList<Ingredient>();
-        instructions = new ArrayList<String>();
+        instructions = "";
         name = "";
+    }
+
+    public Recipe(String name) {
+        ingredients = new ArrayList<Ingredient>();
+        instructions = "";
+        this.name = name;
     }
 
     public ArrayList<Ingredient> getIngredients() {
@@ -25,14 +34,12 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public ArrayList<String> getInstructions() {
-        return instructions;
-    }
-
-    public void setInstructions(ArrayList<String> instructions) {
-        this.instructions = instructions;
-    }
-
     //*********** METHODS ***********
 
+    @Override
+    public int compareTo(@NonNull Recipe recipe) {
+        Collator collator = Collator.getInstance();
+        collator.setStrength(Collator.PRIMARY);
+        return collator.compare(this.name, recipe.name);
+    }
 }

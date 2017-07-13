@@ -1,3 +1,6 @@
+
+<!-- TODO change layout and layout name to be more general -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
@@ -8,14 +11,6 @@
     android:paddingTop="20dp"
     android:paddingBottom="18dp"
     tools:context="com.cookvert.conversion.fragments.ChangeUnitDialog">
-
-    <TextView
-        android:id="@+id/text_amount_change_unit_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="16dp"
-        android:textSize="18sp"
-        android:text="@string/all_unit" />
 
     <Spinner
         android:id="@+id/spinner_change_unit_dialog"

@@ -105,13 +105,6 @@ public class RecipeRecyclerViewAdapter extends BaseExpandableListAdapter{
         Recipe r = mValues.get(groupPosition).recipes.get(childPosition);
         childViewHolder.nameView.setText(r.name);
 
-        childViewHolder.nameView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                mListener.onRecipeListFragmentInteraction(groupPosition, childPosition);
-            }
-        });
-
         return convertView;
     }
 

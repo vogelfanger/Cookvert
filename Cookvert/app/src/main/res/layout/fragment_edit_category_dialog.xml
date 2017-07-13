@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    tools:context="com.cookvert.recipes.fragments.EditCategoryDialog">
+
+    <EditText
+        android:id="@+id/text_name_edit_category_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="18dp"
+        android:textSize="18sp"
+        android:hint="@string/hint_enter_name"
+        android:inputType="text"
+        android:selectAllOnFocus="true"/>
+
+</LinearLayout>

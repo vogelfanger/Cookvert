@@ -1,5 +1,6 @@
 package com.cookvert.recipes.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -15,48 +16,88 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.cookvert.R;
+import com.cookvert.conversion.ConvertManager;
+import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.menu.MainActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
+import com.cookvert.recipes.fragments.ChangeCategoryDialog;
 import com.cookvert.recipes.fragments.EditIngredientDialog;
 import com.cookvert.recipes.fragments.InstructionFragment;
 import com.cookvert.recipes.fragments.NewIngredientDialog;
 import com.cookvert.recipes.fragments.OriginalRecipeFragment;
+import com.cookvert.recipes.fragments.RenameRecipeDialog;
+import com.cookvert.recipes.model.Recipe;
 
 public class EditRecipeActivity extends AppCompatActivity implements
+        ChangeCategoryDialog.OnChangeCategoryListener,
         OriginalRecipeFragment.OnOriginalListFragmentInteractionListener,
-        InstructionFragment.OnFragmentInteractionListener,
+        InstructionFragment.OnEditInstructionsListener,
         PopupMenu.OnMenuItemClickListener,
         NewIngredientDialog.OnNewIngredientListener,
-        EditIngredientDialog.OnEditIngredientListener{
+        EditIngredientDialog.OnEditIngredientListener,
+        RenameRecipeDialog.OnRenameRecipeListener{
 
     private MyIngredientRecyclerViewAdapter ingredientListAdapter;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private FloatingActionButton fab;
+    private int recipePosition; //recipe position in RecipeManager
+    private int categoryPosition; //position of recipe's category in RecipeManager
 
+    //TODO get adapter list for the right recipe from arguments
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
 
+        //get recipe and category positions from arguments
+        recipePosition = getIntent().getExtras().getInt(RecipeManager.ARG_SELECTED_RECIPE_POSITION);
+        categoryPosition = getIntent().getExtras().getInt(RecipeManager.ARG_SELECTED_CATEGORY_POSITION);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        //set recipe name as title for actionbar
+        getSupportActionBar().setTitle(RecipeManager.getInstance().getFocusedRecipe().name);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NewIngredientDialog nDialog = NewIngredientDialog.newInstance();
                 nDialog.show(getSupportFragmentManager(), "newIngredientDialog");
             }
+        });
+
+        //page change listener that disables floating action button with instruction fragment
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        fab.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        fab.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
         });
     }
 
@@ -71,6 +112,12 @@ public class EditRecipeActivity extends AppCompatActivity implements
     //*****                               FRAGMENT INTERACTION METHODS                               *****
     //****************************************************************************************************
 
+
+    @Override
+    public void onChangeCategory(int categoryPosition) {
+        RecipeManager.getInstance().changeCategory(categoryPosition);
+    }
+
     @Override
     public void onEditIngredient(Double amount, int unitKey, String name) {
         RecipeManager.getInstance().editIngredient(amount, unitKey, name);
@@ -78,8 +125,15 @@ public class EditRecipeActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onEditInstructions(String instructions){
+        RecipeManager.getInstance().editInstructions(instructions);
+    }
 
+    @Override
+    public void onHideKeyboard(View view) {
+        //Use InputMethodManager to hide the keyboard from view
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -133,25 +187,60 @@ public class EditRecipeActivity extends AppCompatActivity implements
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
-        //TODO implement actions for each item
         switch (item.getItemId()) {
+            case R.id.action_convert_recipe:
+                //Give focused recipe to ConvertManager
+                //TODO make a method to ConvertManager that deals with everything related to recipe transfer
+                ConvertManager.getInstance().original = RecipeManager.getInstance().getFocusedRecipe();
+                ConvertManager.getInstance().converted = RecipeManager.getInstance().getFocusedRecipe();
+                ConvertManager.getInstance().focusPosition = 0;
+                //put recipe instructions to Extras and start ConvertActivity
+                Intent intent = new Intent(getApplicationContext(), ConvertActivity.class);
+                Bundle args = new Bundle();
+                args.putString(RecipeManager.ARG_RECIPE_INSTRUCTIONS,
+                        RecipeManager.getInstance().getFocusedRecipe().instructions);
+                intent.putExtras(args);
+                startActivity(intent);
+                return true;
+
+            //TODO add toast
+            case R.id.action_change_recipe_category:
+                //Open ChangeCategoryDialog
+                ChangeCategoryDialog cDialog = ChangeCategoryDialog.newInstance(RecipeManager.getInstance().focusCategory);
+                cDialog.show(getSupportFragmentManager(), "changeCategoryDialog");
+                return true;
+
             case R.id.action_delete_recipe:
+                //TODO do this in RecipeManager instead
                 RecipeManager.getInstance().recipeCategories.get(RecipeManager.getInstance().focusCategory)
                         .recipes.remove(RecipeManager.getInstance().focusRecipe);
                 startActivity(new Intent(getApplicationContext(), RecipesActivity.class));
                 Toast toast = Toast.makeText(this, R.string.toast_recipe_deleted, Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
+
             case R.id.action_new_shopping_list:
+                //TODO open dialog and start ShopListActivity
                 return true;
+
             case R.id.action_main_menu:
                 startActivity(new Intent(EditRecipeActivity.this, MainActivity.class));
+                return true;
+
+            case R.id.action_rename_recipe:
+                //open dialog and give current recipe name as argument
+                RenameRecipeDialog rDialog = RenameRecipeDialog.newInstance(RecipeManager.getInstance()
+                        .getFocusedRecipe().name);
+                rDialog.show(getSupportFragmentManager(), "renameRecipeFragment");
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onRenameRecipe(String name) {
+        RecipeManager.getInstance().renameRecipe(name);
+    }
 
     //****************************************************************************************************
     //******                                     PAGER ADAPTER                                    ********
@@ -174,9 +263,12 @@ public class EditRecipeActivity extends AppCompatActivity implements
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position){
                 case 0:
+                    //Make FloatingActionButton visible
                     return OriginalRecipeFragment.newInstance(0);
                 case 1:
-                    return InstructionFragment.newInstance(2, "one", "two");
+                    //editing instructions is enabled
+                    //TODO saved instructions should be loaded as parameter
+                    return InstructionFragment.newInstance(2, 1, "two");
             }
             return null;
         }
@@ -191,7 +283,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getResources().getString(R.string.title_pager_original_recipe);
+                    return getResources().getString(R.string.title_pager_ingredients);
                 case 1:
                     return getResources().getString(R.string.title_pager_recipe_instructions);
             }

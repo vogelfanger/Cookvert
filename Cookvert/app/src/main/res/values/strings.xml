@@ -1,19 +1,24 @@
 <resources>
     <string name="app_name">Cookvert</string>
 
-    <string name="action_delete_recipe">Delete recipe</string>
-    <string name="action_load_recipe">Load recipe</string>
-    <string name="action_main_menu">Main menu</string>
-    <string name="action_new_category">New category</string>
-    <string name="action_new_recipe">New recipe</string>
-    <string name="action_new_shopping_list">New shopping list</string>
-    <string name="action_scale_recipe">Scale recipe</string>
+    <string name="action_change_category">Change Category</string>
+    <string name="action_convert_recipe">Convert</string>
+    <string name="action_delete_category">Delete Category</string>
+    <string name="action_delete_recipe">Delete</string>
+    <string name="action_load_recipe">Load Recipe</string>
+    <string name="action_main_menu">Main Menu</string>
+    <string name="action_new_category">New Category</string>
+    <string name="action_new_recipe">New Recipe</string>
+    <string name="action_new_shopping_list">New Shopping List</string>
+    <string name="action_rename_recipe">Rename</string>
+    <string name="action_scale_recipe">Scale Recipe</string>
 
     <!-- basic texts used in buttons, dialogs and menus -->
     <!-- TODO some of these may be old and unused -->
     <string name="all_ok">Ok</string>
     <string name="all_done">Done</string>
     <string name="all_cancel">Cancel</string>
+    <string name="all_category">Category:</string>
     <string name="all_edit">Edit</string>
     <string name="all_delete">Delete</string>
     <string name="all_no_amount">No amount</string>
@@ -88,6 +93,7 @@
     <string name="error_unit_piece_converted">Piece can\'t be converted</string>
 
     <string name="hint_enter_amount">Enter amount</string>
+    <string name="hint_enter_instructions">Enter instructions</string>
     <string name="hint_enter_name">Enter name</string>
     <string name="hint_enter_multiplier">Enter multiplier</string>
     <string name="hint_tap_to_edit">Tap to edit ingredient</string>
@@ -97,19 +103,29 @@
     <string name="main_button_shopping_lists">SHOPPING LISTS</string>
     <string name="main_button_help">HELP</string>
 
+    <string name="message_dialog_delete_category">Recipes in this category will be moved under UNCATEGORIZED.</string>
+
     <string name="title_activity_convert">Convert</string>
     <string name="title_activity_recipes">Recipes</string>
     <string name="title_activity_shoplists">Shopping Lists</string>
     <string name="title_activity_shoplist">ShoplistActivity</string>
-    <string name="title_dialog_edit_ingredient">Edit ingredient</string>
-    <string name="title_dialog_new_ingredient">New ingredient</string>
-    <string name="title_dialog_scale_recipe">Scale recipe size</string>
+    <string name="title_dialog_change_category">Change category</string>
+    <string name="title_dialog_delete_category">Delete category?</string>
     <string name="title_dialog_delete_ingredient">Delete ingredient?</string>
+    <string name="title_dialog_delete_recipe">Delete recipe?</string>
+    <string name="title_dialog_edit_category">Edit category</string>
+    <string name="title_dialog_edit_ingredient">Edit ingredient</string>
+    <string name="title_dialog_new_category">New category</string>
+    <string name="title_dialog_new_ingredient">New ingredient</string>
+    <string name="title_dialog_new_recipe">New recipe</string>
+    <string name="title_dialog_scale_recipe">Scale recipe size</string>
     <string name="title_pager_original_recipe">Original</string>
+    <string name="title_pager_ingredients">Ingredients</string>
     <string name="title_pager_converted_recipe">Converted</string>
     <string name="title_pager_recipe_instructions">Instructions</string>
 
     <string name="toast_recipe_deleted">Recipe deleted</string>
+    <string name="toast_edit_uncategorized">This category can\'t be edited</string>
 
     <string-array name="spinner_volume_units">
         <item>@string/array_unit_cup_uk</item>

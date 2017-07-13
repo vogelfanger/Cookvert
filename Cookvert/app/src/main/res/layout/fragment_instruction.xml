@@ -1,13 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".recipes.fragments.InstructionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Edit text is unenabled by default. Change this dynamically when needed -->
+    <EditText
+        android:id="@+id/text_instructions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="left|top"
+        android:layout_margin="@dimen/text_margin"
+        android:inputType="textMultiLine"
+        android:hint="@string/hint_enter_instructions"
+        android:enabled="false"/>
 
-</FrameLayout>
+    <!-- Confirmation button for keyboard is gone by default. Set visible when using keyboard with EditText.-->
+    <Button
+        android:id="@+id/button_confirm_instructions_keyboard"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/all_done"
+        android:visibility="gone"/>
+
+</RelativeLayout>

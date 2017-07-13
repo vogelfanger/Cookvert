@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_convert_recipe"
+        android:orderInCategory="1"
+        android:title="@string/action_convert_recipe"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_change_recipe_category"
+        android:orderInCategory="2"
+        android:title="@string/action_change_category"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_rename_recipe"
+        android:orderInCategory="3"
+        android:title="@string/action_rename_recipe"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_delete_recipe"
-        android:orderInCategory="1"
+        android:orderInCategory="4"
         android:title="@string/action_delete_recipe"
         app:showAsAction="never" />
+
     <item
         android:id="@+id/action_new_shopping_list"
         android:orderInCategory="5"
         android:title="@string/action_new_shopping_list"
         app:showAsAction="never" />
+
     <item
         android:id="@+id/action_main_menu"
         android:orderInCategory="6"

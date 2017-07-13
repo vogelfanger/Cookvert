@@ -31,7 +31,8 @@
             android:name=".conversion.activities.ConvertActivity"
             android:label="@string/title_activity_convert"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".recipes.activities.EditRecipeActivity"></activity>
+        <activity android:name=".recipes.activities.EditRecipeActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

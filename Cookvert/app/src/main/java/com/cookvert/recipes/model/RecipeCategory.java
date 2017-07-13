@@ -1,11 +1,16 @@
 package com.cookvert.recipes.model;
 
+import android.support.annotation.NonNull;
+
+import java.text.CollationKey;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  *
  */
-public class RecipeCategory {
+public class RecipeCategory implements Comparable<RecipeCategory> {
 
     public ArrayList<Recipe> recipes;
     public String name;
@@ -13,5 +18,17 @@ public class RecipeCategory {
     public RecipeCategory(){
         recipes = new ArrayList<Recipe>();
         name = "";
+    }
+
+    public RecipeCategory(String name){
+        recipes = new ArrayList<Recipe>();
+        this.name = name;
+    }
+
+    @Override
+    public int compareTo(@NonNull RecipeCategory rc) {
+        Collator collator = Collator.getInstance();
+        collator.setStrength(Collator.PRIMARY);
+        return collator.compare(this.name, rc.name);
     }
 }

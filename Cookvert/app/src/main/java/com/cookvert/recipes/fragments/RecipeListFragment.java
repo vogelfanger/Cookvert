@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import com.cookvert.R;
@@ -72,9 +73,43 @@ public class RecipeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         //set adapter
-        ExpandableListView listView = (ExpandableListView) view.findViewById(R.id.expandable_recipe_list);
+        final ExpandableListView listView = (ExpandableListView) view.findViewById(R.id.expandable_recipe_list);
         //TODO this is an issue when using the fragment in different places, use arguments instead
         listView.setAdapter(new RecipeRecyclerViewAdapter(RecipeManager.getInstance().recipeCategories, mListener));
+
+        //add long click listener to both parent and child views
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                long packPosition = listView.getExpandableListPosition(position);
+                int itemType = ExpandableListView.getPackedPositionType(packPosition);
+                int groupPosition = ExpandableListView.getPackedPositionGroup(packPosition);
+                int childPosition = ExpandableListView.getPackedPositionChild(packPosition);
+
+                //category is clicked
+                if(itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP){
+                    mListener.onLongCategoryClick(view, groupPosition);
+                }
+                //long click interaction for child
+                else if(itemType == ExpandableListView.PACKED_POSITION_TYPE_CHILD){
+                    mListener.onLongChildClick(view, groupPosition, childPosition);
+                }
+                return true;
+            }
+        });
+
+        //add basic click listener to child, parent's listener is not overridden
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view,
+                                        int groupPosition, int childPosition, long l) {
+
+                //basic list interaction for child
+                mListener.onRecipeListFragmentInteraction(groupPosition, childPosition);
+                return true;
+            }
+        });
         return view;
     }
 
@@ -104,10 +139,11 @@ public class RecipeListFragment extends Fragment {
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
-     * TODO fix interaction to cover both parents and childen
      */
     public interface OnRecipeListFragmentInteractionListener {
         void onRecipeListFragmentInteraction(int categoryPosition, int recipePosition);
+        void onLongCategoryClick(View view, int categoryPosition);
+        void onLongChildClick(View view, int categoryPosition, int childPosition);
         void setRecipeListAdapter(RecipeRecyclerViewAdapter adapter);
     }
 }

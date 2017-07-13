@@ -26,12 +26,12 @@ import java.util.List;
 public class ConvertManager {
 
     private static ConvertManager manager = new ConvertManager();
-    private Recipe original;
-    private Recipe converted;
-    private Ingredient focusIngredient;
+    public Recipe original;
+    public Recipe converted;
+    public Ingredient focusIngredient;
     private double multiplier; //used for scaling the recipe
     //TODO focus ingredient is too difficult to handle, use focusPosition instead
-    private int focusPosition; // index of the focus ingredient
+    public int focusPosition; // index of the focus ingredient
     private boolean focusInOriginal;
     private Context context;
 

@@ -62,7 +62,6 @@ public class ChangeUnitDialog extends DialogFragment {
      * @param spinnerItemsRes Resource id of spinner (mass/volume units).
      * @return A new instance of fragment ChangeUnitDialog.
      */
-    // TODO: Rename and change types and number of parameters
     public static ChangeUnitDialog newInstance(int spinnerItemsRes, int ingUnitKey) {
         ChangeUnitDialog fragment = new ChangeUnitDialog();
         Bundle args = new Bundle();
@@ -72,11 +71,11 @@ public class ChangeUnitDialog extends DialogFragment {
         return fragment;
     }
 
-    //TODO find a way to extract correct unit list (mass vs volume)
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_change_unit_dialog, null);
+        //TODO change layout and layout name to be more general
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_spinner_dialog, null);
 
         //get spinner item list from arguments
         spinnerRes = getArguments().getInt(ARG_SPINNER);

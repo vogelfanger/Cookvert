@@ -3,6 +3,7 @@ package com.cookvert.conversion.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.conversion.fragments.ChangeUnitDialog;
 import com.cookvert.conversion.fragments.ConvertedRecipeFragment;
+import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.fragments.EditIngredientDialog;
 import com.cookvert.recipes.fragments.InstructionFragment;
 import com.cookvert.conversion.adapters.MyConvertedIngredientRecyclerViewAdapter;
@@ -31,13 +33,15 @@ import com.cookvert.recipes.fragments.OriginalRecipeFragment;
 import com.cookvert.conversion.fragments.ScaleRecipeDialog;
 import com.cookvert.menu.MainActivity;
 
+import java.util.ArrayList;
+
 /**
  * TODO implement instructions page when recipe section is finished
  */
 public class ConvertActivity extends AppCompatActivity
         implements OriginalRecipeFragment.OnOriginalListFragmentInteractionListener,
                     ConvertedRecipeFragment.OnConvertedListFragmentInteractionListener,
-                    InstructionFragment.OnFragmentInteractionListener,
+                    InstructionFragment.OnEditInstructionsListener,
                     PopupMenu.OnMenuItemClickListener,
                     NewIngredientDialog.OnNewIngredientListener,
                     EditIngredientDialog.OnEditIngredientListener,
@@ -53,17 +57,23 @@ public class ConvertActivity extends AppCompatActivity
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
 
-    // page adapter for each page fragment
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    // list adapters for original and converted recipes
-    MyIngredientRecyclerViewAdapter originalAdapter;
-    MyConvertedIngredientRecyclerViewAdapter convertedAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    // page adapter for each page fragment
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    //list of fragments used in view pager
+    private ArrayList<Fragment> fragments = new ArrayList<>();
 
+    // list adapters for original and converted recipes
+    MyIngredientRecyclerViewAdapter originalAdapter;
+    MyConvertedIngredientRecyclerViewAdapter convertedAdapter;
+
+    FloatingActionButton fab;
+
+    //recipe instructions given as argument from another Activity
+    private String argInstructions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,22 +83,54 @@ public class ConvertActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
+        //add list fragments to fragment list
+        fragments.add(OriginalRecipeFragment.newInstance(1));
+        fragments.add(ConvertedRecipeFragment.newInstance(1,1));
+
+        //if recipe instructions were given as extra, add instruction fragment
+        if(getIntent().hasExtra(RecipeManager.ARG_RECIPE_INSTRUCTIONS)){
+            argInstructions = getIntent().getExtras().getString(RecipeManager.ARG_RECIPE_INSTRUCTIONS);
+            fragments.add(InstructionFragment.newInstance(2, 0, argInstructions));
+        }
+
+        //create pager adapter using fragment list
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments);
+
+        // Set up the ViewPager with pager adapter.
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NewIngredientDialog nDialog = NewIngredientDialog.newInstance();
                 nDialog.show(getSupportFragmentManager(), "newIngredientDialog");
             }
+        });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        fab.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        fab.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        fab.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
         });
     }
 
@@ -147,12 +189,17 @@ public class ConvertActivity extends AppCompatActivity
     }
 
     /**
-     * Instruction fragment interaction method
-     * TODO Do I need this?
-     * @param uri
+     * Instructions are uneditable in this Activity, so this method does nothing
      */
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onEditInstructions(String instructions) {
+    }
+
+    /**
+     * Instructions are uneditable in this Activity, so this method does nothing
+     */
+    @Override
+    public void onHideKeyboard(View view) {
     }
 
     /**
@@ -267,23 +314,30 @@ public class ConvertActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
-        //TODO implement actions for each item
         switch (item.getItemId()) {
-            case R.id.action_scale_recipe:
-                //put recipe multiplier as argument for dialog
-                ScaleRecipeDialog sDialog = ScaleRecipeDialog.newInstance(Double.toString(ConvertManager.getInstance().getMultiplier()));
-                sDialog.show(getSupportFragmentManager(), "ScaleRecipeDialog");
-                return true;
             case R.id.action_load_recipe:
+                //TODO open dialog with database access
                 return true;
+
             case R.id.action_new_recipe:
+                //TODO open dialog
                 return true;
+
             case R.id.action_new_shopping_list:
+                //TODO open dialog and open activity
                 return true;
+
             case R.id.action_main_menu:
                 startActivity(new Intent(ConvertActivity.this, MainActivity.class));
                 return true;
+
+            case R.id.action_scale_recipe:
+                //put recipe multiplier as argument for dialog
+                ScaleRecipeDialog sDialog = ScaleRecipeDialog.newInstance(Double.toString(ConvertManager.getInstance()
+                        .getMultiplier()));
+                sDialog.show(getSupportFragmentManager(), "ScaleRecipeDialog");
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -294,37 +348,44 @@ public class ConvertActivity extends AppCompatActivity
     //*****                                      PAGER ADAPTER                                       ********
     //****************************************************************************************************
 
+    /**
+     * Delete a fragment from list of fragments and update ViewPager
+     * @param position
+     */
+    public void deletePageFragment(int position){
+        if(position < fragments.size()){
+            fragments.remove(position);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+        }
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
+        //list of fragments in pager, given as a parameter
+        private ArrayList<Fragment> pagerFragments;
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Fragment> pagerFragments) {
             super(fm);
+            this.pagerFragments = pagerFragments;
         }
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position){
-                case 0:
-                    return OriginalRecipeFragment.newInstance(1);
-                case 1:
-                    return ConvertedRecipeFragment.newInstance(2, 1);
-                case 2:
-                    return InstructionFragment.newInstance(3, "one", "two");
-            }
-            return null;
+            return pagerFragments.get(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return pagerFragments.size();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
 
         @Override
