@@ -25,6 +25,22 @@ public class RecipeCategory implements Comparable<RecipeCategory> {
         this.name = name;
     }
 
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public int compareTo(@NonNull RecipeCategory rc) {
         Collator collator = Collator.getInstance();

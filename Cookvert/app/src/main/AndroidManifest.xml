@@ -20,10 +20,6 @@
             android:label="@string/title_activity_recipes"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".shoppinglist.activities.ShoplistsActivity"
-            android:label="@string/title_activity_shoplists"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".shoppinglist.activities.ShoplistActivity"
             android:label="@string/title_activity_shoplist"
             android:theme="@style/AppTheme.NoActionBar" />

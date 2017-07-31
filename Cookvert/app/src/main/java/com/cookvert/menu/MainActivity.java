@@ -9,7 +9,6 @@ import android.widget.Button;
 import com.cookvert.R;
 import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.recipes.activities.RecipesActivity;
-import com.cookvert.shoppinglist.activities.ShoplistActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         toShoplists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ShoplistActivity.class));
+
             }
         });
     }

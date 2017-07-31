@@ -34,6 +34,22 @@ public class Recipe implements Comparable<Recipe>{
         this.ingredients = ingredients;
     }
 
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     //*********** METHODS ***********
 
     @Override
