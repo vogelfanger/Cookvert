@@ -189,11 +189,8 @@ public class EditRecipeActivity extends AppCompatActivity implements
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_convert_recipe:
-                //Give focused recipe to ConvertManager
-                //TODO make a method to ConvertManager that deals with everything related to recipe transfer
-                ConvertManager.getInstance().original = RecipeManager.getInstance().getFocusedRecipe();
-                ConvertManager.getInstance().converted = RecipeManager.getInstance().getFocusedRecipe();
-                ConvertManager.getInstance().focusPosition = 0;
+                //Import focused recipe from RecipeManager to ConvertManager
+                ConvertManager.getInstance().importRecipe();
                 //put recipe instructions to Extras and start ConvertActivity
                 Intent intent = new Intent(getApplicationContext(), ConvertActivity.class);
                 Bundle args = new Bundle();
@@ -203,7 +200,6 @@ public class EditRecipeActivity extends AppCompatActivity implements
                 startActivity(intent);
                 return true;
 
-            //TODO add toast
             case R.id.action_change_recipe_category:
                 //Open ChangeCategoryDialog
                 ChangeCategoryDialog cDialog = ChangeCategoryDialog.newInstance(RecipeManager.getInstance().focusCategory);
@@ -211,9 +207,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
                 return true;
 
             case R.id.action_delete_recipe:
-                //TODO do this in RecipeManager instead
-                RecipeManager.getInstance().recipeCategories.get(RecipeManager.getInstance().focusCategory)
-                        .recipes.remove(RecipeManager.getInstance().focusRecipe);
+                RecipeManager.getInstance().deleteRecipe();
                 startActivity(new Intent(getApplicationContext(), RecipesActivity.class));
                 Toast toast = Toast.makeText(this, R.string.toast_recipe_deleted, Toast.LENGTH_SHORT);
                 toast.show();
@@ -268,7 +262,8 @@ public class EditRecipeActivity extends AppCompatActivity implements
                 case 1:
                     //editing instructions is enabled
                     //TODO saved instructions should be loaded as parameter
-                    return InstructionFragment.newInstance(2, 1, "two");
+                    return InstructionFragment.newInstance(2, 1, RecipeManager.getInstance().
+                            getFocusedRecipe().getInstructions());
             }
             return null;
         }

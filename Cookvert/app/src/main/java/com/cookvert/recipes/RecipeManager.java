@@ -1,24 +1,33 @@
 package com.cookvert.recipes;
 
+import android.database.Cursor;
+import android.util.Log;
+
+import com.cookvert.data.DBContract;
+import com.cookvert.data.DBHelper;
 import com.cookvert.recipes.model.Ingredient;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.RecipeCategory;
 import com.cookvert.recipes.model.Unit;
+import com.cookvert.util.Cookvert;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Control object responsible for maintaining and updating recipes in UI.
- * TODO implement database interaction for all methods dealing with recipe data
+ * TODO put getters and setters back
  */
 public class RecipeManager {
 
-    //Argument key for trasaction between RecipesActivity and EditRecipeActivity
+    //Argument key for transaction between RecipesActivity and EditRecipeActivity
     public static final String ARG_SELECTED_RECIPE_POSITION = "selectedRecipePosition";
     public static final String ARG_SELECTED_CATEGORY_POSITION = "selectedCategoryPosition";
     //Argument key for importing recipe instructions from EditRecipeActivity to ConvertActivity
     public static final String ARG_RECIPE_INSTRUCTIONS = "recipeInstructions";
+
+    public static final String LOG_TAG = "RecipeManager"; // tag for Log entries
 
     private static RecipeManager manager = new RecipeManager();
     public ArrayList<RecipeCategory> recipeCategories;
@@ -31,46 +40,147 @@ public class RecipeManager {
         return manager;
     }
 
+    //maps connecting object ids to primary keys in database.
+    private HashMap<Integer, Long> categoryMap;
+    private HashMap<Integer, Long> ingredientMap;
+    private HashMap<Integer, Long> recipeMap;
+
+    public ArrayList<RecipeCategory> getRecipeCategories() {
+        return recipeCategories;
+    }
+
+    public void setRecipeCategories(ArrayList<RecipeCategory> recipeCategories) {
+        this.recipeCategories = recipeCategories;
+    }
+
+    public RecipeCategory getUncategorized() {
+        return uncategorized;
+    }
+
+    public void setUncategorized(RecipeCategory uncategorized) {
+        this.uncategorized = uncategorized;
+    }
+
+    public int getFocusCategory() {
+        return focusCategory;
+    }
+
+    public void setFocusCategory(int focusCategory) {
+        this.focusCategory = focusCategory;
+    }
+
+    public int getFocusRecipe() {
+        return focusRecipe;
+    }
+
+    public void setFocusRecipe(int focusRecipe) {
+        this.focusRecipe = focusRecipe;
+    }
+
+    public int getFocusIngredient() {
+        return focusIngredient;
+    }
+
+    public void setFocusIngredient(int focusIngredient) {
+        this.focusIngredient = focusIngredient;
+    }
+
+    public HashMap<Integer, Long> getCategoryMap() {
+        return categoryMap;
+    }
+
+    public void setCategoryMap(HashMap<Integer, Long> categoryMap) {
+        this.categoryMap = categoryMap;
+    }
+
+    public HashMap<Integer, Long> getIngredientMap() {
+        return ingredientMap;
+    }
+
+    public void setIngredientMap(HashMap<Integer, Long> ingredientMap) {
+        this.ingredientMap = ingredientMap;
+    }
+
+    public HashMap<Integer, Long> getRecipeMap() {
+        return recipeMap;
+    }
+
+    public void setRecipeMap(HashMap<Integer, Long> recipeMap) {
+        this.recipeMap = recipeMap;
+    }
+
+
 
     /**
      * Private constructor to prevent instantiation
-     * TODO import recipe list from database and remove test recipes
      */
     private RecipeManager(){
         recipeCategories = new ArrayList<RecipeCategory>();
-        recipeCategories.add(new RecipeCategory());
-        recipeCategories.get(0).name = "Italian food";
-        recipeCategories.get(0).recipes.add(new Recipe());
-        recipeCategories.get(0).recipes.get(0).name = "Mama's meatballs";
-        recipeCategories.get(0).recipes.get(0).getIngredients().add(new Ingredient(0.0, Unit.CUP_UK, "Tap to edit ingredient (mama)"));
-        recipeCategories.get(0).recipes.add(new Recipe());
-        recipeCategories.get(0).recipes.get(1).name = "Papa's pizza";
-        recipeCategories.get(0).recipes.get(1).getIngredients().add(new Ingredient(0.0, Unit.CUP_UK, "Tap to edit ingredient (papa)"));
-        recipeCategories.add(new RecipeCategory());
-        recipeCategories.get(1).name = "Chinese food";
-        recipeCategories.get(1).recipes.add(new Recipe());
-        recipeCategories.get(1).recipes.get(0).name = "Kung Pao Chicken";
-        recipeCategories.get(1).recipes.get(0).getIngredients().add(new Ingredient(0.0, Unit.CUP_UK, "Tap to edit ingredient (kung)"));
-        //TODO use resource string instead
-        recipeCategories.add(new RecipeCategory("UNCATEGORIZED"));
-        uncategorized = recipeCategories.get(recipeCategories.size()-1);
+        categoryMap = new HashMap<>();
+        ingredientMap = new HashMap<>();
+        recipeMap = new HashMap<>();
+
+        // read categories from database to manager list
+        readCategoriesFromDB();
+
+        // read recipes for each category
+        for(RecipeCategory rc : recipeCategories){
+            readRecipesFromDB(rc);
+
+            // read ingredients for each recipe
+            for(Recipe r : rc.getRecipes()){
+                readIngredientsFromDB(r);
+            }
+        }
 
         sortRecipes();
         focusCategory = 0;
         focusRecipe = 0;
         focusIngredient = 0;
-
     }
 
+    /**
+     * Creates a new recipe category, adds it to category list, sorts the list,
+     * inserts the new category into database and adds primary key to category map.
+     * @param name recipe category name
+     */
     public void addCategory(String name){
-        recipeCategories.add(new RecipeCategory(name));
+        RecipeCategory rc = new RecipeCategory(name);
+        recipeCategories.add(rc);
         sortRecipes(); //sort recipe list to keep it in alphabetical order
+
+        //insert new category to database
+        long dbID = DBHelper.getInstance(Cookvert.getAppContext()).insertRecipeCategory(name);
+        //put category primary key to map
+        categoryMap.put(rc.getId(), dbID);
     }
 
+    /**
+     * Creates new ingredient, adds it to ingredient list,
+     * inserts the ingredient into database and puts primary key to ingredient map.
+     * @param amount ingredient amount
+     * @param unitKey ingredient unit
+     * @param name ingredient name
+     */
     public void addIngredient(double amount, int unitKey, String name){
-        getFocusedRecipe().getIngredients().add(new Ingredient(amount, unitKey, name));
+        Ingredient ingredient = new Ingredient(amount, unitKey, name);
+        getFocusedRecipe().getIngredients().add(ingredient);
+
+        int recipeID = getFocusedRecipe().getId();
+        long recipeDbID = recipeMap.get(recipeID);
+        //insert new ingredient to database
+        long dbID = DBHelper.getInstance(Cookvert.getAppContext()).insertIngredient(
+                amount, name, unitKey, recipeDbID);
+        ingredientMap.put(ingredient.getId(), dbID);
+
     }
 
+    /**
+     * Creates a new recipe, adds it to recipe list, sorts recipes,
+     * inserts recipe into database and puts primary key to recipe map.
+     * @param name recipe name
+     * @param categoryPosition recipe's parent category index in category list
+     */
     public void addRecipe(String name, int categoryPosition){
         Recipe recipe = new Recipe(name);
         focusCategory = categoryPosition; //put focus to new category
@@ -78,10 +188,19 @@ public class RecipeManager {
         sortRecipes(); //sort recipe list to keep it in alphabetical order
         //get new recipe position and set to focus
         focusRecipe = recipeCategories.get(focusCategory).recipes.indexOf(recipe);
+
+        int catID = recipeCategories.get(focusCategory).getId();
+        long catDbID = categoryMap.get(catID);
+        //insert new recipe to database
+        long dbID = DBHelper.getInstance(Cookvert.getAppContext()).insertRecipe(
+                name, recipe.getInstructions(), catDbID);
+        //put recipe primary key to map
+        recipeMap.put(recipe.getId(), dbID);
     }
 
     /**
-     * Changes the category of focused recipe to given one in given position.
+     * Changes the category of focused recipe to one in given position
+     * and updates changes to database.
      * @param position Position of new category
      */
     public void changeCategory(int position){
@@ -92,12 +211,24 @@ public class RecipeManager {
         recipeCategories.get(position).recipes.add(recipe);
         //sort lists in case alphabetical order was changed
         sortRecipes();
+
+        //get primary keys for database access
+        long recipeDbID = recipeMap.get(recipe.getId());
+        long categoryDbID = categoryMap.get(recipeCategories.get(position).getId());
+
+        //update new category for the recipe
+        DBHelper.getInstance(Cookvert.getAppContext()).updateRecipeReference(recipeDbID, categoryDbID);
     }
 
+    /**
+     * If focused category is not uncategorized, deletes the category and reassigns
+     * all contained recipes to uncategorized category.
+     * Changes are made in both manager lists and the database.
+     * //TODO trying to remove uncategorized should result in a Toast
+     */
     public void deleteCategory(){
         RecipeCategory focusRC = recipeCategories.get(focusCategory);
         //skip uncategorized list
-        //TODO this should result in a Toast
         if(focusRC == uncategorized){
             return;
         }else{
@@ -105,47 +236,195 @@ public class RecipeManager {
             for(Recipe r : focusRC.recipes){
                 uncategorized.recipes.add(r);
             }
+            //get category primary keys for database access
+            long catDbID = categoryMap.get(focusRC.getId());
+            long uncategorizedDbID = categoryMap.get(uncategorized.getId());
+
+            //delete category from database and manager list
+            DBHelper.getInstance(Cookvert.getAppContext()).deleteRecipeCategory(
+                    catDbID, uncategorizedDbID);
             recipeCategories.remove(focusCategory);
         }
-
     }
 
+    /**
+     * Deletes ingredient from manager lists and the database.
+     */
     public void deleteIngredient(){
+        long dbID = ingredientMap.get(getFocusedIngredient().getId());
+        DBHelper.getInstance(Cookvert.getAppContext()).deleteIngredient(dbID);
         getFocusedRecipe().getIngredients().remove(focusIngredient);
     }
 
+    /**
+     * Deletes recipe from manager lists and the database.
+     */
     public void deleteRecipe() {
+        long dbID = recipeMap.get(getFocusedRecipe().getId());
+        DBHelper.getInstance(Cookvert.getAppContext()).deleteRecipe(dbID);
         recipeCategories.get(focusCategory).recipes.remove(focusRecipe);
     }
 
+    /**
+     * Updates focused category data in manager lists and the database.
+     * @param name
+     */
     public void editCategory(String name) {
         recipeCategories.get(focusCategory).name = name;
+        long dbID = categoryMap.get(recipeCategories.get(focusCategory).getId());
+        DBHelper.getInstance(Cookvert.getAppContext()).updateRecipeCategory(name, dbID);
     }
 
+    /**
+     * Updates focused ingredient data in manager lists and the database
+     * @param amount new ingredient amount
+     * @param unitKey new ingredient unit
+     * @param name new ingredient name
+     */
     public void editIngredient(double amount, int unitKey, String name){
         getFocusedIngredient().setAmount(amount);
         getFocusedIngredient().assignUnit(unitKey);
         getFocusedIngredient().setName(name);
+
+        //get ingredient primary key and update database
+        long dbID = ingredientMap.get(getFocusedIngredient().getId());
+        DBHelper.getInstance(Cookvert.getAppContext()).updateIngredient(
+                amount, name, unitKey, dbID);
     }
 
     /**
-     * Replaces focused recipe's instructions with given parameter
+     * Updates recipe instructions in manager lists and the database
      * @param instructions New instruction String for focused Recipe
      */
     public void editInstructions(String instructions){
-        getFocusedRecipe().instructions = instructions;
+        getFocusedRecipe().setInstructions(instructions);
+
+        //get recipe primary key and update database
+        long dbID = recipeMap.get(getFocusedRecipe().getId());
+        DBHelper.getInstance(Cookvert.getAppContext()).updateRecipe(
+                getFocusedRecipe().getName(), instructions, dbID);
     }
 
     /**
-     * Replaces focused recipe's name with given parameter
-     * @param name New recipe name
+     * Updates recipe name to manager lists and the database.
+     * @param name new recipe name
      */
     public void renameRecipe(String name){
-        getFocusedRecipe().name = name;
+        getFocusedRecipe().setName(name);
+        long dbID = recipeMap.get(getFocusedRecipe().getId());
+        DBHelper.getInstance(Cookvert.getAppContext()).updateRecipe(
+                name, getFocusedRecipe().getInstructions(), dbID);
     }
 
     /**
-     * Returns an Arraylist containing names of each category.
+     * Reads all recipe categories from database, creates new objects,
+     * adds them to manager list and puts primary keys to map.
+     */
+    public void readCategoriesFromDB(){
+        Cursor cursor = DBHelper.getInstance(Cookvert.getAppContext()).readAllRecipeCategories();
+
+        Cursor cursor1 = DBHelper.getInstance(Cookvert.getAppContext()).readRecipeCat(1);
+
+        String nameArg;
+        long idArg;
+        RecipeCategory rc;
+
+        while(cursor.moveToNext()){
+            //read primary key and name from database
+            idArg = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(DBContract.RecipeCategory._ID));
+            nameArg = cursor.getString(
+                    cursor.getColumnIndexOrThrow(DBContract.RecipeCategory.NAME));
+
+            //create new recipe category and put primary key into map
+            rc = new RecipeCategory(nameArg);
+            recipeCategories.add(rc);
+            categoryMap.put(rc.getId(), idArg);
+
+            //set reference to uncategorized category object
+            if(idArg == 1){
+                uncategorized = rc;
+            }
+        }
+        cursor.close();
+
+        Log.d(LOG_TAG, "categories were read successfully from db, num of categories:"
+                + String.valueOf(recipeCategories.size()));
+    }
+
+    /**
+     * Reads ingredients contained in a recipe from the database,
+     * creates new ingredient objects, adds them to manager lists
+     * and puts primary keys into map.
+     * @param recipe recipe from which ingredients are read
+     */
+    public void readIngredientsFromDB(Recipe recipe){
+        long dbID = recipeMap.get(recipe.getId());
+        Cursor cursor = DBHelper.getInstance(Cookvert.getAppContext()).readIngredientsInRecipe(dbID);
+
+        double amountArg;
+        String nameArg;
+        int unitArg;
+        long idArg;
+        Ingredient ingredient;
+
+        while(cursor.moveToNext()){
+            //read primary key and other ingredient data from database
+            idArg = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(DBContract.Ingredient._ID));
+            amountArg = cursor.getDouble(
+                    cursor.getColumnIndexOrThrow(DBContract.Ingredient.AMOUNT));
+            nameArg = cursor.getString(
+                    cursor.getColumnIndexOrThrow(DBContract.Ingredient.NAME));
+            unitArg = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(DBContract.Ingredient.UNIT));
+
+            ingredient = new Ingredient(amountArg, unitArg, nameArg);
+            recipe.getIngredients().add(ingredient);
+            ingredientMap.put(ingredient.getId(), idArg);
+        }
+        cursor.close();
+
+        Log.d(LOG_TAG, "ingredients were read successfully from recipe, num of ingredients:"
+                + String.valueOf(recipe.getIngredients().size()));
+    }
+
+    /**
+     * Reads recipes contained in a category from the database,
+     * creates new recipe objects, adds them to manager lists and
+     * puts primary keys into map.
+     * @param rc recipe category, from which recipes are read.
+     */
+    public void readRecipesFromDB(RecipeCategory rc){
+        long dbID = categoryMap.get(rc.getId());
+        Cursor cursor = DBHelper.getInstance(Cookvert.getAppContext()).readRecipesInCat(dbID);
+
+        String nameArg;
+        String instructionsArg;
+        long idArg;
+        Recipe recipe;
+
+        while(cursor.moveToNext()){
+            //read primary key, name and instructions from database
+            idArg = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(DBContract.Recipe._ID));
+            nameArg = cursor.getString(
+                    cursor.getColumnIndexOrThrow(DBContract.Recipe.NAME));
+            instructionsArg = cursor.getString(
+                    cursor.getColumnIndexOrThrow(DBContract.Recipe.INSTRUCTIONS));
+
+            //create new recipe and put primary key into map
+            recipe = new Recipe(nameArg, instructionsArg);
+            rc.getRecipes().add(recipe);
+            recipeMap.put(recipe.getId(), idArg);
+        }
+        cursor.close();
+        Log.d(LOG_TAG, "recipes were read successfully from cat, num of recipes:"
+                + String.valueOf(rc.getRecipes().size()));
+    }
+
+    /**
+     * Returns an ArrayList containing names of each category.
      * @return list of names
      */
     public ArrayList<String> getCategoryNames(){

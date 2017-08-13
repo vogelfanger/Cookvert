@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Represents a recipe containing ingredients and instructions.
@@ -13,17 +14,33 @@ public class Recipe implements Comparable<Recipe>{
     private ArrayList<Ingredient> ingredients;
     public String instructions;
     public String name;
+    private int id; //unique identifier, not stored in database
+
+    public static AtomicInteger atomicInt = new AtomicInteger();
+
+    public int getId() {
+        return id;
+    }
 
     public Recipe() {
         ingredients = new ArrayList<Ingredient>();
         instructions = "";
         name = "";
+        this.id = atomicInt.incrementAndGet();
     }
 
     public Recipe(String name) {
         ingredients = new ArrayList<Ingredient>();
         instructions = "";
         this.name = name;
+        this.id = atomicInt.incrementAndGet();
+    }
+
+    public Recipe(String name, String instructions) {
+        this.instructions = instructions;
+        this.name = name;
+        ingredients = new ArrayList<Ingredient>();
+        this.id = atomicInt.incrementAndGet();
     }
 
     public ArrayList<Ingredient> getIngredients() {

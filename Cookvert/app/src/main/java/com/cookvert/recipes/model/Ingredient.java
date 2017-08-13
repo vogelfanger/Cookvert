@@ -2,6 +2,7 @@ package com.cookvert.recipes.model;
 
 
 import java.text.DecimalFormat;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Represents a single ingredient in a recipe.
@@ -11,18 +12,23 @@ public class Ingredient {
     private String name;
     private double amount;
     private Unit unit;
+    private int id; //unique identifier, not stored in database
+
+    public static AtomicInteger atomicInt = new AtomicInteger();
 
 
     public Ingredient(double amount, Unit unit, String name){
         this.name = name;
         this.amount = amount;
         this.unit = unit;
+        this.id = atomicInt.incrementAndGet();
     }
 
     public Ingredient(double amount, int unitKey, String name){
         this.name = name;
         this.amount = amount;
         assignUnit(unitKey);
+        this.id = atomicInt.incrementAndGet();
     }
 
 
@@ -56,6 +62,14 @@ public class Ingredient {
 
     public void setUnit(int unitKey){
         assignUnit(unitKey);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     //******************** METHODS ********************

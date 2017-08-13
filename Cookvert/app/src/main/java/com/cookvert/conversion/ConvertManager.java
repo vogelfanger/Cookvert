@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cookvert.R;
 import com.cookvert.conversion.activities.ConvertActivity;
+import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.model.Ingredient;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.Unit;
@@ -12,6 +13,7 @@ import com.cookvert.util.ResourceHelper;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,8 +21,6 @@ import java.util.List;
  * Contains all the actions that the conversion ui needs for the conversions.
  * This class also contains the temporary recipe objects that can be seen in the conversion view.
  * Transfers temporary objects to recipe and shopping list databases when necessary.
- * TODO decide which parts are static
- * TODO optimize by removing unnecessary getters and setters
  *
  */
 public class ConvertManager {
@@ -28,11 +28,8 @@ public class ConvertManager {
     private static ConvertManager manager = new ConvertManager();
     public Recipe original;
     public Recipe converted;
-    public Ingredient focusIngredient;
     private double multiplier; //used for scaling the recipe
-    //TODO focus ingredient is too difficult to handle, use focusPosition instead
     public int focusPosition; // index of the focus ingredient
-    private boolean focusInOriginal;
     private Context context;
 
     public static ConvertManager getInstance(){
@@ -43,9 +40,7 @@ public class ConvertManager {
         original = new Recipe();
         converted = new Recipe();
         initRecipes(); //add first elements to lists
-        focusIngredient = original.getIngredients().get(0);
         focusPosition = 0;
-        focusInOriginal = true;
         multiplier = 1;
     }
 
@@ -116,7 +111,6 @@ public class ConvertManager {
     /**
      * Converts a single ingredient.
      * @param position Index of the ingredient in the recipe lists.
-     * TODO Implement double rounding
      */
     public void convertIngredient(int position){
         Ingredient orig = findIngredient(position, original);
@@ -154,9 +148,12 @@ public class ConvertManager {
     }
 
 
+
     //****************************************************************************************************
-    //*****                                     PUBLIC METHODS                                       *****
+    //                                          PUBLIC METHODS
     //****************************************************************************************************
+
+
 
     /**
      * This should be called when a new ingredient is added to the original recipe.
@@ -176,6 +173,34 @@ public class ConvertManager {
         converted.getIngredients().add(ingredient);
         //convert and scale the new ingredient in order to keep recipe lists updated
         convertIngredient(original.getIngredients().size()-1);
+    }
+
+    public void changeMultiplier(double multiplier){
+        this.multiplier = multiplier;
+        convertRecipe(); //update the recipe data according to the new multiplier
+    }
+
+    /**
+     * Used when a unit is changed in the converted recipe list.
+     * Sets parameter unit for the focus ingredient
+     * and performs conversion to keep the recipe lists updated.
+     * @param unitType New unit
+     */
+    public void changeUnit(int unitType) {
+        findIngredient(focusPosition, converted).assignUnit(unitType);
+        //convert and scale the ingredient in order to keep recipe lists updated
+        convertIngredient(focusPosition);
+    }
+
+    /**
+     * This should be called when an ingredient is removed from the original recipe.
+     * Removes an ingredient from original and converted at the focused position
+     */
+    public void deleteIngredient(){
+        try {
+            original.getIngredients().remove(focusPosition);
+            converted.getIngredients().remove(focusPosition);
+        } catch (NullPointerException e){}
     }
 
     /**
@@ -199,40 +224,32 @@ public class ConvertManager {
         convertIngredient(focusPosition);
     }
 
-    /**
-     * Used when a unit is changed in the converted recipe list.
-     * Sets parameter unit for the focus ingredient
-     * and performs conversion to keep the recipe lists updated.
-     * @param unitType New unit
-     */
-    public void changeUnit(int unitType) {
-        findIngredient(focusPosition, converted).assignUnit(unitType);
-        //convert and scale the ingredient in order to keep recipe lists updated
-        convertIngredient(focusPosition);
-    }
-
-
-    /**
-     * This should be called when an ingredient is removed from the original recipe.
-     * Removes an ingredient from original and converted at the focused position
-     */
-    public void deleteIngredient(){
-        try {
-            original.getIngredients().remove(focusPosition);
-            converted.getIngredients().remove(focusPosition);
-        } catch (NullPointerException e){}
-    }
-
-    public void changeMultiplier(double multiplier){
-        this.multiplier = multiplier;
-        convertRecipe(); //update the recipe data according to the new multiplier
-    }
-
     public List<Ingredient> getOriginalIngredientList(){
         return original.getIngredients();
     }
 
     public List<Ingredient> getConvertedIngredientList(){
         return converted.getIngredients();
+    }
+
+    /**
+     * Copies recipe data from focused recipe in RecipeManager
+     * to original and converted recipes.
+     */
+    public void importRecipe(){
+        Recipe impRecipe = RecipeManager.getInstance().getFocusedRecipe();
+
+        // create new objects using data from imported recipe
+        original = new Recipe(impRecipe.getName(), impRecipe.getInstructions());
+        original.setIngredients(new ArrayList<Ingredient>());
+        converted = new Recipe(impRecipe.getName(), impRecipe.getInstructions());
+        converted.setIngredients(new ArrayList<Ingredient>());
+
+        // create new ingredients using data from imported recipe
+        for(Ingredient i : impRecipe.getIngredients()){
+            original.getIngredients().add(new Ingredient(i.getAmount(), i.getUnit(), i.getName()));
+            converted.getIngredients().add(new Ingredient(i.getAmount(), i.getUnit(), i.getName()));
+        }
+        focusPosition = 0;
     }
 }

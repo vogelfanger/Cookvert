@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cookvert.R;
+import com.cookvert.data.DBHelper;
 import com.cookvert.menu.MainActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.RecipeRecyclerViewAdapter;
@@ -66,8 +67,17 @@ public class RecipesActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        // close database connection when activity is destroyed
+        DBHelper.getInstance(getApplicationContext()).close();
+        super.onDestroy();
+    }
+
+
+
     //****************************************************************************************************
-    //*****                               FRAGMENT INTERACTION METHODS                               *****
+    //                               FRAGMENT INTERACTION METHODS
     //****************************************************************************************************
 
 
@@ -208,8 +218,6 @@ public class RecipesActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
-        //TODO implement actions for each item
         switch (item.getItemId()) {
             case R.id.action_new_category:
                 NewCategoryDialog nDialog = NewCategoryDialog.newInstance();
@@ -221,5 +229,4 @@ public class RecipesActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
