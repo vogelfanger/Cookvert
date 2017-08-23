@@ -75,11 +75,11 @@ public class ChangeUnitDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         //TODO change layout and layout name to be more general
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_spinner_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_spinner, null);
 
         //get spinner item list from arguments
         spinnerRes = getArguments().getInt(ARG_SPINNER);
-        final Spinner spinner = (Spinner) layout.findViewById(R.id.spinner_change_unit_dialog);
+        final Spinner spinner = (Spinner) layout.findViewById(R.id.spinner_dialog);
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), spinnerRes, R.layout.spinner_item_dialog);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dialog);
         spinner.setAdapter(adapter);

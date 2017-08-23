@@ -1,14 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-    tools:context="com.cookvert.recipes.fragments.EditCategoryDialog">
+    tools:context="com.cookvert.recipes.fragments.NewCategoryDialog">
 
     <EditText
-        android:id="@+id/text_name_edit_category_dialog"
+        android:id="@+id/text_edit_name_dialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"

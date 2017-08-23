@@ -1,4 +1,4 @@
-package com.cookvert.recipes.fragments;
+package com.cookvert.shoppinglist.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,19 +19,19 @@ import com.cookvert.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DeleteRecipeDialog.OnDeleteRecipeListener} interface
+ * {@link DeleteShopListDialog.OnDeleteShopListListener} interface
  * to handle interaction events.
  */
-public class DeleteRecipeDialog extends DialogFragment {
+public class DeleteShopListDialog extends DialogFragment {
 
-    private OnDeleteRecipeListener mListener;
+    private OnDeleteShopListListener mListener;
 
-    public DeleteRecipeDialog() {
+    public DeleteShopListDialog() {
         // Required empty public constructor
     }
 
-    public static DeleteRecipeDialog newInstance(){
-        return new DeleteRecipeDialog();
+    public static DeleteShopListDialog newInstance(){
+        return new DeleteShopListDialog();
     }
 
 
@@ -43,18 +43,18 @@ public class DeleteRecipeDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
-        builder.setTitle(R.string.title_dialog_delete_recipe);
+        builder.setTitle(R.string.title_dialog_delete_shop_list);
 
         builder.setPositiveButton(R.string.all_delete, new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which){
-                mListener.onDeleteRecipe();
+                mListener.onDeleteShopList();
             }
         });
         builder.setNegativeButton(R.string.all_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DeleteRecipeDialog.this.getDialog().cancel();
+                DeleteShopListDialog.this.getDialog().cancel();
             }
         });
         return builder.create();
@@ -63,11 +63,11 @@ public class DeleteRecipeDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnDeleteRecipeListener) {
-            mListener = (OnDeleteRecipeListener) context;
+        if (context instanceof OnDeleteShopListListener) {
+            mListener = (OnDeleteShopListListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnDeleteRecipeListener");
+                    + " must implement OnDeleteShopListListener");
         }
     }
 
@@ -87,7 +87,8 @@ public class DeleteRecipeDialog extends DialogFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnDeleteRecipeListener {
-        void onDeleteRecipe();
+    public interface OnDeleteShopListListener {
+        // TODO: Update argument type and name
+        void onDeleteShopList();
     }
 }

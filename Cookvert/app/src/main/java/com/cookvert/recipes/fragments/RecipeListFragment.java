@@ -74,7 +74,6 @@ public class RecipeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         //set adapter
         final ExpandableListView listView = (ExpandableListView) view.findViewById(R.id.expandable_recipe_list);
-        //TODO this is an issue when using the fragment in different places, use arguments instead
         listView.setAdapter(new RecipeRecyclerViewAdapter(RecipeManager.getInstance().recipeCategories, mListener));
 
         //add long click listener to both parent and child views

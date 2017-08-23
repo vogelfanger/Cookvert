@@ -57,14 +57,14 @@ public class NewIngredientDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_new_ingredient_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_edit_ingredient, null);
 
         //use all unit items in the spinner
         spinnerRes = R.array.spinner_all_units;
-        final EditText iAmount = (EditText) layout.findViewById(R.id.text_amount_new_ingredient_dialog);
-        final EditText iName = (EditText) layout.findViewById(R.id.text_name_new_ingredient_dialog);
+        final EditText iAmount = (EditText) layout.findViewById(R.id.text_amount_edit_ingredient_dialog);
+        final EditText iName = (EditText) layout.findViewById(R.id.text_name_edit_ingredient_dialog);
 
-        final Spinner spinner = (Spinner) layout.findViewById(R.id.spinner_new_ingredient_dialog);
+        final Spinner spinner = (Spinner) layout.findViewById(R.id.spinner_edit_ingredient_dialog);
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), spinnerRes, R.layout.spinner_item_dialog);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dialog);
         spinner.setAdapter(adapter);

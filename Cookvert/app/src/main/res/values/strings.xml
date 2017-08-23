@@ -4,13 +4,14 @@
     <string name="action_change_category">Change Category</string>
     <string name="action_convert_recipe">Convert</string>
     <string name="action_delete_category">Delete Category</string>
+    <string name="action_delete">Delete</string>
     <string name="action_delete_recipe">Delete</string>
     <string name="action_load_recipe">Load Recipe</string>
     <string name="action_main_menu">Main Menu</string>
     <string name="action_new_category">New Category</string>
     <string name="action_new_recipe">New Recipe</string>
     <string name="action_new_shopping_list">New Shopping List</string>
-    <string name="action_rename_recipe">Rename</string>
+    <string name="action_rename">Rename</string>
     <string name="action_scale_recipe">Scale Recipe</string>
 
     <!-- basic texts used in buttons, dialogs and menus -->
@@ -113,19 +114,25 @@
     <string name="title_dialog_delete_category">Delete category?</string>
     <string name="title_dialog_delete_ingredient">Delete ingredient?</string>
     <string name="title_dialog_delete_recipe">Delete recipe?</string>
+    <string name="title_dialog_delete_shop_list">Delete shopping list?</string>
     <string name="title_dialog_edit_category">Edit category</string>
     <string name="title_dialog_edit_ingredient">Edit ingredient</string>
+    <string name="title_dialog_edit_shop_item">Edit shop item</string>
     <string name="title_dialog_new_category">New category</string>
     <string name="title_dialog_new_ingredient">New ingredient</string>
     <string name="title_dialog_new_recipe">New recipe</string>
+    <string name="title_dialog_new_shop_item">New shop item</string>
+    <string name="title_dialog_new_shop_list">New shopping list</string>
+    <string name="title_dialog_rename_shop_list">Rename shopping list</string>
     <string name="title_dialog_scale_recipe">Scale recipe size</string>
     <string name="title_pager_original_recipe">Original</string>
     <string name="title_pager_ingredients">Ingredients</string>
     <string name="title_pager_converted_recipe">Converted</string>
     <string name="title_pager_recipe_instructions">Instructions</string>
 
-    <string name="toast_recipe_deleted">Recipe deleted</string>
     <string name="toast_edit_uncategorized">This category can\'t be edited</string>
+    <string name="toast_recipe_deleted">Recipe deleted</string>
+    <string name="toast_shop_list_deleted">Shopping list deleted</string>
 
     <string-array name="spinner_volume_units">
         <item>@string/array_unit_cup_uk</item>
@@ -191,5 +198,6 @@
 
     <!-- TODO: Instruction fragment placeholder text, remove or change -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_shop_list">EditShopListActivity</string>
 
 </resources>

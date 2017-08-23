@@ -24,10 +24,12 @@ import java.util.List;
  * <p>
  * Activities containing this fragment MUST implement the {@link OnOriginalListFragmentInteractionListener}
  * interface.
+ * //TODO change name to OriginalIngredientListFragment
  */
 public class OriginalRecipeFragment extends Fragment {
 
     private static final String ARG_ADAPTER_LIST = "adapter_list";
+    //TODO this should be put to use by extracting list from recipe manager when fragment is created
     private List<Ingredient> adapterList; //argument list for the adapter
     private OnOriginalListFragmentInteractionListener mListener;
 
@@ -39,7 +41,8 @@ public class OriginalRecipeFragment extends Fragment {
     }
 
     /**
-     * Instantiates a new fragment with parameters. Parameter determines whether which list is used for the list adapter
+     * Instantiates a new fragment with parameters.
+     * Parameter determines whether which list is used for the list adapter
      * @param adapterId 1 uses list from ConvertManager, 0 uses list from RecipeManager
      * @return
      */
@@ -69,7 +72,8 @@ public class OriginalRecipeFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
             //New adapter parameter
-            recyclerView.setAdapter(new MyIngredientRecyclerViewAdapter(getRecipeList(), mListener));
+            recyclerView.setAdapter(
+                    new MyIngredientRecyclerViewAdapter(getRecipeList(), mListener));
         }
         return view;
     }
@@ -99,7 +103,6 @@ public class OriginalRecipeFragment extends Fragment {
     private List<Ingredient> getRecipeList(){
         //if argument is 0, get list for EditRecipeActivity
         if(getArguments().getInt(ARG_ADAPTER_LIST) == 0){
-            //TODO this line causes error in RecipeManager
             return RecipeManager.getInstance().getFocusedRecipe().getIngredients();
         //if argument is 1, get list for ConvertActivity
         }else if(getArguments().getInt(ARG_ADAPTER_LIST) == 1){
@@ -107,7 +110,6 @@ public class OriginalRecipeFragment extends Fragment {
         }else{
             return new ArrayList<Ingredient>();
         }
-
     }
 
     /**
@@ -121,7 +123,8 @@ public class OriginalRecipeFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnOriginalListFragmentInteractionListener {
-        void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition);
+        void onOriginalListFragmentInteraction(
+                MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition);
         void setOriginalRecipeAdapter(MyIngredientRecyclerViewAdapter adapter);
     }
 }

@@ -47,7 +47,7 @@ public class NewCategoryDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_edit_text_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_edit_text, null);
 
         final EditText iName = (EditText) layout.findViewById(R.id.text_edit_name_dialog);
 

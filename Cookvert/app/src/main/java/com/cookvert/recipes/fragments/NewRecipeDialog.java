@@ -44,7 +44,7 @@ public class NewRecipeDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_new_recipe_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_new_recipe, null);
 
         final EditText iName = (EditText) layout.findViewById(R.id.text_name_new_recipe_dialog);
 

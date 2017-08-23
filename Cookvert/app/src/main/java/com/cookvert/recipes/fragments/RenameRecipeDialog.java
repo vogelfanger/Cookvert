@@ -43,7 +43,7 @@ public class RenameRecipeDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_edit_text_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_edit_text, null);
 
         final EditText rName = (EditText) layout.findViewById(R.id.text_edit_name_dialog);
         rName.setText(getArguments().getString(ARG_NAME));

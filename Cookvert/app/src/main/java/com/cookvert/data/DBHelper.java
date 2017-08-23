@@ -117,7 +117,7 @@ public class DBHelper extends SQLiteOpenHelper{
      */
     public void copyDB() throws IOException{
 
-        Log.d(LOG_TAG, "accessing copyDB");
+        Log.d(LOG_TAG, "loading asset database");
         // use local database as input
         InputStream in = Cookvert.getAppContext().getAssets().open(DATABASE_NAME);
         String outputFileName = dbPath + DATABASE_NAME;
@@ -204,27 +204,27 @@ public class DBHelper extends SQLiteOpenHelper{
             + DBContract.ShopItem.NAME + " TEXT, "
             + DBContract.ShopItem.SELECTED + " INTEGER)";
 
-    private static final String SQL_CREATE_TABLE_SHOPPING_LIST =
+    private static final String SQL_CREATE_TABLE_SHOP_LIST =
             "CREATE TABLE IF NOT EXISTS "
-            + DBContract.ShoppingList.TABLE_SHOPPING_LIST + " ("
-            + DBContract.ShoppingList._ID + " INTEGER PRIMARY KEY, "
-            + DBContract.ShoppingList.NAME + " TEXT)";
+            + DBContract.ShopList.TABLE_SHOP_LIST + " ("
+            + DBContract.ShopList._ID + " INTEGER PRIMARY KEY, "
+            + DBContract.ShopList.NAME + " TEXT)";
 
     // Table connects each shop item to a shopping list,
     // so there are two foreign keys to each table
-    private static final String SQL_CREATE_TABLE_SHOPPING_LIST_REFERENCES =
+    private static final String SQL_CREATE_TABLE_SHOP_LIST_REFERENCES =
             "CREATE TABLE IF NOT EXISTS "
-            + DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES + " ("
-            + DBContract.ShoppingListReferences._ID + " INTEGER PRIMARY KEY,"
+            + DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES + " ("
+            + DBContract.ShopListReferences._ID + " INTEGER PRIMARY KEY,"
 
-            + DBContract.ShoppingListReferences.SHOP_ITEM_ID + " INTEGER, "
-            + DBContract.ShoppingListReferences.SHOPPING_LIST_ID + " INTEGER, "
-            + "FOREIGN KEY ("+DBContract.ShoppingListReferences.SHOP_ITEM_ID+") "
+            + DBContract.ShopListReferences.SHOP_ITEM_ID + " INTEGER, "
+            + DBContract.ShopListReferences.SHOP_LIST_ID + " INTEGER, "
+            + "FOREIGN KEY ("+DBContract.ShopListReferences.SHOP_ITEM_ID+") "
             + "REFERENCES "+DBContract.ShopItem.TABLE_SHOP_ITEM+"("+DBContract.ShopItem._ID+"), "
 
-            + "FOREIGN KEY ("+DBContract.ShoppingListReferences.SHOPPING_LIST_ID+") "
-            + "REFERENCES "+DBContract.ShoppingList.TABLE_SHOPPING_LIST
-            + "("+DBContract.ShoppingList._ID+"))";
+            + "FOREIGN KEY ("+DBContract.ShopListReferences.SHOP_LIST_ID+") "
+            + "REFERENCES "+DBContract.ShopList.TABLE_SHOP_LIST
+            + "("+DBContract.ShopList._ID+"))";
 
 
 
@@ -246,11 +246,11 @@ public class DBHelper extends SQLiteOpenHelper{
             + DBContract.RecipeReferences.TABLE_RECIPE_REFERENCES;
     private static final String SQL_DELETE_TABLE_SHOP_ITEM = "DROP TABLE IF EXISTS "
             + DBContract.ShopItem.TABLE_SHOP_ITEM;
-    private static final String SQL_DELETE_TABLE_SHOPPING_LIST = "DROP TABLE IF EXISTS "
-            + DBContract.ShoppingList.TABLE_SHOPPING_LIST;
-    private static final String SQL_DELETE_TABLE_SHOPPING_LIST_REFERENCES =
+    private static final String SQL_DELETE_TABLE_SHOP_LIST = "DROP TABLE IF EXISTS "
+            + DBContract.ShopList.TABLE_SHOP_LIST;
+    private static final String SQL_DELETE_TABLE_SHOP_LIST_REFERENCES =
             "DROP TABLE IF EXISTS "
-            + DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES;
+            + DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES;
 
 
 
@@ -275,8 +275,8 @@ public class DBHelper extends SQLiteOpenHelper{
         db.execSQL(SQL_CREATE_TABLE_RECIPE_CAT);
         db.execSQL(SQL_CREATE_TABLE_RECIPE_REFERENCES);
         db.execSQL(SQL_CREATE_TABLE_SHOP_ITEM);
-        db.execSQL(SQL_CREATE_TABLE_SHOPPING_LIST);
-        db.execSQL(SQL_CREATE_TABLE_SHOPPING_LIST_REFERENCES);
+        db.execSQL(SQL_CREATE_TABLE_SHOP_LIST);
+        db.execSQL(SQL_CREATE_TABLE_SHOP_LIST_REFERENCES);
     }
 
     // Drop tables and create new ones.
@@ -290,9 +290,9 @@ public class DBHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.RecipeCategory.TABLE_RECIPE_CAT);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.RecipeReferences.TABLE_RECIPE_REFERENCES);
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.ShopItem.TABLE_SHOP_ITEM);
-        db.execSQL("DROP TABLE IF EXISTS " + DBContract.ShoppingList.TABLE_SHOPPING_LIST);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.ShopList.TABLE_SHOP_LIST);
         db.execSQL("DROP TABLE IF EXISTS "
-                + DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES);
+                + DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES);
         onCreate(db);
     }
 
@@ -444,18 +444,18 @@ public class DBHelper extends SQLiteOpenHelper{
 
         //values for reference table
         ContentValues values1 = new ContentValues();
-        values1.put(DBContract.ShoppingListReferences.SHOP_ITEM_ID, siID);
+        values1.put(DBContract.ShopListReferences.SHOP_ITEM_ID, siID);
 
-        String selection = DBContract.ShoppingListReferences.SHOPPING_LIST_ID + " LIKE ?";
+        String selection = DBContract.ShopListReferences.SHOP_LIST_ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(listID)};
 
         Cursor cursor = readShopItemReferences(listID);
         if(cursor.moveToFirst()){
             //if first item reference is null, update item id
             if(cursor.isNull(cursor.getColumnIndexOrThrow(
-                    DBContract.ShoppingListReferences.SHOP_ITEM_ID))){
+                    DBContract.ShopListReferences.SHOP_ITEM_ID))){
                 db.update(
-                        DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES,
+                        DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES,
                         values1,
                         selection,
                         selectionArgs
@@ -463,13 +463,13 @@ public class DBHelper extends SQLiteOpenHelper{
             }
             //if first item reference is not null, insert a new row
             else{
-                values1.put(DBContract.ShoppingListReferences.SHOPPING_LIST_ID, listID);
+                values1.put(DBContract.ShopListReferences.SHOP_LIST_ID, listID);
                 long slrID = db.insert(
-                        DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES,
+                        DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES,
                         null, values1);
             }
         }
-        Log.d(LOG_TAG, "shop item inserted, id:" + siID);
+        Log.d(LOG_TAG, "shop item inserted, id:" + siID + ", selected:" + selected.toString());
         return siID;
     }
 
@@ -483,18 +483,18 @@ public class DBHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DBContract.ShoppingList.NAME, name);
+        values.put(DBContract.ShopList.NAME, name);
 
         //insert new row into shopping list table
-        long slID = db.insert(DBContract.ShoppingList.TABLE_SHOPPING_LIST, null, values);
+        long slID = db.insert(DBContract.ShopList.TABLE_SHOP_LIST, null, values);
 
         ContentValues values1 = new ContentValues();
         //put first shop item reference to null and replace it later
-        values1.putNull(DBContract.ShoppingListReferences.SHOP_ITEM_ID);
-        values1.put(DBContract.ShoppingListReferences.SHOPPING_LIST_ID, slID);
+        values1.putNull(DBContract.ShopListReferences.SHOP_ITEM_ID);
+        values1.put(DBContract.ShopListReferences.SHOP_LIST_ID, slID);
 
         //insert new row into reference table
-        long slrID = db.insert(DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES,
+        long slrID = db.insert(DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES,
                 null, values1);
 
         Log.d(LOG_TAG, "shopping list inserted, id:" + String.valueOf(slID));
@@ -518,12 +518,11 @@ public class DBHelper extends SQLiteOpenHelper{
 
         //use row id to select row in reference table
         String selection1 = DBContract.IngredientReferences.INGREDIENT_ID + " = ?";
-        String[] selectionArgs1 = { String.valueOf(ingredientID)};
 
         //delete ingredient row in both tables
-        db.delete(DBContract.Ingredient.TABLE_INGREDIENT, selection, selectionArgs);
         db.delete(DBContract.IngredientReferences.TABLE_INGREDIENT_REFERENCES,
-                selection1, selectionArgs1);
+                selection1, selectionArgs);
+        db.delete(DBContract.Ingredient.TABLE_INGREDIENT, selection, selectionArgs);
 
         Log.d(LOG_TAG, "ingredient deleted, id: " + String.valueOf(ingredientID));
     }
@@ -541,7 +540,6 @@ public class DBHelper extends SQLiteOpenHelper{
 
         //use row id to select rows in reference table
         String selection1 = DBContract.RecipeReferences.RECIPE_ID + " LIKE ?";
-        String[] selectionArgs1 = { String.valueOf(recipeID)};
 
         //get ingredients with reference to the recipe
         List itemIDs = new ArrayList();
@@ -553,13 +551,13 @@ public class DBHelper extends SQLiteOpenHelper{
         cursor.close();
 
         //delete ingredients from ingredient and ingredient reference tables
-        for(int i=0; itemIDs.size()>0; i++){
+        for(int i=0; i < itemIDs.size(); i++){
             deleteIngredient((long) itemIDs.get(i));
         }
 
         //delete recipe rows from recipe and recipe reference tables
+        db.delete(DBContract.RecipeReferences.TABLE_RECIPE_REFERENCES, selection1, selectionArgs);
         db.delete(DBContract.Recipe.TABLE_RECIPE, selection, selectionArgs);
-        db.delete(DBContract.RecipeReferences.TABLE_RECIPE_REFERENCES, selection1, selectionArgs1);
 
         Log.d(LOG_TAG, "recipe deleted, id:" + String.valueOf(recipeID));
     }
@@ -595,13 +593,12 @@ public class DBHelper extends SQLiteOpenHelper{
         String[] selectionArgs = { String.valueOf(itemID)};
 
         //use rowID to select row in reference table
-        String selection1 = DBContract.ShoppingListReferences.SHOP_ITEM_ID + " = ?";
-        String[] selectionArgs1 = { String.valueOf(itemID)};
+        String selection1 = DBContract.ShopListReferences.SHOP_ITEM_ID + " = ?";
 
         //delete shop item row in both tables
+        db.delete(DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES,
+                selection1, selectionArgs);
         db.delete(DBContract.ShopItem.TABLE_SHOP_ITEM, selection, selectionArgs);
-        db.delete(DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES,
-                selection1, selectionArgs1);
 
         Log.d(LOG_TAG, "shop item deleted, id:" + String.valueOf(itemID));
     }
@@ -614,12 +611,11 @@ public class DBHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
 
         //use rowID to select row in shopping list table
-        String selection = DBContract.ShoppingList._ID + " = ?";
+        String selection = DBContract.ShopList._ID + " = ?";
         String[] selectionArgs = { String.valueOf(listID)};
 
         //use rowID to select rows in reference table
-        String selection1 = DBContract.ShoppingListReferences.SHOPPING_LIST_ID + " LIKE ?";
-        String[] selectionArgs1 = { String.valueOf(listID)};
+        String selection1 = DBContract.ShopListReferences.SHOP_LIST_ID + " LIKE ?";
 
         //get all shop item ids in the shopping list
         List itemIDs = new ArrayList();
@@ -636,9 +632,9 @@ public class DBHelper extends SQLiteOpenHelper{
         }
 
         //delete shopping list row from tables
-        db.delete(DBContract.ShoppingList.TABLE_SHOPPING_LIST, selection, selectionArgs);
-        db.delete(DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES,
-                selection1, selectionArgs1);
+        db.delete(DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES,
+                selection1, selectionArgs);
+        db.delete(DBContract.ShopList.TABLE_SHOP_LIST, selection, selectionArgs);
 
         Log.d(LOG_TAG, "shopping list deleted, id:" + listID);
     }
@@ -712,10 +708,10 @@ public class DBHelper extends SQLiteOpenHelper{
                 + DBContract.ShopItem.SELECTED + " "
                 + "FROM " + DBContract.ShopItem.TABLE_SHOP_ITEM + " si "
                 + "INNER JOIN "
-                + DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES + " slf "
+                + DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES + " slf "
                 + "ON si." + DBContract.ShopItem._ID + "="
-                + "slf." + DBContract.ShoppingListReferences.SHOP_ITEM_ID + " "
-                + "WHERE " + DBContract.ShoppingList._ID + "=?";
+                + "slf." + DBContract.ShopListReferences.SHOP_ITEM_ID + " "
+                + "WHERE " + DBContract.ShopListReferences.SHOP_LIST_ID + "=?";
 
         String[] selectionArgs = {String.valueOf(shopListID)};
 
@@ -728,7 +724,7 @@ public class DBHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         //select whole shopping list table
-        String selectQuery = "SELECT * FROM " + DBContract.ShoppingList.TABLE_SHOPPING_LIST;
+        String selectQuery = "SELECT * FROM " + DBContract.ShopList.TABLE_SHOP_LIST;
 
         return db.rawQuery(selectQuery, null);
     }
@@ -881,15 +877,15 @@ public class DBHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
-                DBContract.ShoppingListReferences._ID,
-                DBContract.ShoppingListReferences.SHOP_ITEM_ID
+                DBContract.ShopListReferences._ID,
+                DBContract.ShopListReferences.SHOP_ITEM_ID
         };
 
-        String selection = DBContract.ShoppingListReferences.SHOPPING_LIST_ID + " LIKE ?";
+        String selection = DBContract.ShopListReferences.SHOP_LIST_ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(listID)};
 
         return db.query(
-                DBContract.ShoppingListReferences.TABLE_SHOPPING_LIST_REFERENCES,
+                DBContract.ShopListReferences.TABLE_SHOP_LIST_REFERENCES,
                 projection,
                 selection,
                 selectionArgs,
@@ -901,15 +897,15 @@ public class DBHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         String[] projection = {
-                DBContract.ShoppingList._ID,
-                DBContract.ShoppingList.NAME
+                DBContract.ShopList._ID,
+                DBContract.ShopList.NAME
         };
 
-        String selection = DBContract.ShoppingList._ID + "=?";
+        String selection = DBContract.ShopList._ID + "=?";
         String[] selectionArgs = {Long.toString(id)};
 
         return db.query(
-                DBContract.ShoppingList.TABLE_SHOPPING_LIST,
+                DBContract.ShopList.TABLE_SHOP_LIST,
                 projection,
                 selection,
                 selectionArgs,
@@ -1018,6 +1014,9 @@ public class DBHelper extends SQLiteOpenHelper{
                 values,
                 selection,
                 selectionArgs);
+
+        Log.d(LOG_TAG, "shop item updated, id:" + String.valueOf(rowID)
+                + ", selected:" + String.valueOf(selected));
     }
 
 
@@ -1025,14 +1024,14 @@ public class DBHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DBContract.ShoppingList.NAME, name);
+        values.put(DBContract.ShopList.NAME, name);
 
         //use rowID to select updatable shopping list
-        String selection = DBContract.ShoppingList._ID + " = ?";
+        String selection = DBContract.ShopList._ID + " = ?";
         String[] selectionArgs = { String.valueOf(rowID)};
 
         //row is updated but number of affected rows i is not used
-        int i = db.update(DBContract.ShoppingList.TABLE_SHOPPING_LIST,
+        int i = db.update(DBContract.ShopList.TABLE_SHOP_LIST,
                 values,
                 selection,
                 selectionArgs);

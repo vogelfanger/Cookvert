@@ -48,10 +48,10 @@ public class ChangeCategoryDialog extends DialogFragment {
         // Inflate the layout for this fragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
         //TODO change layout and layout name to be more general
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_spinner_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_spinner, null);
 
         //set up spinner and adapter
-        final Spinner spinner = (Spinner) layout.findViewById(R.id.spinner_change_unit_dialog);
+        final Spinner spinner = (Spinner) layout.findViewById(R.id.spinner_dialog);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item_dialog,
                 RecipeManager.getInstance().getCategoryNames());
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_dialog);

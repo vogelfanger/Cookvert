@@ -160,7 +160,7 @@ public class ConvertActivity extends AppCompatActivity
         ConvertManager.getInstance().setFocusPosition(itemPosition);
         PopupMenu popup = new PopupMenu(this, item.mView);
         popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_original_recipe);
+        popup.inflate(R.menu.menu_popup_original_ingredient);
         popup.show();
     }
 
@@ -175,12 +175,13 @@ public class ConvertActivity extends AppCompatActivity
      * @param item
      */
     @Override
-    public void onConvertedListFragmentInteraction(MyConvertedIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
-        //set the selected ingredient to focus, so that ConvertManager can edit the correct ingredient
+    public void onConvertedListFragmentInteraction(
+            MyConvertedIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
+        //set the selected ingredient to focus in ConvertManager
         ConvertManager.getInstance().setFocusPosition(itemPosition);
         PopupMenu popup = new PopupMenu(this, item.mView);
         popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_converted_recipe);
+        popup.inflate(R.menu.menu_popup_converted_ingredient);
         popup.show();
     }
 

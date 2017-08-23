@@ -43,13 +43,11 @@ public class EditCategoryDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_edit_category_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_edit_text, null);
 
-        final EditText iName = (EditText) layout.findViewById(R.id.text_name_edit_category_dialog);
+        final EditText iName = (EditText) layout.findViewById(R.id.text_edit_name_dialog);
         //set name using arguments
         iName.setText(getArguments().get(ARG_NAME).toString());
-
-        //TODO build dialog and handle invalid input
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);

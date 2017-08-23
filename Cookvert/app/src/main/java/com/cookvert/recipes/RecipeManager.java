@@ -36,14 +36,14 @@ public class RecipeManager {
     public int focusRecipe; //index of the recipe currently in focus
     public int focusIngredient; //index of the ingredient currently in focus
 
-    public static RecipeManager getInstance(){
-        return manager;
-    }
-
     //maps connecting object ids to primary keys in database.
     private HashMap<Integer, Long> categoryMap;
     private HashMap<Integer, Long> ingredientMap;
     private HashMap<Integer, Long> recipeMap;
+
+    public static RecipeManager getInstance(){
+        return manager;
+    }
 
     public ArrayList<RecipeCategory> getRecipeCategories() {
         return recipeCategories;
@@ -322,8 +322,6 @@ public class RecipeManager {
      */
     public void readCategoriesFromDB(){
         Cursor cursor = DBHelper.getInstance(Cookvert.getAppContext()).readAllRecipeCategories();
-
-        Cursor cursor1 = DBHelper.getInstance(Cookvert.getAppContext()).readRecipeCat(1);
 
         String nameArg;
         long idArg;

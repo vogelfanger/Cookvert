@@ -70,7 +70,7 @@ public class EditIngredientDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_edit_ingredient_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_edit_ingredient, null);
 
         final EditText iAmount = (EditText) layout.findViewById(R.id.text_amount_edit_ingredient_dialog);
         final EditText iName = (EditText) layout.findViewById(R.id.text_name_edit_ingredient_dialog);

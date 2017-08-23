@@ -49,15 +49,15 @@ public final class DBContract {
         public final static String SELECTED = "selected";
     }
 
-    public static abstract class ShoppingList implements BaseColumns {
-        public final static String TABLE_SHOPPING_LIST = "shopping_list";
+    public static abstract class ShopList implements BaseColumns {
+        public final static String TABLE_SHOP_LIST = "shopping_list";
         public final static String NAME = "name";
     }
 
     //connects shop items to shopping lists by their id
-    public static abstract class ShoppingListReferences implements BaseColumns{
-        public final static String TABLE_SHOPPING_LIST_REFERENCES = "shopping_list_refs";
-        public final static String SHOPPING_LIST_ID = "shopping_list_id";
+    public static abstract class ShopListReferences implements BaseColumns{
+        public final static String TABLE_SHOP_LIST_REFERENCES = "shopping_list_refs";
+        public final static String SHOP_LIST_ID = "shopping_list_id";
         public final static String SHOP_ITEM_ID = "shop_item_id";
     }
 

@@ -168,7 +168,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
     public void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
         PopupMenu popup = new PopupMenu(this, item.mView);
         popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_original_recipe);
+        popup.inflate(R.menu.menu_popup_original_ingredient);
         popup.show();
     }
 

@@ -37,7 +37,7 @@ public class DeleteCategoryDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_confirmation_dialog, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_confirmation, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);

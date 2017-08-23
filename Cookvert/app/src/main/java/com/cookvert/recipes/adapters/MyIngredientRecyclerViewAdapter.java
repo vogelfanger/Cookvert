@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cookvert.R;
-import com.cookvert.recipes.fragments.OriginalRecipeFragment.OnOriginalListFragmentInteractionListener;
+import com.cookvert.recipes.fragments.OriginalRecipeFragment.
+        OnOriginalListFragmentInteractionListener;
 import com.cookvert.recipes.model.Ingredient;
 
 import java.util.List;
@@ -16,12 +17,14 @@ import java.util.List;
 /**
  * TODO Change name into IngredientRecycler....
  */
-public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngredientRecyclerViewAdapter.ViewHolder> {
+public class MyIngredientRecyclerViewAdapter extends
+        RecyclerView.Adapter<MyIngredientRecyclerViewAdapter.ViewHolder> {
 
     private final List<Ingredient> mValues;
     private final OnOriginalListFragmentInteractionListener mListener;
 
-    public MyIngredientRecyclerViewAdapter(List<Ingredient> items, OnOriginalListFragmentInteractionListener listener) {
+    public MyIngredientRecyclerViewAdapter(List<Ingredient> items,
+                                           OnOriginalListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
         //Bind the adapter to the activity
@@ -69,11 +72,10 @@ public class MyIngredientRecyclerViewAdapter extends RecyclerView.Adapter<MyIngr
             mNameView = (TextView) view.findViewById(R.id.converted_name);
         }
 
-
-
         @Override
         public String toString() {
-            return super.toString() + " '" + mAmountView.getText() + mUnitView.getText() + mNameView.getText() + "'";
+            return super.toString() + " '" + mAmountView.getText() +
+                    mUnitView.getText() + mNameView.getText() + "'";
         }
     }
 
