@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
+    android:paddingBottom="@dimen/text_margin"
     tools:context="com.cookvert.recipes.fragments.NewCategoryDialog">
 
     <EditText
         android:id="@+id/text_edit_name_dialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/text_margin"
         android:layout_marginBottom="18dp"
         android:textSize="18sp"
         android:hint="@string/hint_enter_name"

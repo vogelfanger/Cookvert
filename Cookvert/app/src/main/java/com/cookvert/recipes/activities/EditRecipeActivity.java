@@ -46,18 +46,11 @@ public class EditRecipeActivity extends AppCompatActivity implements
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
-    private int recipePosition; //recipe position in RecipeManager
-    private int categoryPosition; //position of recipe's category in RecipeManager
 
-    //TODO get adapter list for the right recipe from arguments
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
-
-        //get recipe and category positions from arguments
-        recipePosition = getIntent().getExtras().getInt(RecipeManager.ARG_SELECTED_RECIPE_POSITION);
-        categoryPosition = getIntent().getExtras().getInt(RecipeManager.ARG_SELECTED_CATEGORY_POSITION);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

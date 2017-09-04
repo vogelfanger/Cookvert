@@ -92,6 +92,10 @@ public class ResourceHelper {
             return Unit.TEASPOON_UK;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_teaspoon_us))) {
             return Unit.TEASPOON_US;
+        }else if(name.equals(context.getResources().getString(R.string.array_unit_celsius))) {
+            return Unit.CELSIUS;
+        }else if(name.equals(context.getResources().getString(R.string.array_unit_fahrenheit))) {
+            return Unit.FAHRENHEIT;
         }else return null;
     }
 }

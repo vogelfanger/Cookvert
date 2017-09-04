@@ -19,21 +19,21 @@
         <activity
             android:name=".recipes.activities.RecipesActivity"
             android:label="@string/title_activity_recipes"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".shoppinglist.activities.ShopListsActivity"
-            android:label="@string/title_activity_shoplist"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_shoplists"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".conversion.activities.ConvertActivity"
             android:label="@string/title_activity_convert"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".recipes.activities.EditRecipeActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".shoppinglist.activities.EditShopListActivity"
-            android:label="@string/title_activity_edit_shop_list"
             android:theme="@style/AppTheme"></activity>
     </application>
 

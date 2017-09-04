@@ -1,6 +1,7 @@
 package com.cookvert.recipes.model;
 
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -77,7 +78,7 @@ public class Ingredient {
     /**
      * Help method that sets the unit type based on the key number.
      * @param unitKey Number that identifies the unit.
-     * TODO Update new ingredients alphabetically
+     * TODO Update new units alphabetically
      */
     public void assignUnit(int unitKey){
 
@@ -166,15 +167,21 @@ public class Ingredient {
     }
 
     /**
-     * Rounds given double to more presentable decimal format and returns the rounded amount as a String.
-     * Rounding depends on the magnitude of given double. Largest possible return value is 9999.
-     * Values between 9999 and 1 are rounded to 4 significant numbers. Anything below 1 is rounded to 4 decimals after 0.
+     * Rounds given double to more presentable decimal format
+     * and returns the rounded amount as a String.
+     * Rounding depends on the magnitude of given double.
+     * Values over 1 are rounded to 4 significant numbers.
+     * Anything below 1 is rounded to 4 decimals after 0.
      * @param amount Amount being rounded
      * @return Rounded amount
      */
-    public static String roundAmount(double amount){
+    public static String roundAmount(double amount) {
         DecimalFormat df;
-        if(amount >= 1000){
+        if(amount >= 10000){
+            // round last digit to nearest 10
+            amount = Math.round(amount / 10.0) * 10.0;
+            df = new DecimalFormat("####0");
+        }else if(amount >= 1000){
             df = new DecimalFormat("###0");
         }else if(1000 >= amount && amount >= 100){
             df = new DecimalFormat("##0.#");
@@ -185,12 +192,36 @@ public class Ingredient {
         }else {
             df = new DecimalFormat("0.0###");
         }
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        return df.format(amount);
+    }
+
+    public static String roundTemperature(double amount) {
+        DecimalFormat df;
+        if (amount >= 10000) {
+            // round last digit to nearest 10
+            amount = Math.round(amount / 10.0) * 10.0;
+            df = new DecimalFormat("####0");
+        } else if (amount >= 1000) {
+            df = new DecimalFormat("###0");
+        } else if (1000 >= amount && amount >= 100) {
+            df = new DecimalFormat("##0.#");
+        } else if (100 >= amount && amount >= 0){
+            df = new DecimalFormat("#0.##");
+        } else if (amount <= -100){
+            df = new DecimalFormat("##0.#;-##0.#");
+        } else if (amount <= -10){
+            df = new DecimalFormat("#0.##;-#0.##");
+        } else{
+            df = new DecimalFormat("#0.##;-#0.##");
+        }
+        df.setRoundingMode(RoundingMode.HALF_UP);
         return df.format(amount);
     }
 
     @Override
     public String toString() {
-        return amount + " " + unit + " " + name;
+        return String.valueOf(amount) + " " + unit.toString() + " " + name;
     }
 }
 

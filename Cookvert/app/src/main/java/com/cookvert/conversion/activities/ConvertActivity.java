@@ -17,26 +17,40 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.conversion.fragments.ChangeUnitDialog;
+import com.cookvert.conversion.fragments.ConvertTemperatureDialog;
 import com.cookvert.conversion.fragments.ConvertedRecipeFragment;
+import com.cookvert.conversion.fragments.ExportRecipeDialog;
+import com.cookvert.conversion.fragments.ExportShopListDialog;
+import com.cookvert.conversion.fragments.ImportRecipeDialog;
 import com.cookvert.recipes.RecipeManager;
+import com.cookvert.recipes.activities.EditRecipeActivity;
 import com.cookvert.recipes.fragments.EditIngredientDialog;
 import com.cookvert.recipes.fragments.InstructionFragment;
 import com.cookvert.conversion.adapters.MyConvertedIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.fragments.NewIngredientDialog;
+import com.cookvert.recipes.fragments.NewRecipeDialog;
 import com.cookvert.recipes.fragments.OriginalRecipeFragment;
 import com.cookvert.conversion.fragments.ScaleRecipeDialog;
 import com.cookvert.menu.MainActivity;
+import com.cookvert.recipes.model.Ingredient;
+import com.cookvert.recipes.model.Recipe;
+import com.cookvert.recipes.model.Unit;
+import com.cookvert.shoppinglist.ShopListManager;
+import com.cookvert.shoppinglist.activities.EditShopListActivity;
+import com.cookvert.shoppinglist.fragments.NewShopListDialog;
+import com.cookvert.shoppinglist.model.ShopList;
 
 import java.util.ArrayList;
 
 /**
- * TODO implement instructions page when recipe section is finished
+ *
  */
 public class ConvertActivity extends AppCompatActivity
         implements OriginalRecipeFragment.OnOriginalListFragmentInteractionListener,
@@ -46,7 +60,10 @@ public class ConvertActivity extends AppCompatActivity
                     NewIngredientDialog.OnNewIngredientListener,
                     EditIngredientDialog.OnEditIngredientListener,
                     ScaleRecipeDialog.OnScaleRecipeListener,
-                    ChangeUnitDialog.OnChangeUnitListener {
+                    ChangeUnitDialog.OnChangeUnitListener,
+                    ExportShopListDialog.OnExportShopListListener,
+                    ExportRecipeDialog.OnExportRecipeListener,
+                    ImportRecipeDialog.OnImportRecipeListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -67,10 +84,14 @@ public class ConvertActivity extends AppCompatActivity
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
     // list adapters for original and converted recipes
-    MyIngredientRecyclerViewAdapter originalAdapter;
-    MyConvertedIngredientRecyclerViewAdapter convertedAdapter;
+    private MyIngredientRecyclerViewAdapter originalAdapter;
+    private MyConvertedIngredientRecyclerViewAdapter convertedAdapter;
 
-    FloatingActionButton fab;
+    private FloatingActionButton fab;
+    // text view at the bottom of the activity
+    private TextView multiplierView;
+    // text for multiplierView, multplier is added after this text dynamically
+    private String muliplierText;
 
     //recipe instructions given as argument from another Activity
     private String argInstructions;
@@ -132,6 +153,13 @@ public class ConvertActivity extends AppCompatActivity
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+
+
+        muliplierText = getResources().getString(R.string.text_multiplier_amount);
+        // set text for multiplier view at the bottom of the activity
+        multiplierView = (TextView) findViewById(R.id.text_multiplier_covert_activity);
+        multiplierView.setText(
+                muliplierText + " " + String.valueOf(ConvertManager.getInstance().getMultiplier()));
     }
 
     @Override
@@ -204,6 +232,27 @@ public class ConvertActivity extends AppCompatActivity
     public void onHideKeyboard(View view) {
     }
 
+    @Override
+    public void onImportRecipe(int recipePosition) {
+        ConvertManager.getInstance().importRecipeFromDialog(recipePosition);
+        originalAdapter.notifyDataSetChanged();
+        convertedAdapter.notifyDataSetChanged();
+
+        // remove old instructions page, if it exists
+        if(fragments.size() >= 3) {
+            fragments.remove(2);
+        }
+        // add instructions fragment to pager
+        argInstructions = RecipeManager.getInstance().
+                getAllRecipes().get(recipePosition).getInstructions();
+        fragments.add(InstructionFragment.newInstance(2, 0, argInstructions));
+        mSectionsPagerAdapter.notifyDataSetChanged();
+
+        Toast toast = Toast.makeText(
+                this, R.string.toast_recipe_loaded, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     /**
      *
      *
@@ -235,6 +284,35 @@ public class ConvertActivity extends AppCompatActivity
         convertedAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onExportRecipe(String name, boolean useOriginal) {
+        // set up recipe in convert manager
+        Recipe recipe = ConvertManager.getInstance().exportAsRecipe(name, useOriginal);
+        // add recipe to recipe manager
+        RecipeManager.getInstance().importRecipe(recipe);
+        startActivity(new Intent(ConvertActivity.this, EditRecipeActivity.class));
+
+        //show toast
+        Toast toast = Toast.makeText(
+                this, R.string.toast_recipe_saved, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    public void onExportShopList(String name) {
+        // Set up new shop list in convert manager
+        ShopList list = ConvertManager.getInstance().exportAsShopList(
+                getApplicationContext(), name);
+        // add shop list to shop list manager
+        ShopListManager.getInstance().importShopList(list);
+        startActivity(new Intent(ConvertActivity.this, EditShopListActivity.class));
+
+        // show toast
+        Toast toast = Toast.makeText(
+                this, R.string.toast_shop_list_saved, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     /**
      *
      * @param multiplier
@@ -244,6 +322,7 @@ public class ConvertActivity extends AppCompatActivity
         ConvertManager.getInstance().changeMultiplier(multiplier);
         originalAdapter.notifyDataSetChanged();
         convertedAdapter.notifyDataSetChanged();
+        multiplierView.setText(muliplierText + " " + String.valueOf(multiplier));
     }
 
 
@@ -317,20 +396,41 @@ public class ConvertActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
+            case R.id.action_clear_lists:
+                ConvertManager.getInstance().deleteAllIngredients();
+                originalAdapter.notifyDataSetChanged();
+                convertedAdapter.notifyDataSetChanged();
+                Toast toast = Toast.makeText(
+                        this, R.string.toast_ingredients_removed, Toast.LENGTH_SHORT);
+                toast.show();
+                return true;
+
+            case R.id.action_convert_temperature:
+                Ingredient temp = ConvertManager.getInstance().getOriginalTemperature();
+                if(temp.getUnit() == Unit.CELSIUS){
+                    ConvertTemperatureDialog cDialog = ConvertTemperatureDialog.newInstance(
+                            temp.getAmount(), 0);
+                    cDialog.show(getSupportFragmentManager(), "convertTemperatureDialog");
+                }else{
+                    ConvertTemperatureDialog cDialog = ConvertTemperatureDialog.newInstance(
+                            temp.getAmount(), 1);
+                    cDialog.show(getSupportFragmentManager(), "convertTemperatureDialog");
+                }
+                return true;
+
             case R.id.action_load_recipe:
-                //TODO open dialog with database access
+                ImportRecipeDialog imDialog = ImportRecipeDialog.newInstance();
+                imDialog.show(getSupportFragmentManager(), "importRecipeDialog");
                 return true;
 
             case R.id.action_new_recipe:
-                //TODO open dialog
+                ExportRecipeDialog erDialog = ExportRecipeDialog.newInstance();
+                erDialog.show(getSupportFragmentManager(), "exportRecipeDialog");
                 return true;
 
             case R.id.action_new_shopping_list:
-                //TODO open dialog and open activity
-                return true;
-
-            case R.id.action_main_menu:
-                startActivity(new Intent(ConvertActivity.this, MainActivity.class));
+                ExportShopListDialog dialog = ExportShopListDialog.newInstance();
+                dialog.show(getSupportFragmentManager(), "exportShopItemDialog");
                 return true;
 
             case R.id.action_scale_recipe:
@@ -347,7 +447,7 @@ public class ConvertActivity extends AppCompatActivity
 
 
     //****************************************************************************************************
-    //*****                                      PAGER ADAPTER                                       ********
+    //                                      PAGER ADAPTER
     //****************************************************************************************************
 
     /**

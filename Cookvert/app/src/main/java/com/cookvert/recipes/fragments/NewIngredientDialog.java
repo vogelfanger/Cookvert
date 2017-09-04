@@ -130,9 +130,19 @@ public class NewIngredientDialog extends DialogFragment {
                 if (iName.getText().toString().length() == 0) {
                     iName.setError(getContext().getText(R.string.error_no_name));
                 }
-            } else if (iName.getText().toString().length() == 0) {
+            }
+            // see if amount is too large or name field is empty
+            else if(Double.parseDouble(iAmount.getText().toString()) >= 99995) {
+                iAmount.setError(getContext().getText(R.string.error_amount_too_large));
+                if (iName.getText().toString().length() == 0) {
+                    iName.setError(getContext().getText(R.string.error_no_name));
+                }
+            }
+            // see if name is missing
+            else if (iName.getText().toString().length() == 0) {
                 iName.setError(getContext().getText(R.string.error_no_name));
-            } else {
+            }
+            else {
                 //send data from text fields and spinner to listener Activity and dismiss dialog
                 mListener.onNewIngredient(Double.parseDouble(iAmount.getText().toString()),
                         spinnerUnit.getUnitKey(), iName.getText().toString());

@@ -70,8 +70,6 @@ public class OriginalRecipeFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-            //New adapter parameter
             recyclerView.setAdapter(
                     new MyIngredientRecyclerViewAdapter(getRecipeList(), mListener));
         }

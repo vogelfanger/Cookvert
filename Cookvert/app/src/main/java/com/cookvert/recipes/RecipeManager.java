@@ -14,6 +14,7 @@ import com.cookvert.util.Cookvert;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Control object responsible for maintaining and updating recipes in UI.
@@ -35,6 +36,8 @@ public class RecipeManager {
     public int focusCategory; //index of the category currently in focus
     public int focusRecipe; //index of the recipe currently in focus
     public int focusIngredient; //index of the ingredient currently in focus
+
+    private ArrayList<Recipe> allRecipes;
 
     //maps connecting object ids to primary keys in database.
     private HashMap<Integer, Long> categoryMap;
@@ -109,7 +112,9 @@ public class RecipeManager {
         this.recipeMap = recipeMap;
     }
 
-
+    public ArrayList<Recipe> getAllRecipes() {
+        return allRecipes;
+    }
 
     /**
      * Private constructor to prevent instantiation
@@ -137,7 +142,18 @@ public class RecipeManager {
         focusCategory = 0;
         focusRecipe = 0;
         focusIngredient = 0;
+
+        // this is filled only when needed
+        allRecipes = new ArrayList<Recipe>();
     }
+
+
+
+    //****************************************************************************************************
+    //                                      PUBLIC METHODS
+    //****************************************************************************************************
+
+
 
     /**
      * Creates a new recipe category, adds it to category list, sorts the list,
@@ -305,6 +321,16 @@ public class RecipeManager {
                 getFocusedRecipe().getName(), instructions, dbID);
     }
 
+    public void importRecipe(Recipe recipe){
+        int categoryIndex = recipeCategories.indexOf(uncategorized);
+        // add recipe to database
+        addRecipe(recipe.getName(), categoryIndex);
+        // add each ingredient to database
+        for(Ingredient i : recipe.getIngredients()){
+            addIngredient(i.getAmount(), i.getUnit().getUnitKey(), i.getName());
+        }
+    }
+
     /**
      * Updates recipe name to manager lists and the database.
      * @param name new recipe name
@@ -422,13 +448,13 @@ public class RecipeManager {
     }
 
     /**
-     * Returns an ArrayList containing names of each category.
+     * Creates a list of all recipes and eturns an ArrayList containing names of each category.
      * @return list of names
      */
     public ArrayList<String> getCategoryNames(){
         ArrayList<String> list = new ArrayList<String>();
         for(RecipeCategory rc : recipeCategories){
-            list.add(rc.name);
+            list.add(rc.getName());
         }
         return list;
     }
@@ -447,6 +473,28 @@ public class RecipeManager {
      */
     public Ingredient getFocusedIngredient(){
         return recipeCategories.get(focusCategory).recipes.get(focusRecipe).getIngredients().get(focusIngredient);
+    }
+
+    /**
+     * Creates a list of all recipes from all categories, sorts it in alphabetical order
+     * and returns a list containing all recipe names.
+     * Corresponding list of Recipe objects is kept in manager.
+     * @return List of recipe names
+     */
+    public ArrayList<String> listAllRecipes(){
+        ArrayList<String> list = new ArrayList<String>();
+        // create a new list to erase any old data
+        allRecipes = new ArrayList<Recipe>();
+
+        for(RecipeCategory rc : recipeCategories){
+            for(Recipe r : rc.getRecipes()){
+                list.add(r.getName());
+                allRecipes.add(r);
+            }
+        }
+        Collections.sort(list);
+        Collections.sort(allRecipes);
+        return list;
     }
 
     /**

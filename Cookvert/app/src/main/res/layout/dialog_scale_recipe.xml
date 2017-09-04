@@ -1,28 +1,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-    android:paddingTop="20dp"
     android:paddingBottom="18dp"
     tools:context="com.cookvert.conversion.fragments.ScaleRecipeDialog">
 
     <TextView
-        android:id="@+id/text_multiplier_header_scale_recipe_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textSize="18sp"
-        android:text="@string/all_multiplier" />
+        android:id="@+id/text_dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
 
     <EditText
         android:id="@+id/text_multiplier_amount_scale_recipe_dialog"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
+        android:layout_height="wrap_content"
         android:hint="@string/hint_enter_multiplier"
         android:inputType="numberDecimal"
-        android:selectAllOnFocus="true"/>
+        app:theme="@style/AppTheme.EditText"/>
 
 </LinearLayout>

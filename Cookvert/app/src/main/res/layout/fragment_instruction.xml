@@ -13,6 +13,7 @@
         android:gravity="left|top"
         android:layout_margin="@dimen/text_margin"
         android:inputType="textMultiLine"
+        android:lineSpacingMultiplier="1.2"
         android:hint="@string/hint_enter_instructions"
         android:enabled="false"/>
 

@@ -89,7 +89,8 @@ public class EditIngredientDialog extends DialogFragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerUnit = ResourceHelper.getUnitByName(adapter.getItem(position).toString(), getContext());
+                spinnerUnit = ResourceHelper.getUnitByName(
+                        adapter.getItem(position).toString(), getContext());
             }
 
             @Override
@@ -139,13 +140,19 @@ public class EditIngredientDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             //see if amount or name fields are empty and put up a warning if necessary
-            //see if amount or name fields are empty and put up a warning if necessary
             if (iAmount.getText().toString().length() == 0) {
                 iAmount.setError(getContext().getText(R.string.error_no_amount));
                 if (iName.getText().toString().length() == 0) {
                     iName.setError(getContext().getText(R.string.error_no_name));
                 }
-            } else if (iName.getText().toString().length() == 0) {
+            }
+            // see if amount is too large or name field is empty
+            else if(Double.parseDouble(iAmount.getText().toString()) >= 99995){
+                iAmount.setError(getContext().getText(R.string.error_amount_too_large));
+                if (iName.getText().toString().length() == 0) {
+                    iName.setError(getContext().getText(R.string.error_no_name));
+                }
+            }else if (iName.getText().toString().length() == 0) {
                 iName.setError(getContext().getText(R.string.error_no_name));
             } else {
                 //send data from text fields and spinner to listener Activity and dismiss dialog

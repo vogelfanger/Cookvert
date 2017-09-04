@@ -133,16 +133,6 @@ public class ShopListManager {
     }
 
     /**
-     * Updates focused shop list's name in manager's list and the database.
-     * @param name new shop list name
-     */
-    public void renameShopList(String name){
-        long dbID = shopListMap.get(getFocusedShopList().getId());
-        DBHelper.getInstance(Cookvert.getAppContext()).updateShoppingList(name, dbID);
-        getFocusedShopList().setName(name);
-    }
-
-    /**
      * Updates focused shop item's name in manager's list and the database.
      * @param name new shop item name
      */
@@ -151,6 +141,26 @@ public class ShopListManager {
         DBHelper.getInstance(Cookvert.getAppContext()).updateShopItem(
                 name, getFocusedShopItem().isSelected(), dbID);
         getFocusedShopItem().setName(name);
+    }
+
+    public void importShopList(ShopList list){
+        // add new shop list to manager and database
+        addShopList(list.getName());
+        // add copies of each shop item to inserted shop list
+        for(ShopItem i : list.getItems()){
+            addShopItem(i.getName());
+        }
+
+    }
+
+    /**
+     * Updates focused shop list's name in manager's list and the database.
+     * @param name new shop list name
+     */
+    public void renameShopList(String name){
+        long dbID = shopListMap.get(getFocusedShopList().getId());
+        DBHelper.getInstance(Cookvert.getAppContext()).updateShoppingList(name, dbID);
+        getFocusedShopList().setName(name);
     }
 
     /**

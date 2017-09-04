@@ -2,7 +2,9 @@
     <string name="app_name">Cookvert</string>
 
     <string name="action_change_category">Change Category</string>
+    <string name="action_clear_lists">Clear lists</string>
     <string name="action_convert_recipe">Convert</string>
+    <string name="action_convert_temperature">Convert temperature</string>
     <string name="action_delete_category">Delete Category</string>
     <string name="action_delete">Delete</string>
     <string name="action_delete_recipe">Delete</string>
@@ -16,7 +18,7 @@
 
     <!-- basic texts used in buttons, dialogs and menus -->
     <!-- TODO some of these may be old and unused -->
-    <string name="all_ok">Ok</string>
+    <string name="all_ok">OK</string>
     <string name="all_done">Done</string>
     <string name="all_cancel">Cancel</string>
     <string name="all_category">Category:</string>
@@ -29,13 +31,18 @@
     <string name="all_multiplier">Multiplier:</string>
     <string name="all_unit">Unit:</string>
 
+    <string name="array_recipe_type_original">Use original ingredients</string>
+    <string name="array_recipe_type_converted">Use converted ingredients</string>
+
     <!-- whole names of each unit -->
+    <string name="array_unit_celsius">Celsius</string>
     <string name="array_unit_cup_uk">cup (UK)</string>
     <string name="array_unit_cup_us">cup (US)</string>
     <string name="array_unit_deciliter">deciliter</string>
     <string name="array_unit_dessertspoon_eu">dessertspoon (EU)</string>
     <string name="array_unit_dessertspoon_uk">dessertspoon (UK)</string>
     <string name="array_unit_dessertspoon_us">dessertspoon (US)</string>
+    <string name="array_unit_fahrenheit">Fahrenheit</string>
     <string name="array_unit_fluid_ounce_uk">fluid ounce (UK)</string>
     <string name="array_unit_fluid_ounce_us">fluid ounce (US)</string>
     <string name="array_unit_gallon_uk">gallon (UK)</string>
@@ -88,15 +95,22 @@
     <string name="array_unit_short_name_teaspoon_us">tsp (US)</string>
 
     <!-- error messages shown in text views and toasts -->
+    <string name="error_amount_too_large">Amount is too large</string>
+    <string name="error_multiplier_max_accuracy">Max accuracy exceeded (x.xxx)</string>
+    <string name="error_multiplier_too_large">Multiplier is too large</string>
     <string name="error_no_amount">Amount is missing</string>
     <string name="error_no_multiplier">Multiplier is missing</string>
     <string name="error_no_name">Name is missing</string>
     <string name="error_unit_piece_converted">Piece can\'t be converted</string>
 
+
     <string name="hint_enter_amount">Enter amount</string>
     <string name="hint_enter_instructions">Enter instructions</string>
     <string name="hint_enter_name">Enter name</string>
+    <string name="hint_enter_name_recipe">Enter recipe name</string>
+    <string name="hint_enter_name_shop_list">Enter shopping list name</string>
     <string name="hint_enter_multiplier">Enter multiplier</string>
+    <string name="hint_enter_temperature">Enter temperature</string>
     <string name="hint_tap_to_edit">Tap to edit ingredient</string>
 
     <string name="main_button_convert">CONVERT</string>
@@ -104,15 +118,27 @@
     <string name="main_button_shopping_lists">SHOPPING LISTS</string>
     <string name="main_button_help">HELP</string>
 
-    <string name="message_dialog_delete_category">Recipes in this category will be moved under UNCATEGORIZED.</string>
+    <string name="message_change_unit">Convert ingredient into given unit</string>
+    <string name="message_dialog_convert_temperature">
+        Enter amount and select unit to convert temperature</string>
+    <string name="message_dialog_export_recipe">
+        Ingredients in conversion list are added to new recipe</string>
+    <string name="message_dialog_export_shop_list">
+        Ingredients in conversion list are added to new shopping list</string>
+    <string name="message_dialog_import_recipe">Select the recipe you want to convert</string>
+    <string name="message_dialog_scale_recipe">
+        Multiply all ingredient amounts by given number</string>
+    <string name="message_dialog_delete_category">
+        Recipes in this category will be moved under UNCATEGORIZED</string>
+
+    <string name="text_multiplier_amount">Current multiplier: </string>
 
     <string name="title_activity_convert">Convert</string>
     <string name="title_activity_recipes">Recipes</string>
     <string name="title_activity_shoplists">Shopping Lists</string>
-    <string name="title_activity_shoplist">ShoplistActivity</string>
     <string name="title_dialog_change_category">Change category</string>
+    <string name="title_dialog_convert_temperature">Convert temperature</string>
     <string name="title_dialog_delete_category">Delete category?</string>
-    <string name="title_dialog_delete_ingredient">Delete ingredient?</string>
     <string name="title_dialog_delete_recipe">Delete recipe?</string>
     <string name="title_dialog_delete_shop_list">Delete shopping list?</string>
     <string name="title_dialog_edit_category">Edit category</string>
@@ -125,14 +151,18 @@
     <string name="title_dialog_new_shop_list">New shopping list</string>
     <string name="title_dialog_rename_shop_list">Rename shopping list</string>
     <string name="title_dialog_scale_recipe">Scale recipe size</string>
-    <string name="title_pager_original_recipe">Original</string>
+    <string name="title_pager_original_recipe">Ingredients</string>
     <string name="title_pager_ingredients">Ingredients</string>
-    <string name="title_pager_converted_recipe">Converted</string>
+    <string name="title_pager_converted_recipe">Converted ingredients</string>
     <string name="title_pager_recipe_instructions">Instructions</string>
 
     <string name="toast_edit_uncategorized">This category can\'t be edited</string>
+    <string name="toast_ingredients_removed">Ingredients removed</string>
     <string name="toast_recipe_deleted">Recipe deleted</string>
+    <string name="toast_recipe_loaded">Recipe loaded</string>
+    <string name="toast_recipe_saved">Recipe saved</string>
     <string name="toast_shop_list_deleted">Shopping list deleted</string>
+    <string name="toast_shop_list_saved">Shopping list saved</string>
 
     <string-array name="spinner_volume_units">
         <item>@string/array_unit_cup_uk</item>
@@ -196,8 +226,14 @@
         <item>@string/array_unit_teaspoon_us</item>
     </string-array>
 
-    <!-- TODO: Instruction fragment placeholder text, remove or change -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_edit_shop_list">EditShopListActivity</string>
+    <string-array name="spinner_recipe_type_selection">
+        <item>@string/array_recipe_type_original</item>
+        <item>@string/array_recipe_type_converted</item>
+    </string-array>
+
+    <string-array name="spinner_temperature_units">
+        <item>@string/array_unit_celsius</item>
+        <item>@string/array_unit_fahrenheit</item>
+    </string-array>
 
 </resources>

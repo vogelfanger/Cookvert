@@ -41,6 +41,10 @@ public class EditShopListActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //set shop list name as title for actionbar
+        getSupportActionBar().setTitle(
+                ShopListManager.getInstance().getFocusedShopList().getName());
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -518,6 +518,7 @@ public class Converter {
     public static final double TEASPOON_US_TO_TEASPOON_UK = 0.8327;
 
 
+
     //************************************** CONVERT FROM GRAM ****************************************************
 
     public static double gramToKilogram(double amount){
@@ -2016,5 +2017,17 @@ public class Converter {
     }
     public static double teaspoonUSToTeaspoonUK(double amount){
         return amount*TEASPOON_US_TO_TEASPOON_UK;
+    }
+
+    //************************************** CONVERT FROM CELSIUS ****************************************
+
+    public static double celsiusToFahrenheit(double amount){
+        return (amount*9/5 + 32);
+    }
+
+    //************************************** CONVERT FROM FAHRENHEIT ****************************************
+
+    public static double fahrenheitToCelsius(double amount){
+        return ((amount - 32)*5/9);
     }
 }

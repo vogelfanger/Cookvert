@@ -6,11 +6,11 @@
 
     <TextView
         android:id="@+id/recipe_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginTop="@dimen/text_margin"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:textAppearance="?attr/textAppearanceListItem" />
 

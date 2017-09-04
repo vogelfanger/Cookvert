@@ -36,10 +36,8 @@ public class MyConvertedIngredientRecyclerViewAdapter extends RecyclerView.Adapt
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-        //TODO Create a method for rounding the decimals correctly
         holder.mAmountView.setText(mValues.get(position).getRoundedAmount());
         Context context = (Context) mListener; //Get the context for the getString() method
-        //TODO Create a method for extracting short name for units and use it here
         holder.mUnitView.setText(context.getString(mValues.get(position).getUnit().getRes()));
         holder.mNameView.setText(mValues.get(position).getName());
 

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cookvert.R;
 
@@ -37,12 +38,15 @@ public class DeleteCategoryDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_confirmation, null);
+        LinearLayout layout = (LinearLayout) inflater.inflate(
+                R.layout.dialog_confirmation_with_message, null);
+
+        TextView message = (TextView) layout.findViewById(R.id.text_dialog_message);
+        message.setText(R.string.message_dialog_delete_category);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
         builder.setTitle(R.string.title_dialog_delete_category);
-        builder.setMessage(R.string.message_dialog_delete_category);
 
         builder.setPositiveButton(R.string.all_delete, new DialogInterface.OnClickListener(){
             @Override

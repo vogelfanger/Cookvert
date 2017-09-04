@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cookvert.R;
+import com.cookvert.util.TextValidator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +57,11 @@ public class ScaleRecipeDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.dialog_scale_recipe, null);
 
-        final EditText iMultiplier = (EditText) layout.findViewById(R.id.text_multiplier_amount_scale_recipe_dialog);
+        final TextView message = (TextView) layout.findViewById(R.id.text_dialog_message);
+        message.setText(R.string.message_dialog_scale_recipe);
+
+        final EditText iMultiplier =
+                (EditText) layout.findViewById(R.id.text_multiplier_amount_scale_recipe_dialog);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -103,7 +109,16 @@ public class ScaleRecipeDialog extends DialogFragment {
             //see if multiplier field is empty and put up a warning if necessary
             if(iMultiplier.getText().toString().length() == 0) {
                 iMultiplier.setError(getContext().getText(R.string.error_no_multiplier));
-            }else{
+            }
+            // see if multiplier is too large
+            else if(Double.parseDouble(iMultiplier.getText().toString()) >= 1000.0){
+                iMultiplier.setError(getContext().getText(R.string.error_multiplier_too_large));
+            }
+            // see if multiplier has too many digits after decimal points
+            else if(TextValidator.accuracyMoreThanThreeDigits(iMultiplier.getText().toString())){
+                iMultiplier.setError(getContext().getText(R.string.error_multiplier_max_accuracy));
+            }
+            else{
                 //send data from text field to listener Activity and dismiss dialog
                 mListener.onScaleRecipe(Double.parseDouble(iMultiplier.getText().toString()));
                 dialog.dismiss();

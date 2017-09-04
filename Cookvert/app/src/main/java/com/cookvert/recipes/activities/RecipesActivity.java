@@ -140,13 +140,7 @@ public class RecipesActivity extends AppCompatActivity
         RecipeManager.getInstance().focusRecipe = recipePosition;
 
         //start new activity where ingredient data can be edited
-        Intent intent = new Intent(getApplicationContext(), EditRecipeActivity.class);
-        Bundle args = new Bundle();
-        //pass recipe position in RecipeManager as arguments
-        args.putInt(RecipeManager.ARG_SELECTED_RECIPE_POSITION, RecipeManager.getInstance().focusRecipe);
-        args.putInt(RecipeManager.ARG_SELECTED_CATEGORY_POSITION, RecipeManager.getInstance().focusCategory);
-        intent.putExtras(args);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), EditRecipeActivity.class));
     }
 
     @Override

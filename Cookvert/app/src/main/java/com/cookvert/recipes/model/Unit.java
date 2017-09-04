@@ -3055,6 +3055,95 @@ public enum Unit {
         public double convert(Unit target, double amount){
             return target.convertFromPiece(amount);
         }
+    },
+
+    //*************************************** CELSIUS *************************************************
+
+    CELSIUS {
+
+        private final int unitKey = 28;
+
+        @Override
+        public int getUnitKey(){
+            return unitKey;
+        }
+
+        @Override
+        public int getRes() {
+            return R.string.array_unit_celsius;
+        }
+
+        @Override
+        public boolean isMassUnit() {
+            return false;
+        }
+
+        @Override
+        public boolean isPiece() {
+            return false;
+        }
+
+        @Override
+        public double convert(Unit target, double amount){
+            return target.convertFromCelsius(amount);
+        }
+
+        @Override
+        public double convertFromCelsius(double amount) {
+            return super.convertFromCelsius(amount);
+        }
+
+        @Override
+        public double convertFromFahrenheit(double amount) {
+            return Converter.fahrenheitToCelsius(amount);
+        }
+    },
+
+    //*************************************** FAHRENHEIT *************************************************
+
+    FAHRENHEIT {
+
+        private final int unitKey = 29;
+
+        @Override
+        public int getUnitKey(){
+            return unitKey;
+        }
+
+        @Override
+        public int wholeListPosition() {
+            return 28;
+        }
+
+        @Override
+        public int getRes() {
+            return R.string.array_unit_fahrenheit;
+        }
+
+        @Override
+        public boolean isMassUnit() {
+            return false;
+        }
+
+        @Override
+        public boolean isPiece() {
+            return false;
+        }
+
+        @Override
+        public double convert(Unit target, double amount){
+            return target.convertFromFahrenheit(amount);
+        }
+
+        @Override
+        public double convertFromCelsius(double amount) {
+            return Converter.celsiusToFahrenheit(amount);
+        }
+
+        @Override
+        public double convertFromFahrenheit(double amount) {
+            return super.convertFromFahrenheit(amount);
+        }
     };
 
 
@@ -3202,6 +3291,16 @@ public enum Unit {
     }
 
     public double convertFromPiece(double amount){
+        return amount;
+    }
+
+    // TEMPERATURE UNITS
+
+    public double convertFromCelsius(double amount) {
+        return amount;
+    }
+
+    public double convertFromFahrenheit(double amount) {
         return amount;
     }
 }

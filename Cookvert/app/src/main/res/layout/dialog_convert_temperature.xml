@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="18dp">
+
+    <TextView
+        android:id="@+id/text_dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
+
+    <EditText
+        android:id="@+id/edit_text_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:hint="@string/hint_enter_temperature"
+        android:inputType="numberDecimal|numberSigned"
+        android:theme="@style/AppTheme.EditText"/>
+
+    <Spinner
+        android:id="@+id/spinner_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </Spinner>
+
+    <TextView
+        android:id="@+id/text_converted_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="18dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"/>
+
+</LinearLayout>

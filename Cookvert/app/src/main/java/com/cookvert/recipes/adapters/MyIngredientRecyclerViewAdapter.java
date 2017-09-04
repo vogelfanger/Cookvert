@@ -55,6 +55,9 @@ public class MyIngredientRecyclerViewAdapter extends
                 }
             }
         });
+
+        // add divider for item
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
