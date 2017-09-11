@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -18,8 +21,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cookvert.R;
+import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.data.DBHelper;
-import com.cookvert.menu.MainActivity;
+import com.cookvert.help.HelpActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.RecipeRecyclerViewAdapter;
 import com.cookvert.recipes.fragments.ChangeCategoryDialog;
@@ -29,6 +33,7 @@ import com.cookvert.recipes.fragments.EditCategoryDialog;
 import com.cookvert.recipes.fragments.NewCategoryDialog;
 import com.cookvert.recipes.fragments.NewRecipeDialog;
 import com.cookvert.recipes.fragments.RecipeListFragment;
+import com.cookvert.shoppinglist.activities.ShopListsActivity;
 
 public class RecipesActivity extends AppCompatActivity
                              implements ChangeCategoryDialog.OnChangeCategoryListener,
@@ -37,11 +42,14 @@ public class RecipesActivity extends AppCompatActivity
                                         EditCategoryDialog.OnEditCategoryListener,
                                         RecipeListFragment.OnRecipeListFragmentInteractionListener,
                                         NewCategoryDialog.OnNewCategoryListener,
-                                        NewRecipeDialog.OnNewRecipeListener,
-                                        PopupMenu.OnMenuItemClickListener{
+                                        NewRecipeDialog.OnNewRecipeListener{
 
 
-    RecipeRecyclerViewAdapter recipeAdapter;
+    private RecipeRecyclerViewAdapter recipeAdapter;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,42 @@ public class RecipesActivity extends AppCompatActivity
                 NewRecipeDialog.newInstance().show(getSupportFragmentManager(), "newRecipeDialog");
             }
         });
+
+        // set up drawer from layout
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        // make home button in app bar visible
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.navigation_item_convert:
+                        startActivity(new Intent(RecipesActivity.this, ConvertActivity.class));
+                        return true;
+                    case R.id.navigation_item_recipes:
+                        // activity already selected, NOP
+                        return true;
+                    case R.id.navigation_item_shop_lists:
+                        startActivity(new Intent(RecipesActivity.this, ShopListsActivity.class));
+                        return true;
+                    case R.id.navigation_item_help:
+                        startActivity(new Intent(RecipesActivity.this, HelpActivity.class));
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        // preselect item based on current activity
+        navigationView.getMenu().getItem(1).setChecked(true);
     }
 
     @Override
@@ -81,33 +125,6 @@ public class RecipesActivity extends AppCompatActivity
     //****************************************************************************************************
 
 
-    @Override
-    public void onLongCategoryClick(View view, int categoryPosition) {
-        //if long clicked category is uncategorized, show toast
-        if(categoryPosition == RecipeManager.getInstance().recipeCategories.size() - 1){
-            Toast toast = Toast.makeText(this, R.string.toast_edit_uncategorized, Toast.LENGTH_SHORT);
-            toast.show();
-            return;
-        }
-        //show popup when long clicking other categories
-        else {
-            RecipeManager.getInstance().focusCategory = categoryPosition;
-            PopupMenu popup = new PopupMenu(this, view);
-            popup.setOnMenuItemClickListener(this);
-            popup.inflate(R.menu.menu_popup_recipe_category);
-            popup.show();
-        }
-    }
-
-    @Override
-    public void onLongChildClick(View view, int categoryPosition, int childPosition) {
-        RecipeManager.getInstance().focusCategory = categoryPosition;
-        RecipeManager.getInstance().focusRecipe = childPosition;
-        PopupMenu popup = new PopupMenu(this, view);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_recipe);
-        popup.show();
-    }
 
     @Override
     public void onChangeCategory(int categoryPosition) {
@@ -117,8 +134,16 @@ public class RecipesActivity extends AppCompatActivity
 
     @Override
     public void onDeleteCategory() {
-        RecipeManager.getInstance().deleteCategory();
-        recipeAdapter.notifyDataSetChanged();
+        //if category is uncategorized, show toast
+        if(RecipeManager.getInstance().focusCategory ==
+                RecipeManager.getInstance().recipeCategories.size() - 1){
+            Toast toast = Toast.makeText(this, R.string.toast_edit_uncategorized, Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }else{
+            RecipeManager.getInstance().deleteCategory();
+            recipeAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -129,7 +154,26 @@ public class RecipesActivity extends AppCompatActivity
 
     @Override
     public void onEditCategory(String name) {
-        RecipeManager.getInstance().editCategory(name);
+        //if focused category is uncategorized, show toast
+        if(RecipeManager.getInstance().focusCategory ==
+                RecipeManager.getInstance().recipeCategories.size() - 1){
+            Toast toast = Toast.makeText(this, R.string.toast_edit_uncategorized, Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }else {
+            RecipeManager.getInstance().editCategory(name);
+        }
+    }
+
+    @Override
+    public void onCategoryContextMenuCreated(int categoryPosition) {
+        RecipeManager.getInstance().setFocusCategory(categoryPosition);
+    }
+
+    @Override
+    public void onRecipeContextMenuCreated(int categoryPosition, int recipePosition) {
+        RecipeManager.getInstance().setFocusCategory(categoryPosition);
+        RecipeManager.getInstance().setFocusRecipe(recipePosition);
     }
 
     @Override
@@ -170,36 +214,74 @@ public class RecipesActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    /**
-     * Popup menu interactions
-     * @param item Selected menu item
-     * @return true, if item was selected
-     */
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.popup_change_category:
-                //pass category position as argument for dialog
-                ChangeCategoryDialog.newInstance(RecipeManager.getInstance().focusCategory)
-                        .show(getSupportFragmentManager(), "changeCategory");
+
+    //****************************************************************************************************
+    //                                  MENU INTERACTION METHODS
+    //****************************************************************************************************
+
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        // Select recipe
+        if(item.getTitle() == getResources().getString(R.string.action_select_recipe)){
+            //start new activity where ingredient data can be edited
+            startActivity(new Intent(getApplicationContext(), EditRecipeActivity.class));
+            return true;
+        }
+
+        // Change category
+        if(item.getTitle() == getResources().getString(R.string.action_change_category)){
+            //pass category position as argument for dialog
+            ChangeCategoryDialog.newInstance(RecipeManager.getInstance().getFocusCategory())
+                    .show(getSupportFragmentManager(), "changeCategory");
+            return true;
+        }
+
+        // Edit category
+        if(item.getTitle() == getResources().getString(R.string.action_edit_recipe_category)){
+            // show toast when trying to edit uncategorized category
+            if(RecipeManager.getInstance().focusOnUncategorized()){
+                Toast toast = Toast.makeText(
+                        this, R.string.toast_edit_uncategorized, Toast.LENGTH_SHORT);
+                toast.show();
                 return true;
-            case R.id.popup_delete_category:
-                //show dialog when deleting category
-                DeleteCategoryDialog.newInstance().show(getSupportFragmentManager(), "deleteCategoryDialog");
-                return true;
-            case R.id.popup_delete_recipe:
-                //show dialog when deleting recipe
-                DeleteRecipeDialog.newInstance().show(getSupportFragmentManager(), "deleteRecipeDialog");
-                return true;
-            case R.id.popup_edit_category:
+            }else{
                 //pass category name as argument for dialog
-                String argName = RecipeManager.getInstance().recipeCategories.get(RecipeManager.getInstance().focusCategory).name;
+                String argName = RecipeManager.getInstance().recipeCategories.get(
+                        RecipeManager.getInstance().getFocusCategory()).name;
                 EditCategoryDialog eDialog = EditCategoryDialog.newInstance(argName);
                 eDialog.show(getSupportFragmentManager(), "editCategoryDialog");
                 return true;
+            }
         }
-        return super.onOptionsItemSelected(item);
+
+        // Delete recipe
+        if(item.getTitle() == getResources().getString(R.string.action_delete_recipe)){
+            //show dialog when deleting recipe
+            DeleteRecipeDialog.newInstance().show(
+                    getSupportFragmentManager(), "deleteRecipeDialog");
+            return true;
+        }
+
+        // Delete category
+        if(item.getTitle() == getResources().getString(R.string.action_delete_category)){
+            // show toast when trying to delete uncategorized category
+            if(RecipeManager.getInstance().focusOnUncategorized()){
+                Toast toast = Toast.makeText(
+                        this, R.string.toast_edit_uncategorized, Toast.LENGTH_SHORT);
+                toast.show();
+                return true;
+            }else{
+                //show dialog when deleting category
+                DeleteCategoryDialog.newInstance().show(
+                        getSupportFragmentManager(), "deleteCategoryDialog");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -216,9 +298,6 @@ public class RecipesActivity extends AppCompatActivity
             case R.id.action_new_category:
                 NewCategoryDialog nDialog = NewCategoryDialog.newInstance();
                 nDialog.show(getSupportFragmentManager(), "newCategoryDialog");
-                return true;
-            case R.id.action_main_menu:
-                startActivity(new Intent(RecipesActivity.this, MainActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

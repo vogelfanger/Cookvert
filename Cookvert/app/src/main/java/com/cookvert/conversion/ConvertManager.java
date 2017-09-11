@@ -366,10 +366,15 @@ public class ConvertManager {
         converted = new Recipe(impRecipe.getName(), impRecipe.getInstructions());
         converted.setIngredients(new ArrayList<Ingredient>());
 
+        int counter = 0;
+
         // create new ingredients using data from imported recipe
         for(Ingredient i : impRecipe.getIngredients()){
             original.getIngredients().add(new Ingredient(i.getAmount(), i.getUnit(), i.getName()));
             converted.getIngredients().add(new Ingredient(i.getAmount(), i.getUnit(), i.getName()));
+            // convert ingredients in case multiplier was changed before
+            convertIngredient(counter);
+            counter++;
         }
         focusPosition = 0;
     }

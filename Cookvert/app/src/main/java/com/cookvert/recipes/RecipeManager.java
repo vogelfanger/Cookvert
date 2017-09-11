@@ -448,6 +448,18 @@ public class RecipeManager {
     }
 
     /**
+     * Returns true, if currently focused category is the uncategorized one.
+     * @return true, if focused category is uncategorized, otherwise false
+     */
+    public boolean focusOnUncategorized(){
+        if(focusCategory == recipeCategories.indexOf(uncategorized)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
      * Creates a list of all recipes and eturns an ArrayList containing names of each category.
      * @return list of names
      */

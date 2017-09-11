@@ -3,7 +3,11 @@ package com.cookvert.conversion.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +17,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +37,12 @@ import com.cookvert.conversion.fragments.ConvertedRecipeFragment;
 import com.cookvert.conversion.fragments.ExportRecipeDialog;
 import com.cookvert.conversion.fragments.ExportShopListDialog;
 import com.cookvert.conversion.fragments.ImportRecipeDialog;
+import com.cookvert.help.HelpActivity;
+import com.cookvert.navigation.DrawerListAdapter;
+import com.cookvert.navigation.NavigationItem;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.activities.EditRecipeActivity;
+import com.cookvert.recipes.activities.RecipesActivity;
 import com.cookvert.recipes.fragments.EditIngredientDialog;
 import com.cookvert.recipes.fragments.InstructionFragment;
 import com.cookvert.conversion.adapters.MyConvertedIngredientRecyclerViewAdapter;
@@ -38,12 +51,12 @@ import com.cookvert.recipes.fragments.NewIngredientDialog;
 import com.cookvert.recipes.fragments.NewRecipeDialog;
 import com.cookvert.recipes.fragments.OriginalRecipeFragment;
 import com.cookvert.conversion.fragments.ScaleRecipeDialog;
-import com.cookvert.menu.MainActivity;
 import com.cookvert.recipes.model.Ingredient;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.Unit;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.activities.EditShopListActivity;
+import com.cookvert.shoppinglist.activities.ShopListsActivity;
 import com.cookvert.shoppinglist.fragments.NewShopListDialog;
 import com.cookvert.shoppinglist.model.ShopList;
 
@@ -56,7 +69,6 @@ public class ConvertActivity extends AppCompatActivity
         implements OriginalRecipeFragment.OnOriginalListFragmentInteractionListener,
                     ConvertedRecipeFragment.OnConvertedListFragmentInteractionListener,
                     InstructionFragment.OnEditInstructionsListener,
-                    PopupMenu.OnMenuItemClickListener,
                     NewIngredientDialog.OnNewIngredientListener,
                     EditIngredientDialog.OnEditIngredientListener,
                     ScaleRecipeDialog.OnScaleRecipeListener,
@@ -95,6 +107,10 @@ public class ConvertActivity extends AppCompatActivity
 
     //recipe instructions given as argument from another Activity
     private String argInstructions;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,14 +168,50 @@ public class ConvertActivity extends AppCompatActivity
 
             @Override
             public void onPageScrollStateChanged(int state) {}
-        });
 
+        });
 
         muliplierText = getResources().getString(R.string.text_multiplier_amount);
         // set text for multiplier view at the bottom of the activity
         multiplierView = (TextView) findViewById(R.id.text_multiplier_covert_activity);
         multiplierView.setText(
                 muliplierText + " " + String.valueOf(ConvertManager.getInstance().getMultiplier()));
+
+        // set up drawer from layout
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        // make home button in app bar visible
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.navigation_item_convert:
+                        // activity already selected, NOP
+                        return true;
+                    case R.id.navigation_item_recipes:
+                        startActivity(new Intent(ConvertActivity.this, RecipesActivity.class));
+                        return true;
+                    case R.id.navigation_item_shop_lists:
+                        startActivity(new Intent(ConvertActivity.this, ShopListsActivity.class));
+                        return true;
+                    case R.id.navigation_item_help:
+                        startActivity(new Intent(ConvertActivity.this, HelpActivity.class));
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        // preselect item based on current activity
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
@@ -183,13 +235,19 @@ public class ConvertActivity extends AppCompatActivity
      * @param item
      */
     @Override
-    public void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
-        //set the selected ingredient to focus, so that ConvertManager can edit the correct ingredient
+    public void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item,
+                                                  int itemPosition) {
+        //set selected ingredient to focus, so that ConvertManager can edit the correct ingredient
         ConvertManager.getInstance().setFocusPosition(itemPosition);
-        PopupMenu popup = new PopupMenu(this, item.mView);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_original_ingredient);
-        popup.show();
+
+        //create dialog using selected ingredient data as arguments
+        String argAmount = Double.toString(ConvertManager.getInstance().getOriginalFocusIngredient().getAmount());
+        //selected unit's position when spinner contains all units
+        int argUnitPos1 = ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().wholeListPosition();
+        String argName = ConvertManager.getInstance().getOriginalFocusIngredient().getName();
+
+        EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
+        eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
     }
 
     @Override
@@ -207,10 +265,37 @@ public class ConvertActivity extends AppCompatActivity
             MyConvertedIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
         //set the selected ingredient to focus in ConvertManager
         ConvertManager.getInstance().setFocusPosition(itemPosition);
-        PopupMenu popup = new PopupMenu(this, item.mView);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_converted_ingredient);
-        popup.show();
+
+        //selected unit's position in spinner is given as argument for dialogs
+        int argUnitPos;
+        //selected unit is mass unit
+        if(ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().isMassUnit()){
+            argUnitPos = ConvertManager.getInstance().getConvertedFocusIngredient().getUnit().massListPosition();
+            ChangeUnitDialog cDialog = ChangeUnitDialog.newInstance(R.array.spinner_mass_units, argUnitPos);
+            cDialog.show(getSupportFragmentManager(), "changeUnitDialog");
+        }
+        //selected unit is volume unit
+        else if(ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().isPiece() == false){
+            argUnitPos = ConvertManager.getInstance().getConvertedFocusIngredient().getUnit().volumeListPosition();
+            ChangeUnitDialog cDialog = ChangeUnitDialog.newInstance(R.array.spinner_volume_units, argUnitPos);
+            cDialog.show(getSupportFragmentManager(), "changeUnitDialog");
+        }
+        //selected unit is piece, can't be converted
+        else{
+            Toast toast = Toast.makeText(this, R.string.error_unit_piece_converted, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    /**
+     * Called when ingredient in list is long clicked (Context menu is created).
+     * Sets selected ingredient position to focus in ConvertManager, so that actions from
+     * Context menu are executed on the right list item.
+     * @param itemPosition Selected ingredient position in list
+     */
+    @Override
+    public void onContextMenuCreated(int itemPosition) {
+        ConvertManager.getInstance().setFocusPosition(itemPosition);
     }
 
     @Override
@@ -332,58 +417,56 @@ public class ConvertActivity extends AppCompatActivity
 
 
 
-    /**
-     * Handles actions for popup menus in lists.
-     * @param item
-     * @return
-     */
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
+    public boolean onContextItemSelected(MenuItem item) {
 
-            //set the correct unit menu according to the selected unit
-            case R.id.popup_change_unit:
-                //selected unit's position in spinner is given as argument for dialogs
-                int argUnitPos;
-                //selected unit is mass unit
-                if(ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().isMassUnit()){
-                    argUnitPos = ConvertManager.getInstance().getConvertedFocusIngredient().getUnit().massListPosition();
-                    ChangeUnitDialog cDialog = ChangeUnitDialog.newInstance(R.array.spinner_mass_units, argUnitPos);
-                    cDialog.show(getSupportFragmentManager(), "changeUnitDialog");
-                }
-                //selected unit is volume unit
-                else if(ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().isPiece() == false){
-                    argUnitPos = ConvertManager.getInstance().getConvertedFocusIngredient().getUnit().volumeListPosition();
-                    ChangeUnitDialog cDialog = ChangeUnitDialog.newInstance(R.array.spinner_volume_units, argUnitPos);
-                    cDialog.show(getSupportFragmentManager(), "changeUnitDialog");
-                }
-                //selected unit is piece, can't be converted
-                else{
-                    Toast toast = Toast.makeText(this, R.string.error_unit_piece_converted, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                return true;
+        // Change unit
+        if(item.getTitle() == getResources().getString(R.string.action_change_unit)) {
+            //selected unit's position in spinner is given as argument for dialogs
+            int argUnitPos;
+            //selected unit is mass unit
+            if (ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().isMassUnit()) {
+                argUnitPos = ConvertManager.getInstance().getConvertedFocusIngredient().getUnit().massListPosition();
+                ChangeUnitDialog cDialog = ChangeUnitDialog.newInstance(R.array.spinner_mass_units, argUnitPos);
+                cDialog.show(getSupportFragmentManager(), "changeUnitDialog");
+            }
+            //selected unit is volume unit
+            else if (ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().isPiece() == false) {
+                argUnitPos = ConvertManager.getInstance().getConvertedFocusIngredient().getUnit().volumeListPosition();
+                ChangeUnitDialog cDialog = ChangeUnitDialog.newInstance(R.array.spinner_volume_units, argUnitPos);
+                cDialog.show(getSupportFragmentManager(), "changeUnitDialog");
+            }
+            //selected unit is piece, can't be converted
+            else {
+                Toast toast = Toast.makeText(this, R.string.error_unit_piece_converted, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            return true;
+        }
 
-            case R.id.popup_edit:
-                //create dialog using selected ingredient data as arguments
-                String argAmount = Double.toString(ConvertManager.getInstance().getOriginalFocusIngredient().getAmount());
-                //selected unit's position when spinner contains all units
-                int argUnitPos1 = ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().wholeListPosition();
-                String argName = ConvertManager.getInstance().getOriginalFocusIngredient().getName();
+        // Edit ingredient
+        if(item.getTitle() == getResources().getString(R.string.action_edit_ingredient)) {
+            //create dialog using selected ingredient data as arguments
+            String argAmount = Double.toString(ConvertManager.getInstance().getOriginalFocusIngredient().getAmount());
+            //selected unit's position when spinner contains all units
+            int argUnitPos1 = ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().wholeListPosition();
+            String argName = ConvertManager.getInstance().getOriginalFocusIngredient().getName();
 
-                EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
-                eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
-                return true;
-            case R.id.popup_delete:
-                //delete ingredient and update lists
-                ConvertManager.getInstance().deleteIngredient();
-                originalAdapter.notifyDataSetChanged();
-                convertedAdapter.notifyDataSetChanged();
-                return true;
+            EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
+            eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
+            return true;
+        }
+
+        // Delete ingredient
+        if(item.getTitle() == getResources().getString(R.string.action_delete)) {
+            //delete ingredient and update lists
+            ConvertManager.getInstance().deleteIngredient();
+            originalAdapter.notifyDataSetChanged();
+            convertedAdapter.notifyDataSetChanged();
+            return true;
         }
         return false;
     }
-
 
     /**
      * Handles actions for app bar menu interactions
@@ -396,6 +479,11 @@ public class ConvertActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
+
+            // home button opens drawer
+            case R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+
             case R.id.action_clear_lists:
                 ConvertManager.getInstance().deleteAllIngredients();
                 originalAdapter.notifyDataSetChanged();

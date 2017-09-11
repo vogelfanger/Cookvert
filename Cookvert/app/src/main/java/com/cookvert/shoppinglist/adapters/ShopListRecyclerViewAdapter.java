@@ -1,6 +1,7 @@
 package com.cookvert.shoppinglist.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,15 @@ public class ShopListRecyclerViewAdapter extends
                 }
             }
         });
+
+        // long click listener informs activity that a context menu is created
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mListener.onContextMenuCreated(position);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -59,7 +69,8 @@ public class ShopListRecyclerViewAdapter extends
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnCreateContextMenuListener{
         public final View mView;
         public final TextView mNameView;
         public ShopList mItem;
@@ -68,6 +79,16 @@ public class ShopListRecyclerViewAdapter extends
             super(view);
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.shopping_list_name);
+            view.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view,
+                                        ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle(R.string.title_context_menu);
+            contextMenu.add(0, view.getId(), 0, R.string.action_select_shop_list);
+            contextMenu.add(0, view.getId(), 0, R.string.action_edit_shop_list);
+            contextMenu.add(0, view.getId(), 0, R.string.action_delete);
         }
 
         @Override

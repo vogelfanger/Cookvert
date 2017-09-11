@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.cookvert.R;
 import com.cookvert.data.DBHelper;
-import com.cookvert.menu.MainActivity;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.adapters.ShopItemRecyclerViewAdapter;
 import com.cookvert.shoppinglist.fragments.DeleteShopListDialog;
@@ -24,7 +23,6 @@ import com.cookvert.shoppinglist.fragments.RenameShopListDialog;
 import com.cookvert.shoppinglist.fragments.ShopItemListFragment;
 
 public class EditShopListActivity extends AppCompatActivity implements
-        PopupMenu.OnMenuItemClickListener,
         ShopItemListFragment.OnShopItemListInteractionListener,
         NewShopItemDialog.OnNewShopItemListener,
         DeleteShopListDialog.OnDeleteShopListListener,
@@ -78,9 +76,14 @@ public class EditShopListActivity extends AppCompatActivity implements
 
 
     @Override
+    public void onContextMenuCreated(int itemPosition) {
+        ShopListManager.getInstance().setFocusShopItem(itemPosition);
+    }
+
+    @Override
     public void onDeleteShopList() {
-        ShopListManager.getInstance().deleteShopList();
         startActivity(new Intent(getApplicationContext(), ShopListsActivity.class));
+        ShopListManager.getInstance().deleteShopList();
         Toast toast = Toast.makeText(this, R.string.toast_shop_list_deleted, Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -111,10 +114,9 @@ public class EditShopListActivity extends AppCompatActivity implements
     @Override
     public void onShopItemNameClick(ShopItemRecyclerViewAdapter.ViewHolder holder, int itemPosition) {
         ShopListManager.getInstance().setFocusShopItem(itemPosition);
-        PopupMenu popup = new PopupMenu(this, holder.mView);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_shop_item);
-        popup.show();
+        EditShopItemDialog eDialog = EditShopItemDialog.newInstance(
+                ShopListManager.getInstance().getFocusedShopItem().getName());
+        eDialog.show(getSupportFragmentManager(), "editShopItemDialog");
     }
 
     @Override
@@ -132,22 +134,25 @@ public class EditShopListActivity extends AppCompatActivity implements
     //                                  MENU INTERACTION METHODS
     //****************************************************************************************************
 
+
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_edit_shop_item:
-                EditShopItemDialog eDialog = EditShopItemDialog.newInstance(
-                        ShopListManager.getInstance().getFocusedShopItem().getName());
-                eDialog.show(getSupportFragmentManager(), "editShopItemDialog");
-                return true;
-            case R.id.action_delete_shop_item:
-                ShopListManager.getInstance().deleteShopItem();
-                shopItemListAdapter.notifyDataSetChanged();
-                return true;
+    public boolean onContextItemSelected(MenuItem item) {
+
+        if(item.getTitle() == getResources().getString(R.string.action_edit_shop_item)){
+            EditShopItemDialog eDialog = EditShopItemDialog.newInstance(
+                    ShopListManager.getInstance().getFocusedShopItem().getName());
+            eDialog.show(getSupportFragmentManager(), "editShopItemDialog");
+            return true;
+        }
+
+        // Delete shop item
+        else if(item.getTitle() == getResources().getString(R.string.action_delete)){
+            ShopListManager.getInstance().deleteShopItem();
+            shopItemListAdapter.notifyDataSetChanged();
+            return true;
         }
         return false;
     }
-
 
     /**
      * Handles actions for app bar menu interactions
@@ -165,9 +170,6 @@ public class EditShopListActivity extends AppCompatActivity implements
             case R.id.action_delete_shop_list:
                 DeleteShopListDialog dDialog = DeleteShopListDialog.newInstance();
                 dDialog.show(getSupportFragmentManager(), "deleteShopListDialog");
-                return true;
-            case R.id.action_main_menu:
-                startActivity(new Intent(EditShopListActivity.this, MainActivity.class));
                 return true;
         }
         return false;

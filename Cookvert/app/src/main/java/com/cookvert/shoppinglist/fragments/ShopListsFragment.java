@@ -85,7 +85,8 @@ public class ShopListsFragment extends Fragment {
     public interface OnShopListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onShopListFragmentInteraction(
-                ShopListRecyclerViewAdapter.ViewHolder item, int itemposition);
+                ShopListRecyclerViewAdapter.ViewHolder item, int itemPosition);
         void setShopListAdapter(ShopListRecyclerViewAdapter adapter);
+        void onContextMenuCreated(int itemPosition);
     }
 }

@@ -85,7 +85,7 @@ public class ImportRecipeDialog extends DialogFragment{
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
-        builder.setTitle(R.string.all_change_unit);
+        builder.setTitle(R.string.action_load_recipe);
 
         builder.setPositiveButton(R.string.all_done, new DialogInterface.OnClickListener() {
             @Override

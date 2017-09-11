@@ -20,6 +20,6 @@
         android:id="@+id/expandable_recipe_list"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:childDivider="@android:color/transparent"/>
+        android:childDivider="@android:color/transparent" />
 
 </LinearLayout>

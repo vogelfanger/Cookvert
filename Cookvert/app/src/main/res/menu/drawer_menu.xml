@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_convert"
+            android:icon="@drawable/icon_convert"
+            android:title="@string/title_activity_convert"/>
+        <item
+            android:id="@+id/navigation_item_recipes"
+            android:icon="@drawable/icon_recipes"
+            android:title="@string/title_activity_recipes"/>
+        <item
+            android:id="@+id/navigation_item_shop_lists"
+            android:icon="@drawable/icon_shopping_lists"
+            android:title="@string/title_activity_shoplists"/>
+        <item
+            android:id="@+id/navigation_item_help"
+            android:icon="@drawable/icon_about"
+            android:title="@string/title_activity_help"/>
+    </group>
+
+</menu>

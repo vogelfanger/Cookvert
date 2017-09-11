@@ -1,6 +1,7 @@
 package com.cookvert.recipes.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.cookvert.R;
+import com.cookvert.conversion.ConvertManager;
+import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.fragments.RecipeListFragment;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.RecipeCategory;
@@ -55,7 +58,8 @@ public class RecipeRecyclerViewAdapter extends BaseExpandableListAdapter{
 
         //inflate category layout, create a new view holder and bind it into the view
         if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_recipe_category, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.fragment_recipe_category, parent, false);
             parentViewHolder = new ParentRecipeCategoryViewHolder(convertView);
             convertView.setTag(parentViewHolder);
         }else {
@@ -87,13 +91,15 @@ public class RecipeRecyclerViewAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition,
+                             boolean isLastChild, View convertView, ViewGroup parent) {
 
         final ChildRecipeViewHolder childViewHolder;
 
-        //inflate category layout, create a new view holder and bind it into the view
+        //inflate recipe layout, create a new view holder and bind it into the view
         if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_recipe_list_row, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.fragment_recipe_list_row, parent, false);
             childViewHolder = new ChildRecipeViewHolder(convertView);
             convertView.setTag(childViewHolder);
         }else{
@@ -120,9 +126,8 @@ public class RecipeRecyclerViewAdapter extends BaseExpandableListAdapter{
 
     /**
      * ViewHolder containing a single recipe category item
-     * //TODO add an arrow to layout?
      */
-    public class ParentRecipeCategoryViewHolder {
+    public class ParentRecipeCategoryViewHolder{
         public final View view;
         public final TextView nameView;
         public RecipeCategory item;
@@ -136,7 +141,7 @@ public class RecipeRecyclerViewAdapter extends BaseExpandableListAdapter{
     /**
      * ViewHolder containing a single recipe item
      */
-    public class ChildRecipeViewHolder {
+    public class ChildRecipeViewHolder{
         public final View view;
         public final TextView nameView;
         public Recipe item;
@@ -146,8 +151,4 @@ public class RecipeRecyclerViewAdapter extends BaseExpandableListAdapter{
             nameView = (TextView) view.findViewById(R.id.recipe_name);
         }
     }
-
-
-
-
 }

@@ -9,25 +9,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menu.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".recipes.activities.RecipesActivity"
             android:label="@string/title_activity_recipes"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".shoppinglist.activities.ShopListsActivity"
             android:label="@string/title_activity_shoplists"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name=".conversion.activities.ConvertActivity"
             android:label="@string/title_activity_convert"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".recipes.activities.EditRecipeActivity"
             android:windowSoftInputMode="adjustResize"

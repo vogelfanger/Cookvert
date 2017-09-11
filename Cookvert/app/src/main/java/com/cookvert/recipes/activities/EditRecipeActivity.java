@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.conversion.activities.ConvertActivity;
-import com.cookvert.menu.MainActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.fragments.ChangeCategoryDialog;
@@ -37,7 +36,6 @@ public class EditRecipeActivity extends AppCompatActivity implements
         ChangeCategoryDialog.OnChangeCategoryListener,
         OriginalRecipeFragment.OnOriginalListFragmentInteractionListener,
         InstructionFragment.OnEditInstructionsListener,
-        PopupMenu.OnMenuItemClickListener,
         NewIngredientDialog.OnNewIngredientListener,
         EditIngredientDialog.OnEditIngredientListener,
         RenameRecipeDialog.OnRenameRecipeListener{
@@ -112,6 +110,11 @@ public class EditRecipeActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onContextMenuCreated(int itemPosition) {
+        RecipeManager.getInstance().setFocusIngredient(itemPosition);
+    }
+
+    @Override
     public void onEditIngredient(Double amount, int unitKey, String name) {
         RecipeManager.getInstance().editIngredient(amount, unitKey, name);
         ingredientListAdapter.notifyDataSetChanged();
@@ -129,24 +132,30 @@ public class EditRecipeActivity extends AppCompatActivity implements
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.popup_edit:
-                //create dialog using selected ingredient data as arguments
-                String argAmount = Double.toString(RecipeManager.getInstance().getFocusedIngredient().getAmount());
-                //selected unit's position when spinner contains all units
-                int argUnitPos1 = RecipeManager.getInstance().getFocusedIngredient().getUnit().wholeListPosition();
-                String argName = RecipeManager.getInstance().getFocusedIngredient().getName();
 
-                EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
-                eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
-                return true;
-            case R.id.popup_delete:
-                //delete ingredient and update lists
-                RecipeManager.getInstance().deleteIngredient();
-                ingredientListAdapter.notifyDataSetChanged();
-                return true;
+
+    //****************************************************************************************************
+    //                                        MENU INTERACTION METHODS
+    //****************************************************************************************************
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle() == getResources().getString(R.string.action_edit_ingredient)){
+            //create dialog using selected ingredient data as arguments
+            String argAmount = Double.toString(RecipeManager.getInstance().getFocusedIngredient().getAmount());
+            //selected unit's position when spinner contains all units
+            int argUnitPos1 = RecipeManager.getInstance().getFocusedIngredient().getUnit().wholeListPosition();
+            String argName = RecipeManager.getInstance().getFocusedIngredient().getName();
+
+            EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
+            eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
+            return true;
+        }else if(item.getTitle() == getResources().getString(R.string.action_delete)){
+            //delete ingredient and update lists
+            RecipeManager.getInstance().deleteIngredient();
+            ingredientListAdapter.notifyDataSetChanged();
+            return true;
         }
         return false;
     }
@@ -158,11 +167,16 @@ public class EditRecipeActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
-        PopupMenu popup = new PopupMenu(this, item.mView);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_popup_original_ingredient);
-        popup.show();
+    public void onOriginalListFragmentInteraction(
+            MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
+        //create dialog using selected ingredient data as arguments
+        String argAmount = Double.toString(RecipeManager.getInstance().getFocusedIngredient().getAmount());
+        //selected unit's position when spinner contains all units
+        int argUnitPos1 = RecipeManager.getInstance().getFocusedIngredient().getUnit().wholeListPosition();
+        String argName = RecipeManager.getInstance().getFocusedIngredient().getName();
+
+        EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
+        eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
     }
 
     @Override
@@ -208,10 +222,6 @@ public class EditRecipeActivity extends AppCompatActivity implements
 
             case R.id.action_new_shopping_list:
                 //TODO open dialog and start ShopListActivity
-                return true;
-
-            case R.id.action_main_menu:
-                startActivity(new Intent(EditRecipeActivity.this, MainActivity.class));
                 return true;
 
             case R.id.action_rename_recipe:

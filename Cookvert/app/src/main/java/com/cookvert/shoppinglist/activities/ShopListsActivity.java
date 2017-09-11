@@ -3,28 +3,41 @@ package com.cookvert.shoppinglist.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cookvert.R;
+import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.data.DBHelper;
-import com.cookvert.menu.MainActivity;
+import com.cookvert.help.HelpActivity;
+import com.cookvert.recipes.activities.RecipesActivity;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.adapters.ShopListRecyclerViewAdapter;
+import com.cookvert.shoppinglist.fragments.DeleteShopListDialog;
 import com.cookvert.shoppinglist.fragments.NewShopListDialog;
+import com.cookvert.shoppinglist.fragments.RenameShopListDialog;
 import com.cookvert.shoppinglist.fragments.ShopListsFragment;
 
 public class ShopListsActivity extends AppCompatActivity implements
-        PopupMenu.OnMenuItemClickListener,
         NewShopListDialog.OnNewShopListListener,
-        ShopListsFragment.OnShopListFragmentInteractionListener{
+        ShopListsFragment.OnShopListFragmentInteractionListener,
+        RenameShopListDialog.OnRenameShopListListener,
+        DeleteShopListDialog.OnDeleteShopListListener{
 
     ShopListRecyclerViewAdapter shopListAdapter;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +55,41 @@ public class ShopListsActivity extends AppCompatActivity implements
                 dialog.show(getSupportFragmentManager(), "newShopListDialog");
             }
         });
+
+        // set up drawer from layout
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        // make home button in app bar visible
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.navigation_item_convert:
+                        startActivity(new Intent(ShopListsActivity.this, ConvertActivity.class));
+                        return true;
+                    case R.id.navigation_item_recipes:
+                        startActivity(new Intent(ShopListsActivity.this, RecipesActivity.class));
+                        return true;
+                    case R.id.navigation_item_shop_lists:
+                        // activity already selected, NOP
+                        return true;
+                    case R.id.navigation_item_help:
+                        startActivity(new Intent(ShopListsActivity.this, HelpActivity.class));
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        // preselect item based on current activity
+        navigationView.getMenu().getItem(2).setChecked(true);
     }
 
     @Override
@@ -65,6 +113,20 @@ public class ShopListsActivity extends AppCompatActivity implements
     //****************************************************************************************************
 
 
+
+    @Override
+    public void onContextMenuCreated(int itemPosition) {
+        ShopListManager.getInstance().setFocusShopList(itemPosition);
+    }
+
+    @Override
+    public void onDeleteShopList() {
+        ShopListManager.getInstance().deleteShopList();
+        shopListAdapter.notifyDataSetChanged();
+        Toast toast = Toast.makeText(this, R.string.toast_shop_list_deleted, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     @Override
     public void onNewShopList(String name) {
         ShopListManager.getInstance().addShopList(name);
@@ -72,13 +134,18 @@ public class ShopListsActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onRenameShopList(String name) {
+        ShopListManager.getInstance().renameShopList(name);
+        shopListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onShopListFragmentInteraction(
             ShopListRecyclerViewAdapter.ViewHolder item, int itemPosition) {
-        // set selected shoplist to focus in ShopListManager
+        // set selected shop list to focus in ShopListManager
         ShopListManager.getInstance().setFocusShopList(itemPosition);
         startActivity(new Intent(ShopListsActivity.this, EditShopListActivity.class));
     }
-
 
     @Override
     public void setShopListAdapter(ShopListRecyclerViewAdapter adapter) {
@@ -94,13 +161,17 @@ public class ShopListsActivity extends AppCompatActivity implements
 
 
     @Override
-    public boolean onMenuItemClick(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.popup_rename_shoplist:
-                //TODO implement dialog
-                return true;
-            case R.id.popup_delete_shoplist:
-                // TODO delete shoplist and make toast
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle() == getResources().getString(R.string.action_edit_shop_list)){
+            RenameShopListDialog rDialog = RenameShopListDialog.newInstance(
+                    ShopListManager.getInstance().getFocusedShopList().getName());
+            rDialog.show(getSupportFragmentManager(), "renameShopListDialog");
+            return true;
+        }
+        else if(item.getTitle() == getResources().getString(R.string.action_delete)){
+            DeleteShopListDialog dDialog = DeleteShopListDialog.newInstance();
+            dDialog.show(getSupportFragmentManager(), "deleteShopListDialog");
+            return true;
         }
         return false;
     }
@@ -116,9 +187,7 @@ public class ShopListsActivity extends AppCompatActivity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_main_menu:
-                startActivity(new Intent(ShopListsActivity.this, MainActivity.class));
-                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

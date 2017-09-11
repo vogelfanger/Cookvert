@@ -119,5 +119,6 @@ public class ConvertedRecipeFragment extends Fragment {
     public interface OnConvertedListFragmentInteractionListener {
         void onConvertedListFragmentInteraction(MyConvertedIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition);
         void setConvertedRecipeAdapter(MyConvertedIngredientRecyclerViewAdapter adapter);
+        void onContextMenuCreated(int itemPosition);
     }
 }

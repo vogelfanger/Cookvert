@@ -124,5 +124,6 @@ public class OriginalRecipeFragment extends Fragment {
         void onOriginalListFragmentInteraction(
                 MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition);
         void setOriginalRecipeAdapter(MyIngredientRecyclerViewAdapter adapter);
+        void onContextMenuCreated(int itemPosition);
     }
 }

@@ -2,6 +2,7 @@ package com.cookvert.conversion.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,15 @@ public class MyConvertedIngredientRecyclerViewAdapter extends RecyclerView.Adapt
                 }
             }
         });
+
+        // long click listener informs activity that a context menu is created
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mListener.onContextMenuCreated(position);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -57,7 +67,8 @@ public class MyConvertedIngredientRecyclerViewAdapter extends RecyclerView.Adapt
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnCreateContextMenuListener{
         public final View mView;
         public final TextView mAmountView;
         public final TextView mUnitView;
@@ -70,11 +81,19 @@ public class MyConvertedIngredientRecyclerViewAdapter extends RecyclerView.Adapt
             mAmountView = (TextView) view.findViewById(R.id.converted_amount);
             mUnitView = (TextView) view.findViewById(R.id.converted_unit);
             mNameView = (TextView) view.findViewById(R.id.converted_name);
+            view.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mAmountView.getText() + mUnitView.getText() + mNameView.getText() + "'";
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle(R.string.title_context_menu);
+            contextMenu.add(0, view.getId(), 0, R.string.action_change_unit);
+            contextMenu.add(0, view.getId(), 0, R.string.action_delete);
         }
     }
 }

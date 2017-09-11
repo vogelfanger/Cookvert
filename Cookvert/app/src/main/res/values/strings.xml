@@ -2,18 +2,28 @@
     <string name="app_name">Cookvert</string>
 
     <string name="action_change_category">Change Category</string>
-    <string name="action_clear_lists">Clear lists</string>
+    <string name="action_change_unit">Select unit</string>
+    <string name="action_clear_lists">Clear ingredients</string>
     <string name="action_convert_recipe">Convert</string>
     <string name="action_convert_temperature">Convert temperature</string>
     <string name="action_delete_category">Delete Category</string>
     <string name="action_delete">Delete</string>
     <string name="action_delete_recipe">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_edit_ingredient">Edit</string>
+    <string name="action_edit_recipe_category">Rename category</string>
+    <string name="action_edit_shop_item">Edit</string>
+    <string name="action_edit_shop_list">Rename</string>
     <string name="action_load_recipe">Load Recipe</string>
     <string name="action_main_menu">Main Menu</string>
     <string name="action_new_category">New Category</string>
     <string name="action_new_recipe">New Recipe</string>
     <string name="action_new_shopping_list">New Shopping List</string>
+    <string name="action_remove">Remove</string>
     <string name="action_rename">Rename</string>
+    <string name="action_select_recipe">Select recipe</string>
+    <string name="action_select_shop_item">Select</string>
+    <string name="action_select_shop_list">Select</string>
     <string name="action_scale_recipe">Scale Recipe</string>
 
     <!-- basic texts used in buttons, dialogs and menus -->
@@ -94,6 +104,9 @@
     <string name="array_unit_short_name_teaspoon_uk">tsp (UK)</string>
     <string name="array_unit_short_name_teaspoon_us">tsp (US)</string>
 
+    <string name="drawer_open">DRAWER OPEN</string>
+    <string name="drawer_close">DRAWER CLOSE</string>
+
     <!-- error messages shown in text views and toasts -->
     <string name="error_amount_too_large">Amount is too large</string>
     <string name="error_multiplier_max_accuracy">Max accuracy exceeded (x.xxx)</string>
@@ -134,8 +147,10 @@
     <string name="text_multiplier_amount">Current multiplier: </string>
 
     <string name="title_activity_convert">Convert</string>
+    <string name="title_activity_help">Help</string>
     <string name="title_activity_recipes">Recipes</string>
     <string name="title_activity_shoplists">Shopping Lists</string>
+    <string name="title_context_menu">Select action</string>
     <string name="title_dialog_change_category">Change category</string>
     <string name="title_dialog_convert_temperature">Convert temperature</string>
     <string name="title_dialog_delete_category">Delete category?</string>
