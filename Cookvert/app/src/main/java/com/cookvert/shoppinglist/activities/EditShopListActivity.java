@@ -51,6 +51,9 @@ public class EditShopListActivity extends AppCompatActivity implements
                 nDialog.show(getSupportFragmentManager(), "newShopItemDialog");
             }
         });
+
+        // enable up button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -162,11 +165,16 @@ public class EditShopListActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.home:
+                startActivity(new Intent(EditShopListActivity.this, ShopListsActivity.class));
+                return true;
+
             case R.id.action_rename_shop_list:
                 RenameShopListDialog rDialog = RenameShopListDialog.newInstance(
                         ShopListManager.getInstance().getFocusedShopList().getName());
                 rDialog.show(getSupportFragmentManager(), "renameShopListDialog");
                 return true;
+
             case R.id.action_delete_shop_list:
                 DeleteShopListDialog dDialog = DeleteShopListDialog.newInstance();
                 dDialog.show(getSupportFragmentManager(), "deleteShopListDialog");

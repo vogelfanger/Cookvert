@@ -22,15 +22,19 @@ import android.widget.Toast;
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.conversion.activities.ConvertActivity;
+import com.cookvert.conversion.fragments.ExportShopListDialog;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.fragments.ChangeCategoryDialog;
 import com.cookvert.recipes.fragments.EditIngredientDialog;
+import com.cookvert.recipes.fragments.ExportAsShopListDialog;
 import com.cookvert.recipes.fragments.InstructionFragment;
 import com.cookvert.recipes.fragments.NewIngredientDialog;
 import com.cookvert.recipes.fragments.OriginalRecipeFragment;
 import com.cookvert.recipes.fragments.RenameRecipeDialog;
 import com.cookvert.recipes.model.Recipe;
+import com.cookvert.shoppinglist.ShopListManager;
+import com.cookvert.shoppinglist.activities.EditShopListActivity;
 
 public class EditRecipeActivity extends AppCompatActivity implements
         ChangeCategoryDialog.OnChangeCategoryListener,
@@ -38,7 +42,8 @@ public class EditRecipeActivity extends AppCompatActivity implements
         InstructionFragment.OnEditInstructionsListener,
         NewIngredientDialog.OnNewIngredientListener,
         EditIngredientDialog.OnEditIngredientListener,
-        RenameRecipeDialog.OnRenameRecipeListener{
+        RenameRecipeDialog.OnRenameRecipeListener,
+        ExportAsShopListDialog.OnExportAsShopListListener{
 
     private MyIngredientRecyclerViewAdapter ingredientListAdapter;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -90,6 +95,9 @@ public class EditRecipeActivity extends AppCompatActivity implements
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+
+        // enable up button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -123,6 +131,19 @@ public class EditRecipeActivity extends AppCompatActivity implements
     @Override
     public void onEditInstructions(String instructions){
         RecipeManager.getInstance().editInstructions(instructions);
+    }
+
+    @Override
+    public void onExportAsShopList(String name) {
+        ShopListManager.getInstance().importShopList(
+                RecipeManager.getInstance().exportAsShopList(this, name));
+
+        startActivity(new Intent(EditRecipeActivity.this, EditShopListActivity.class));
+
+        // show toast
+        Toast toast = Toast.makeText(
+                this, R.string.toast_shop_list_saved, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
@@ -195,6 +216,10 @@ public class EditRecipeActivity extends AppCompatActivity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
+            case R.id.home:
+                startActivity(new Intent(EditRecipeActivity.this, RecipesActivity.class));
+                return true;
+
             case R.id.action_convert_recipe:
                 //Import focused recipe from RecipeManager to ConvertManager
                 ConvertManager.getInstance().importRecipe();
@@ -221,7 +246,8 @@ public class EditRecipeActivity extends AppCompatActivity implements
                 return true;
 
             case R.id.action_new_shopping_list:
-                //TODO open dialog and start ShopListActivity
+                ExportAsShopListDialog dialog = ExportAsShopListDialog.newInstance();
+                dialog.show(getSupportFragmentManager(), "exportAsShopList");
                 return true;
 
             case R.id.action_rename_recipe:

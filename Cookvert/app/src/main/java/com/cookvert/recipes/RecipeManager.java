@@ -1,5 +1,6 @@
 package com.cookvert.recipes;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -9,7 +10,10 @@ import com.cookvert.recipes.model.Ingredient;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.RecipeCategory;
 import com.cookvert.recipes.model.Unit;
+import com.cookvert.shoppinglist.model.ShopItem;
+import com.cookvert.shoppinglist.model.ShopList;
 import com.cookvert.util.Cookvert;
+import com.cookvert.util.ResourceHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -319,6 +323,19 @@ public class RecipeManager {
         long dbID = recipeMap.get(getFocusedRecipe().getId());
         DBHelper.getInstance(Cookvert.getAppContext()).updateRecipe(
                 getFocusedRecipe().getName(), instructions, dbID);
+    }
+
+    public ShopList exportAsShopList(Context context, String name){
+        ShopList list = new ShopList(name);
+        String itemName;
+        for(Ingredient i : getFocusedRecipe().getIngredients()){
+            // add new shop item using ingredient data for new objects
+            itemName = Ingredient.roundAmount(i.getAmount()) + "  "
+                    + ResourceHelper.getStringFromRes(context, i.getUnit().getRes()) + "  "
+                    + i.getName();
+            list.getItems().add(new ShopItem(itemName));
+        }
+        return list;
     }
 
     public void importRecipe(Recipe recipe){

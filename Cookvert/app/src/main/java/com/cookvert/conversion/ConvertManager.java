@@ -308,7 +308,7 @@ public class ConvertManager {
         String itemName;
         for(Ingredient i : original.getIngredients()){
             // add new shop item using ingredient data for new objects
-            itemName = String.valueOf(i.getAmount()) + "  "
+            itemName = Ingredient.roundAmount(i.getAmount()) + "  "
                     + ResourceHelper.getStringFromRes(context, i.getUnit().getRes()) + "  "
                     + i.getName();
             list.getItems().add(new ShopItem(itemName));

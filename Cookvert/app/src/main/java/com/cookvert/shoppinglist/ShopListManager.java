@@ -74,9 +74,12 @@ public class ShopListManager {
         this.focusShopItem = focusShopItem;
     }
 
+
+
     //****************************************************************************************************
     //                               LIST INTERACTION METHODS
     //****************************************************************************************************
+
 
 
     /**
@@ -150,7 +153,6 @@ public class ShopListManager {
         for(ShopItem i : list.getItems()){
             addShopItem(i.getName());
         }
-
     }
 
     /**

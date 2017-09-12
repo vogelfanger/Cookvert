@@ -131,13 +131,15 @@
     <string name="main_button_shopping_lists">SHOPPING LISTS</string>
     <string name="main_button_help">HELP</string>
 
-    <string name="message_change_unit">Convert ingredient into given unit</string>
+    <string name="message_change_unit">Select target unit to convert ingredient</string>
     <string name="message_dialog_convert_temperature">
         Enter amount and select unit to convert temperature</string>
     <string name="message_dialog_export_recipe">
         Ingredients in conversion list are added to new recipe</string>
     <string name="message_dialog_export_shop_list">
         Ingredients in conversion list are added to new shopping list</string>
+    <string name="message_dialog_export_from_recipe_to_shop_list">
+        Ingredients of the recipe are added to new shopping list</string>
     <string name="message_dialog_import_recipe">Select the recipe you want to convert</string>
     <string name="message_dialog_scale_recipe">
         Multiply all ingredient amounts by given number</string>

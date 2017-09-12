@@ -32,10 +32,13 @@
         <activity
             android:name=".recipes.activities.EditRecipeActivity"
             android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".recipes.activities.RecipesActivity"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".shoppinglist.activities.EditShopListActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:parentActivityName=".shoppinglist.activities.ShopListsActivity"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>
