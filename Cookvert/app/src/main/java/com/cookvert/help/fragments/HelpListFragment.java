@@ -1,7 +1,6 @@
-package com.cookvert.shoppinglist.fragments;
+package com.cookvert.help.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,29 +10,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cookvert.R;
-import com.cookvert.shoppinglist.ShopListManager;
-import com.cookvert.shoppinglist.adapters.ShopListRecyclerViewAdapter;
-import com.cookvert.shoppinglist.model.ShopList;
+import com.cookvert.help.HelpManager;
+import com.cookvert.help.adapters.HelpItemRecyclerViewAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ShopListsFragment.OnShopListFragmentInteractionListener} interface
- * to handle interaction events.
+ *
  */
-public class ShopListsFragment extends Fragment {
 
-    private OnShopListFragmentInteractionListener mListener;
+public class HelpListFragment extends Fragment{
+    /**
+     * A simple {@link Fragment} subclass.
+     * Activities that contain this fragment must implement the
+     * {@link HelpListFragment.OnHelpListFragmentInteractionListener} interface
+     * to handle interaction events.
+     */
+    private OnHelpListFragmentInteractionListener mListener;
 
-    public ShopListsFragment() {
+    public HelpListFragment() {
         // Required empty public constructor
     }
 
-    public static ShopListsFragment newInstance(){
-        ShopListsFragment fragment = new ShopListsFragment();
+    public static HelpListFragment newInstance(){
+        HelpListFragment fragment = new HelpListFragment();
         return fragment;
     }
 
@@ -41,15 +41,16 @@ public class ShopListsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shop_lists, container, false);
+        View view = inflater.inflate(R.layout.fragment_help_list, container, false);
 
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            recyclerView.setAdapter(new ShopListRecyclerViewAdapter(
-                    ShopListManager.getInstance().getShoppingLists(), mListener));
+            //TODO put the list of topics as parameter
+            recyclerView.setAdapter(new HelpItemRecyclerViewAdapter(
+                    HelpManager.getInstance().getHelpTopics(), mListener));
         }
 
         return view;
@@ -58,11 +59,11 @@ public class ShopListsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnShopListFragmentInteractionListener) {
-            mListener = (OnShopListFragmentInteractionListener) context;
+        if (context instanceof OnHelpListFragmentInteractionListener) {
+            mListener = (OnHelpListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnShopListFragmentInteractionListener");
+                    + " must implement OnHelpListFragmentInteractionListener");
         }
     }
 
@@ -82,10 +83,9 @@ public class ShopListsFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnShopListFragmentInteractionListener {
-        void onShopListFragmentInteraction(
-                ShopListRecyclerViewAdapter.ViewHolder item, int itemPosition);
-        void setShopListAdapter(ShopListRecyclerViewAdapter adapter);
-        void onContextMenuCreated(int itemPosition);
+    public interface OnHelpListFragmentInteractionListener {
+        void onHelpListFragmentInteraction(
+                HelpItemRecyclerViewAdapter.ViewHolder item, int itemPosition);
+        void setHelpListAdapter(HelpItemRecyclerViewAdapter adapter);
     }
 }

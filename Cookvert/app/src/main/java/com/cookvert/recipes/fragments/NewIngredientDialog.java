@@ -124,28 +124,24 @@ public class NewIngredientDialog extends DialogFragment {
         }
         @Override
         public void onClick(View v) {
-            //see if amount or name fields are empty and put up a warning if necessary
+            //see if amount field is empty and put up a warning if necessary
             if (iAmount.getText().toString().length() == 0) {
                 iAmount.setError(getContext().getText(R.string.error_no_amount));
-                if (iName.getText().toString().length() == 0) {
-                    iName.setError(getContext().getText(R.string.error_no_name));
-                }
             }
-            // see if amount is too large or name field is empty
+            // see if amount is too large
             else if(Double.parseDouble(iAmount.getText().toString()) >= 99995) {
                 iAmount.setError(getContext().getText(R.string.error_amount_too_large));
-                if (iName.getText().toString().length() == 0) {
-                    iName.setError(getContext().getText(R.string.error_no_name));
-                }
-            }
-            // see if name is missing
-            else if (iName.getText().toString().length() == 0) {
-                iName.setError(getContext().getText(R.string.error_no_name));
             }
             else {
                 //send data from text fields and spinner to listener Activity and dismiss dialog
-                mListener.onNewIngredient(Double.parseDouble(iAmount.getText().toString()),
-                        spinnerUnit.getUnitKey(), iName.getText().toString());
+                if (iName.getText().toString().length() == 0){
+                    mListener.onNewIngredient(Double.parseDouble(iAmount.getText().toString()),
+                            spinnerUnit.getUnitKey(), "");
+                }else{
+                    mListener.onNewIngredient(Double.parseDouble(iAmount.getText().toString()),
+                            spinnerUnit.getUnitKey(), iName.getText().toString());
+                }
+
                 dialog.dismiss();
             }
         }

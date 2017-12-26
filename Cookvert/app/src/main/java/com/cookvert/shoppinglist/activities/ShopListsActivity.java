@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +16,7 @@ import android.widget.Toast;
 import com.cookvert.R;
 import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.data.DBHelper;
-import com.cookvert.help.HelpActivity;
+import com.cookvert.help.activities.HelpActivity;
 import com.cookvert.recipes.activities.RecipesActivity;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.adapters.ShopListRecyclerViewAdapter;
@@ -131,6 +129,7 @@ public class ShopListsActivity extends AppCompatActivity implements
     public void onNewShopList(String name) {
         ShopListManager.getInstance().addShopList(name);
         shopListAdapter.notifyDataSetChanged();
+        startActivity(new Intent(ShopListsActivity.this, EditShopListActivity.class));
     }
 
     @Override

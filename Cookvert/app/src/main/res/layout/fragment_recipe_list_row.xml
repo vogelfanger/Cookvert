@@ -11,7 +11,7 @@
         android:layout_marginBottom="@dimen/text_margin"
         android:layout_marginRight="@dimen/text_margin"
         android:layout_marginTop="@dimen/text_margin"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:paddingLeft="50dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 
 </LinearLayout>

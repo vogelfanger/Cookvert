@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.cookvert.R;
 import com.cookvert.shoppinglist.fragments.ShopItemListFragment;
 import com.cookvert.shoppinglist.model.ShopItem;
+import com.cookvert.util.Cookvert;
 
 import java.util.List;
 
@@ -74,6 +75,17 @@ public class ShopItemRecyclerViewAdapter extends
                 mListener.onShopItemCheboxClick(holder, position, b);
             }
         });
+
+        // change background color if checkbox is checked
+        if(holder.mCheckBox.isChecked()){
+            holder.mView.setBackgroundColor(
+                    Cookvert.getAppContext().getResources().getColor(R.color.colorPrimaryVeryLight));
+        }
+        // change background color back if checkbox is not checked
+        else{
+            holder.mView.setBackgroundColor(
+                    Cookvert.getAppContext().getResources().getColor(R.color.colorDarkGray));
+        }
     }
 
     @Override

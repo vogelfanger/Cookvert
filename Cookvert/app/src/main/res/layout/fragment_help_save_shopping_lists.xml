@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_shopping_lists_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+    <TextView
+        android:id="@+id/text_content_1.1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_shopping_lists_content_1.1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_1.2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/help_save_shopping_lists_content_1.2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_1.3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/help_save_shopping_lists_content_1.3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_1.4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/help_save_shopping_lists_content_1.4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_1.5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/help_save_shopping_lists_content_1.5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_shopping_lists_content_2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+</LinearLayout>

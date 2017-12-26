@@ -14,6 +14,7 @@ import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.fragments.RecipeListFragment;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.RecipeCategory;
+import com.cookvert.util.Cookvert;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +71,14 @@ public class RecipeRecyclerViewAdapter extends BaseExpandableListAdapter{
         //set the data for text view
         RecipeCategory rc = mValues.get(groupPosition);
         parentViewHolder.nameView.setText(rc.name);
+
+        if(isExpanded){
+            convertView.setBackgroundColor(
+                    Cookvert.getAppContext().getResources().getColor(R.color.colorAccentLight));
+        }else{
+            convertView.setBackgroundColor(
+                    Cookvert.getAppContext().getResources().getColor(R.color.colorDarkGray));
+        }
 
         return convertView;
     }

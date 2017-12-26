@@ -15,8 +15,10 @@ import com.cookvert.shoppinglist.model.ShopList;
 import com.cookvert.util.Cookvert;
 import com.cookvert.util.ResourceHelper;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -229,6 +231,9 @@ public class RecipeManager {
         recipeCategories.get(focusCategory).recipes.remove(focusRecipe);
         //add recipe to new category
         recipeCategories.get(position).recipes.add(recipe);
+        // update focus
+        focusCategory = position;
+        focusRecipe = recipeCategories.get(position).getRecipes().indexOf(recipe);
         //sort lists in case alphabetical order was changed
         sortRecipes();
 
@@ -521,7 +526,14 @@ public class RecipeManager {
                 allRecipes.add(r);
             }
         }
-        Collections.sort(list);
+        Collections.sort(list, new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                Collator collator = Collator.getInstance();
+                collator.setStrength(Collator.PRIMARY);
+                return collator.compare(s, t1);
+            }
+        });
         Collections.sort(allRecipes);
         return list;
     }

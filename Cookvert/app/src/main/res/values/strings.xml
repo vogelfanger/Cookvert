@@ -24,7 +24,7 @@
     <string name="action_select_recipe">Select recipe</string>
     <string name="action_select_shop_item">Select</string>
     <string name="action_select_shop_list">Select</string>
-    <string name="action_scale_recipe">Scale Recipe</string>
+    <string name="action_scale_recipe">Scale size</string>
 
     <!-- basic texts used in buttons, dialogs and menus -->
     <!-- TODO some of these may be old and unused -->
@@ -116,6 +116,72 @@
     <string name="error_no_name">Name is missing</string>
     <string name="error_unit_piece_converted">Piece can\'t be converted</string>
 
+    <string name="help_convert_saved_recipe_title">How to convert units from a saved recipe</string>
+    <string name="help_convert_saved_recipe_content_1.1">1.	Open the Cookvert app.</string>
+    <string name="help_convert_saved_recipe_content_1.2">2. Tap the top left menu and select Recipes.</string>
+    <string name="help_convert_saved_recipe_content_1.3">3.	Select the recipe you want to convert.</string>
+    <string name="help_convert_saved_recipe_content_1.4">4.	Tap the top right menu and select Convert.</string>
+    <string name="help_convert_saved_recipe_content_2">Convert view opens up and the ingredient in your recipe are automatically added to each page. You can now convert ingredients by selecting a target unit from Converted ingredients page.</string>
+    <string name="help_convert_saved_recipe_content_3">Any changes made to recipe\'s ingredients in Convert view are not saved. To edit ingredients permanently, see \"How to save recipes\".</string>
+    <string name="help_convert_saved_recipe_content_4part1_bold">Tips: </string>
+    <string name="help_convert_saved_recipe_content_4part2">Once a recipe is loaded to Convert view, you will see a third page that shows you the instructions of the recipe. You can also load a recipe directly in Convert view by selecting Load recipe from top right menu. </string>
+
+    <string name="help_convert_temperature_title">How to convert temperature</string>
+    <string name="help_convert_temperature_content_1.1">1. Open the Cookvert app.</string>
+    <string name="help_convert_temperature_content_1.2">2. Tap the top left menu and make sure Convert is seleted.</string>
+    <string name="help_convert_temperature_content_1.3">3. Tap the temperature icon in top right or select Convert temperature from top right menu.</string>
+    <string name="help_convert_temperature_content_1.4">4. Enter the temperature amount and unit you want to convert.</string>
+    <string name="help_convert_temperature_content_1.5">5. The text at the bottom shows you the converted temperature. The amount is automatically updated when you change original amount or unit. </string>
+
+    <string name="help_convert_units_title">How to convert units</string>
+    <string name="help_convert_units_content_1.1">1. Open the Cookvert app.</string>
+    <string name="help_convert_units_content_1.2">2. Tap the top left menu and make sure Convert is selected.</string>
+    <string name="help_convert_units_content_2">After these steps you will see two pages:</string>
+    <string name="help_convert_units_content_3part1_bold">Ingredients </string>
+    <string name="help_convert_units_content_3part2">page shows you the list of ingredients you are converting.</string>
+    <string name="help_convert_units_content_4part1_bold">Converted ingredients </string>
+    <string name="help_convert_units_content_4part2">page shows you a similar list, which represents the ingredients after they are converted into other units. You can change pages by swiping the screen left and right.</string>
+    <string name="help_convert_units_content_5">To convert an ingredient:</string>
+    <string name="help_convert_units_content_5.1">1. Add a new ingredient by entering amount, unit and name.</string>
+    <string name="help_convert_units_content_5.2">2. Go to Converted ingredients page and tap the ingredient you just added.</string>
+    <string name="help_convert_units_content_5.3">3. Select a target unit and tap DONE.</string>
+    <string name="help_convert_units_content_5.4">4. The ingredient has now been converted into selected unit. Ingredients page shows you the original amount and unit, while Converted Ingredients page shows you the converted amount and unit.</string>
+    <string name="help_convert_units_content_6">Note that the amounts shown at the Converted ingredients page are also affected by current multiplier, that is located at the bottom of the view.</string>
+    <string name="help_convert_units_content_7part1_bold">Tip: </string>
+    <string name="help_convert_units_content_7part2">You can easily convert multiple ingredients, or even a whole recipe by adding all the ingredients you need into the lists and individually selecting a target unit for each. You can also scale your recipe by changing the multiplier. This will both convert the ingredients, and scale their amount. </string>
+
+    <string name="help_save_recipes_title">How to save recipes</string>
+    <string name="help_save_recipes_content_1.1">1.	Open the Cookvert app.</string>
+    <string name="help_save_recipes_content_1.2">2. Tap the top left menu and select Recipes.</string>
+    <string name="help_save_recipes_content_2">Now you should see a list of recipe categories. Tapping a category will show you all the recipes it contains. You can add new categories from top right menu. New recipes can be added using the button in bottom right corner.</string>
+    <string name="help_save_recipes_content_3">To create a new recipe:</string>
+    <string name="help_save_recipes_content_3.1">1.	To add a new recipe, tap the button at the bottom right.</string>
+    <string name="help_save_recipes_content_3.2">2.	Enter a name , select a category for the recipe and tap DONE. Name and category can be changed later.</string>
+    <string name="help_save_recipes_content_3.3">3.	The recipe is now saved and a new view opens up. Here you can add ingredients and instructions to the recipe, and edit them when necessary. Any changes are saved automatically.</string>
+    <string name="help_save_recipes_content_4">Note that each recipe must be part of a category. If you don\'t want to categorize some recipes, you can use the \"Uncategorized\" category. This is also the category where your recipes are moved to when you delete a category.</string>
+    <string name="help_save_recipes_content_5part1_bold">Tip:</string>
+    <string name="help_save_recipes_content_5part2">After a recipe is saved, you can easily convert or scale the ingredients by selecting Convert from top right menu. You can also add all the ingredient into a new shopping list.</string>
+
+    <string name="help_save_shopping_lists_title">How to save shopping lists</string>
+    <string name="help_save_shopping_lists_content_1.1">1. Open the Cookvert app.</string>
+    <string name="help_save_shopping_lists_content_1.2">2. Tap the top left menu and select Shopping Lists.</string>
+    <string name="help_save_shopping_lists_content_1.3">3. Tap the button at the bottom right to create a new shopping list.</string>
+    <string name="help_save_shopping_lists_content_1.4">4. Enter a name and tap DONE.</string>
+    <string name="help_save_shopping_lists_content_1.5">5. The shopping list is now saved and a new view opens up. Here you can add items to the list and edit them when necessary. Any changes are saved automatically. </string>
+    <string name="help_save_shopping_lists_content_2">Each shopping item has a name and a checkbox. You can edit the name by tapping it. Checking the checkbox will move the item to the bottom of the shopping list. Unchecking the checkbox will move the item above all checked items. You can delete an item by long tapping it and selecting Delete.</string>
+    
+    <string name="help_scale_saved_recipe_title">How to scale the size of a recipe</string>
+    <string name="help_scale_saved_recipe_content_1.1">1. Open the Cookvert app.</string>
+    <string name="help_scale_saved_recipe_content_1.2">2. Tap the top left menu and select Recipes.</string>
+    <string name="help_scale_saved_recipe_content_1.3">3. Select the recipe you want to scale.</string>
+    <string name="help_scale_saved_recipe_content_1.4">4. Tap the top right menu and select Covert.</string>
+    <string name="help_scale_saved_recipe_content_1.5">Convert view opens up and the ingredients in your recipe are automatically added to each page.</string>
+    <string name="help_scale_saved_recipe_content_1.6">5. Select Scale size from the upper right menu.</string>
+    <string name="help_scale_saved_recipe_content_1.7">6. Enter a multiplier and tap DONE.</string>
+    <string name="help_scale_saved_recipe_content_2">Ingredients have now been scaled by the multiplier. Converted ingredients page shows you the scaled amounts, while Ingredients page shows you the original amounts. Current multiplier is also shown at the bottom of the view.</string>
+    <string name="help_scale_saved_recipe_content_3">Any changes made to recipe\'s ingredients in Convert view are not saved. To edit ingredients permanently, see \"How to save recipes\".</string>
+    <string name="help_scale_saved_recipe_content_4part1_bold">Tips:</string>
+    <string name="help_scale_saved_recipe_content_4part2">Once a recipe is loaded to Convert view, you will see a third page that shows you the instructions of the recipe. You can also load a recipe directly in Convert view by selecting Load recipe from top right menu.</string>
 
     <string name="hint_enter_amount">Enter amount</string>
     <string name="hint_enter_instructions">Enter instructions</string>
@@ -146,6 +212,8 @@
     <string name="message_dialog_delete_category">
         Recipes in this category will be moved under UNCATEGORIZED</string>
 
+    <string name="text_about_link_header">About</string>
+    <string name="text_help_list_header">Help topics</string>
     <string name="text_multiplier_amount">Current multiplier: </string>
 
     <string name="title_activity_convert">Convert</string>
@@ -168,10 +236,15 @@
     <string name="title_dialog_new_shop_list">New shopping list</string>
     <string name="title_dialog_rename_shop_list">Rename shopping list</string>
     <string name="title_dialog_scale_recipe">Scale recipe size</string>
-    <string name="title_pager_original_recipe">Ingredients</string>
-    <string name="title_pager_ingredients">Ingredients</string>
-    <string name="title_pager_converted_recipe">Converted ingredients</string>
-    <string name="title_pager_recipe_instructions">Instructions</string>
+    <string name="title_help_how_to_convert_saved_recipe">How to convert units from saved recipe</string>
+    <string name="title_help_how_to_convert">How to convert units</string>
+    <string name="title_help_how_to_convert_temperature">How to convert temperature</string>
+    <string name="title_help_how_to_save_recipes">How to save recipes</string>
+    <string name="title_help_how_to_scale_recipe">How to scale the size of a recipe</string>
+    <string name="title_pager_original_recipe">INGREDIENTS</string>
+    <string name="title_pager_ingredients">INGREDIENTS</string>
+    <string name="title_pager_converted_recipe">CONVERTED INGREDIENTS</string>
+    <string name="title_pager_recipe_instructions">INSTRUCTIONS</string>
 
     <string name="toast_edit_uncategorized">This category can\'t be edited</string>
     <string name="toast_ingredients_removed">Ingredients removed</string>

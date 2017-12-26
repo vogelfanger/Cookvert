@@ -1,15 +1,15 @@
 package com.cookvert.conversion.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -17,15 +17,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +35,7 @@ import com.cookvert.conversion.fragments.ConvertedRecipeFragment;
 import com.cookvert.conversion.fragments.ExportRecipeDialog;
 import com.cookvert.conversion.fragments.ExportShopListDialog;
 import com.cookvert.conversion.fragments.ImportRecipeDialog;
-import com.cookvert.help.HelpActivity;
-import com.cookvert.navigation.DrawerListAdapter;
-import com.cookvert.navigation.NavigationItem;
+import com.cookvert.help.activities.HelpActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.activities.EditRecipeActivity;
 import com.cookvert.recipes.activities.RecipesActivity;
@@ -48,7 +44,6 @@ import com.cookvert.recipes.fragments.InstructionFragment;
 import com.cookvert.conversion.adapters.MyConvertedIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.fragments.NewIngredientDialog;
-import com.cookvert.recipes.fragments.NewRecipeDialog;
 import com.cookvert.recipes.fragments.OriginalRecipeFragment;
 import com.cookvert.conversion.fragments.ScaleRecipeDialog;
 import com.cookvert.recipes.model.Ingredient;
@@ -57,7 +52,6 @@ import com.cookvert.recipes.model.Unit;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.activities.EditShopListActivity;
 import com.cookvert.shoppinglist.activities.ShopListsActivity;
-import com.cookvert.shoppinglist.fragments.NewShopListDialog;
 import com.cookvert.shoppinglist.model.ShopList;
 
 import java.util.ArrayList;
@@ -89,6 +83,11 @@ public class ConvertActivity extends AppCompatActivity
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+
+    // tags fragment manager
+    public static final String TAG_DISPLAY_INSTRUCTIONS = "displayInstructions";
+    public static final String TAG_SAVED_STATE_INSTRUCTIONS = "bundleInstructions";
+
     private ViewPager mViewPager;
     // page adapter for each page fragment
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -107,6 +106,7 @@ public class ConvertActivity extends AppCompatActivity
 
     //recipe instructions given as argument from another Activity
     private String argInstructions;
+    private Boolean displayInstructions;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -116,19 +116,46 @@ public class ConvertActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        // this line prevents fragment from disappearing on orientation change
+
         setContentView(R.layout.activity_convert);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //add list fragments to fragment list
+        OriginalRecipeFragment oFrag = OriginalRecipeFragment.newInstance(1);
+        ConvertedRecipeFragment cFrag = ConvertedRecipeFragment.newInstance(1,1);
         fragments.add(OriginalRecipeFragment.newInstance(1));
         fragments.add(ConvertedRecipeFragment.newInstance(1,1));
 
+        // preliminary value, that is changed later if instructions fragment is added to the activity
+        displayInstructions = false;
+
         //if recipe instructions were given as extra, add instruction fragment
-        if(getIntent().hasExtra(RecipeManager.ARG_RECIPE_INSTRUCTIONS)){
-            argInstructions = getIntent().getExtras().getString(RecipeManager.ARG_RECIPE_INSTRUCTIONS);
-            fragments.add(InstructionFragment.newInstance(2, 0, argInstructions));
+        if(getIntent().hasExtra(RecipeManager.ARG_RECIPE_INSTRUCTIONS)) {
+            displayInstructions = true;
+            argInstructions = getIntent().getExtras().
+                    getString(RecipeManager.ARG_RECIPE_INSTRUCTIONS);
+            InstructionFragment insFrag = InstructionFragment.newInstance(2, 0, argInstructions);
+            fragments.add(insFrag);
+        }
+        //if instructions were loaded during activity's previous lifetime, add instructions fragment
+        else if(ConvertManager.getInstance().getLoadedInstructions() != null) {
+            displayInstructions = true;
+            argInstructions = ConvertManager.getInstance().getLoadedInstructions();
+            InstructionFragment insFrag = InstructionFragment.newInstance(2, 0, argInstructions);
+            fragments.add(insFrag);
+        }
+
+        // add instructions fragment if there was one in previous state
+        if(savedInstanceState != null){
+            if(savedInstanceState.containsKey(TAG_DISPLAY_INSTRUCTIONS) &&
+                    savedInstanceState.containsKey(TAG_SAVED_STATE_INSTRUCTIONS)) {
+                displayInstructions = true;
+                argInstructions = savedInstanceState.getString(TAG_SAVED_STATE_INSTRUCTIONS);
+                InstructionFragment insFrag = InstructionFragment.newInstance(2, 0, argInstructions);
+                fragments.add(insFrag);
+            }
         }
 
         //create pager adapter using fragment list
@@ -147,6 +174,8 @@ public class ConvertActivity extends AppCompatActivity
             }
         });
 
+        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_strip);
+        tabStrip.setTabIndicatorColorResource(R.color.colorAccent);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -156,12 +185,15 @@ public class ConvertActivity extends AppCompatActivity
                 switch (position){
                     case 0:
                         fab.setVisibility(View.VISIBLE);
+                        multiplierView.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         fab.setVisibility(View.VISIBLE);
+                        multiplierView.setVisibility(View.VISIBLE);
                         break;
                     case 2:
                         fab.setVisibility(View.GONE);
+                        multiplierView.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -214,12 +246,28 @@ public class ConvertActivity extends AppCompatActivity
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_convert, menu);
         return true;
 
+    }
+
+    @Override
+    public void onHideKeyboard(View view) {
+        //Use InputMethodManager to hide the keyboard from view
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(TAG_DISPLAY_INSTRUCTIONS, displayInstructions);
+        outState.putString(TAG_SAVED_STATE_INSTRUCTIONS, argInstructions);
     }
 
 
@@ -310,12 +358,7 @@ public class ConvertActivity extends AppCompatActivity
     public void onEditInstructions(String instructions) {
     }
 
-    /**
-     * Instructions are uneditable in this Activity, so this method does nothing
-     */
-    @Override
-    public void onHideKeyboard(View view) {
-    }
+
 
     @Override
     public void onImportRecipe(int recipePosition) {
@@ -323,16 +366,23 @@ public class ConvertActivity extends AppCompatActivity
         originalAdapter.notifyDataSetChanged();
         convertedAdapter.notifyDataSetChanged();
 
-        // remove old instructions page, if it exists
-        if(fragments.size() >= 3) {
-            fragments.remove(2);
-        }
-        // add instructions fragment to pager
-        argInstructions = RecipeManager.getInstance().
-                getAllRecipes().get(recipePosition).getInstructions();
-        fragments.add(InstructionFragment.newInstance(2, 0, argInstructions));
-        mSectionsPagerAdapter.notifyDataSetChanged();
+        argInstructions = ConvertManager.getInstance().getLoadedInstructions();
 
+        // if an old instructions fragment exists, replace text.
+        if(fragments.size() >= 3){
+            //fragments.remove(2);
+            InstructionFragment f = (InstructionFragment) fragments.get(2);
+            f.setNewInstructions(argInstructions);
+        }
+
+        // add instructions fragment to pager
+        else {
+            InstructionFragment iFrag = InstructionFragment.newInstance(2, 0, argInstructions);
+            displayInstructions = true;
+            fragments.add(iFrag);
+        }
+
+        mSectionsPagerAdapter.notifyDataSetChanged();
         Toast toast = Toast.makeText(
                 this, R.string.toast_recipe_loaded, Toast.LENGTH_SHORT);
         toast.show();
@@ -550,7 +600,7 @@ public class ConvertActivity extends AppCompatActivity
     }
 
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
@@ -558,7 +608,8 @@ public class ConvertActivity extends AppCompatActivity
         //list of fragments in pager, given as a parameter
         private ArrayList<Fragment> pagerFragments;
 
-        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Fragment> pagerFragments) {
+        public SectionsPagerAdapter(
+                FragmentManager fm, ArrayList<Fragment> pagerFragments) {
             super(fm);
             this.pagerFragments = pagerFragments;
         }

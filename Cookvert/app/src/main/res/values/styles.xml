@@ -16,7 +16,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:actionBarDivider">@color/colorPrimary</item>
+    </style>
 
     <style name="AppTheme.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:textSize">18sp</item>
@@ -28,5 +30,11 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.TextEditorButton" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="background">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
+    </style>
 
 </resources>

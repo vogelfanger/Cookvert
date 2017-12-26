@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".recipes.fragments.InstructionFragment">
 
-    <!-- Edit text is unenabled by default. Change this dynamically when needed -->
     <EditText
         android:id="@+id/text_instructions"
         android:layout_width="match_parent"
@@ -15,7 +14,8 @@
         android:inputType="textMultiLine"
         android:lineSpacingMultiplier="1.2"
         android:hint="@string/hint_enter_instructions"
-        android:enabled="false"/>
+        android:scrollbars="vertical"
+        android:enabled="true"/>
 
     <!-- Confirmation button for keyboard is gone by default. Set visible when using keyboard with EditText.-->
     <Button
@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/all_done"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        style="@style/AppTheme.TextEditorButton"/>
 
 </RelativeLayout>

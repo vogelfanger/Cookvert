@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.cookvert.shoppinglist.activities.ShopListsActivity">
+        tools:context="com.cookvert.help.activities.HelpActivity">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -29,22 +29,46 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <!-- shoplists fragment -->
-        <fragment
-            android:name="com.cookvert.shoppinglist.fragments.ShopListsFragment"
-            android:id="@+id/shoplists_fragment"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_input_add"
-            android:theme="@style/AppTheme.FloatingActionButton"/>
+            <!-- List header -->
+            <TextView
+                android:id="@+id/text_help_list_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="@string/text_help_list_header"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/colorAccentDark"/>
+
+            <!-- List fragment containing help topics -->
+            <fragment
+                android:name="com.cookvert.help.fragments.HelpListFragment"
+                android:id="@+id/help_list_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+            <!-- Link that opens the About page -->
+            <TextView
+                android:id="@+id/text_about_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
+                android:layout_marginBottom="@dimen/text_margin"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_about_link_header"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/colorAccentDark"/>
+
+        </LinearLayout>
+
+
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -58,6 +82,6 @@
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/drawer_menu"
         app:itemTextColor="@drawable/navigation_view_item_color_selector"
-        app:itemIconTint="@drawable/navigation_view_item_color_selector"/>
+        app:itemIconTint="@drawable/navigation_view_item_color_selector" />
 
 </android.support.v4.widget.DrawerLayout>

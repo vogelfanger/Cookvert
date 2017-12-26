@@ -36,6 +36,7 @@ public class InstructionFragment extends Fragment {
     private String instructionString;
 
     private OnEditInstructionsListener mListener;
+    private EditText instructions;
 
     public InstructionFragment() {
         // Required empty public constructor
@@ -63,6 +64,7 @@ public class InstructionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             //EditText is unenabled
             if (getArguments().getInt(ARG_ENABLED) == 0){
@@ -82,10 +84,9 @@ public class InstructionFragment extends Fragment {
         // Inflate the layout for this fragment
         final RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_instruction, container, false);
 
-        final EditText instructions = (EditText) layout.findViewById(R.id.text_instructions);
+        instructions = (EditText) layout.findViewById(R.id.text_instructions);
         //put previously saved instructions to EditText
         instructions.setText(instructionString, EditText.BufferType.EDITABLE);
-        instructions.setEnabled(isEnabled);
 
         //This button becomes visible when EditText gets focus
         final Button buttonDone = (Button) layout.findViewById(R.id.button_confirm_instructions_keyboard);
@@ -101,6 +102,12 @@ public class InstructionFragment extends Fragment {
                     instructions.setFocusableInTouchMode(true);
                 }
             });
+        }
+        // if editing is not enabled, darken the text color and make text non-interactable.
+        else{
+            instructions.setTextColor(getResources().getColor(R.color.colorBlack));
+            instructions.setKeyListener(null);
+            instructions.setCursorVisible(false);
         }
 
         //set FocusChange listener for EditText to make extra button visible with soft keyboard.
@@ -165,5 +172,14 @@ public class InstructionFragment extends Fragment {
     public interface OnEditInstructionsListener {
         void onEditInstructions(String instructions);
         void onHideKeyboard(View view);
+    }
+
+    public void setNewInstructions(String newInstructions){
+        if(instructions != null) {
+            instructions.setText(newInstructions);
+            if(instructions == null) {
+                instructions.setText("");
+            }
+        }
     }
 }

@@ -139,25 +139,24 @@ public class EditIngredientDialog extends DialogFragment {
         }
         @Override
         public void onClick(View v) {
-            //see if amount or name fields are empty and put up a warning if necessary
+            //see if amount is missing and put up a warning if necessary
             if (iAmount.getText().toString().length() == 0) {
                 iAmount.setError(getContext().getText(R.string.error_no_amount));
-                if (iName.getText().toString().length() == 0) {
-                    iName.setError(getContext().getText(R.string.error_no_name));
-                }
             }
-            // see if amount is too large or name field is empty
+            // see if amount is too large
             else if(Double.parseDouble(iAmount.getText().toString()) >= 99995){
                 iAmount.setError(getContext().getText(R.string.error_amount_too_large));
-                if (iName.getText().toString().length() == 0) {
-                    iName.setError(getContext().getText(R.string.error_no_name));
-                }
-            }else if (iName.getText().toString().length() == 0) {
-                iName.setError(getContext().getText(R.string.error_no_name));
-            } else {
+            }
+            else {
                 //send data from text fields and spinner to listener Activity and dismiss dialog
-                mListener.onEditIngredient(Double.parseDouble(iAmount.getText().toString()),
-                        spinnerUnit.getUnitKey(), iName.getText().toString());
+                if (iName.getText().toString().length() == 0) {
+                    mListener.onEditIngredient(Double.parseDouble(iAmount.getText().toString()),
+                            spinnerUnit.getUnitKey(), "");
+                } else{
+                    mListener.onEditIngredient(Double.parseDouble(iAmount.getText().toString()),
+                            spinnerUnit.getUnitKey(), iName.getText().toString());
+                }
+
                 dialog.dismiss();
             }
         }

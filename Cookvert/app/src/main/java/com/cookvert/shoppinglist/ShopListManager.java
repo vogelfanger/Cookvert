@@ -20,16 +20,16 @@ import java.util.HashMap;
 
 public class ShopListManager {
 
-    public static final String LOG_TAG = "ShopListManager"; // tag for Log entries
+    private static final String LOG_TAG = "ShopListManager"; // tag for Log entries
 
     private static ShopListManager manager = new ShopListManager();
-    public ArrayList<ShopList> shoppingLists;
-    public int focusShopList;
-    public int focusShopItem;
+    private ArrayList<ShopList> shoppingLists;
+    private int focusShopList;
+    private int focusShopItem;
 
     // maps connecting object ids to database primary keys
-    public HashMap<Integer, Long> shopListMap;
-    public HashMap<Integer, Long> shopItemMap;
+    private HashMap<Integer, Long> shopListMap;
+    private HashMap<Integer, Long> shopItemMap;
 
     // private constructor prevents multiple instances
     private ShopListManager() {
@@ -74,7 +74,17 @@ public class ShopListManager {
         this.focusShopItem = focusShopItem;
     }
 
+    public void setShoppingLists(ArrayList<ShopList> shoppingLists) {
+        this.shoppingLists = shoppingLists;
+    }
 
+    public void setShopListMap(HashMap<Integer, Long> shopListMap) {
+        this.shopListMap = shopListMap;
+    }
+
+    public void setShopItemMap(HashMap<Integer, Long> shopItemMap) {
+        this.shopItemMap = shopItemMap;
+    }
 
     //****************************************************************************************************
     //                               LIST INTERACTION METHODS
@@ -166,7 +176,9 @@ public class ShopListManager {
     }
 
     /**
-     * Updates focused shop item's checkbox value in manager's list and the database
+     * Updates focused shop item's checkbox value in manager's list and the database.
+     * If the item is selected, item is also moved to the end of the shop list.
+     * If the item is unselected, item is moved above all selected items.
      * @param selected new checkbox value for shop item
      */
     public void selectShopItem(boolean selected){
@@ -174,6 +186,32 @@ public class ShopListManager {
         DBHelper.getInstance(Cookvert.getAppContext()).updateShopItem(
                 getFocusedShopItem().getName(), selected, dbID);
         getFocusedShopItem().setSelected(selected);
+
+        ShopItem focusItem = getFocusedShopItem();
+        // if item is selected, move it to the end of the list.
+        if(selected){
+            getFocusedShopList().getItems().remove(focusItem);
+            getFocusedShopList().getItems().add(focusItem);
+        }
+        // if item is unselected, it is moved above selected items.
+        else{
+            int counter = 0;
+            for(ShopItem s : getFocusedShopList().getItems()){
+                if(s.isSelected()){
+                    getFocusedShopList().getItems().remove(focusItem);
+                    getFocusedShopList().getItems().add(counter-1, focusItem);
+                    return;
+                } else{
+                    counter++;
+                }
+            }
+            getFocusedShopList().getItems().remove(focusItem);
+            getFocusedShopList().getItems().add(counter-1, focusItem);
+            return;
+        }
+
+        // update focus position
+        focusShopItem = getFocusedShopList().getItems().indexOf(focusItem);
     }
 
 
@@ -182,13 +220,37 @@ public class ShopListManager {
     //                                         PUBLIC METHODS
     //****************************************************************************************************
 
-
+    /**
+     * Iterates through focused shop list
+     * and arranges the shop items so that checked items appear last in the list.
+     */
+    public void sortShopItems(){
+        ArrayList<ShopItem> checkedItems = new ArrayList<>();
+        //collect checked items from the shop list
+        for(ShopItem si : shoppingLists.get(focusShopList).getItems()){
+            // if shop item is checked, move it to the end of the shop list
+            if(si.isSelected()){
+                checkedItems.add(si);
+            }
+        }
+        // put collected items to the bottom of the list
+        for(ShopItem s : checkedItems){
+            shoppingLists.get(focusShopList).getItems().remove(s);
+            shoppingLists.get(focusShopList).getItems().add(s);
+        }
+    }
 
     public void sortShopLists(){
         Collections.sort(shoppingLists);
     }
 
+    /**
+     * Sorts the items in focused shop list and returns it.
+     * @return currently focused shop list
+     */
     public ShopList getFocusedShopList(){
+        //sort items before giving the list to outer classes
+        sortShopItems();
         return shoppingLists.get(focusShopList);
     }
 

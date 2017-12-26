@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_recipes_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+    <TextView
+        android:id="@+id/text_content_1.1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_1.1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_1.2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_1.2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_3"
+        android:textColor="@color/colorAccentDark"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:id="@+id/text_content_3.1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_3.1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_3.2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_3.2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_3.3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_3.3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/text_content_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/help_save_recipes_content_4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <!-- Text is added dynamically in fragment class-->
+    <TextView
+        android:id="@+id/text_content_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+</LinearLayout>

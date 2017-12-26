@@ -34,6 +34,8 @@ public class ConvertManager {
     private double multiplier; //used for scaling the recipe
     public int focusPosition; // index of the focus ingredient
 
+    private String loadedInstructions; //instructions of imported recipe
+
     private Ingredient originalTemperature;
     private Ingredient convertedTemperature;
 
@@ -106,6 +108,14 @@ public class ConvertManager {
 
     public void setConvertedTemperature(Ingredient convertedTemperature) {
         this.convertedTemperature = convertedTemperature;
+    }
+
+    public String getLoadedInstructions() {
+        return loadedInstructions;
+    }
+
+    public void setLoadedInstructions(String loadedInstructions) {
+        this.loadedInstructions = loadedInstructions;
     }
 
     //TODO use resource strings instead
@@ -221,11 +231,12 @@ public class ConvertManager {
         } catch (NullPointerException e){}
     }
 
+    /**
+     * Clears both original and convarted recipes of all ingredients.
+     */
     public void deleteAllIngredients(){
-        for(int i=0; i<original.getIngredients().size(); i++){
-            original.getIngredients().remove(i);
-            converted.getIngredients().remove(i);
-        }
+        original.getIngredients().clear();
+        converted.getIngredients().clear();
     }
 
     /**
@@ -241,12 +252,9 @@ public class ConvertManager {
         findIngredient(focusPosition, original).assignUnit(unitType);
         findIngredient(focusPosition, original).setName(name);
 
-        //set the name and unit for the same ingredient in converted recipe
-        findIngredient(focusPosition, converted).setAmount(amount);
-        findIngredient(focusPosition, converted).assignUnit(unitType);
-        findIngredient(focusPosition, converted).setName(name);
         //convert and scale the ingredient in order to keep recipe lists updated
         convertIngredient(focusPosition);
+        findIngredient(focusPosition, converted).setName(name);
     }
 
     /**
@@ -356,8 +364,15 @@ public class ConvertManager {
             converted.getIngredients().add(new Ingredient(i.getAmount(), i.getUnit(), i.getName()));
         }
         focusPosition = 0;
+
+        //save instructions into separate variable
+        loadedInstructions = impRecipe.getInstructions();
     }
 
+    /**
+     * Copies recipe data from the recipe selected in a dialog
+     * to original and converted recipes.
+     */
     public void importRecipeFromDialog(int recipePosition){
         Recipe impRecipe = RecipeManager.getInstance().getAllRecipes().get(recipePosition);
 
@@ -377,5 +392,8 @@ public class ConvertManager {
             counter++;
         }
         focusPosition = 0;
+
+        //save instructions into separate variable
+        loadedInstructions = impRecipe.getInstructions();
     }
 }

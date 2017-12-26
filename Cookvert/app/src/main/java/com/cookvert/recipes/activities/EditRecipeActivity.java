@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,6 +76,8 @@ public class EditRecipeActivity extends AppCompatActivity implements
             }
         });
 
+        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_strip);
+        tabStrip.setTabIndicatorColorResource(R.color.colorAccent);
         //page change listener that disables floating action button with instruction fragment
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -105,6 +108,13 @@ public class EditRecipeActivity extends AppCompatActivity implements
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_recipe, menu);
         return true;
+    }
+
+    @Override
+    public void onHideKeyboard(View view) {
+        //Use InputMethodManager to hide the keyboard from view
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     //****************************************************************************************************
@@ -146,12 +156,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
         toast.show();
     }
 
-    @Override
-    public void onHideKeyboard(View view) {
-        //Use InputMethodManager to hide the keyboard from view
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+
 
 
 
