@@ -19,11 +19,6 @@ import android.widget.TextView;
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.recipes.model.Unit;
-import com.cookvert.util.ResourceHelper;
-
-/**
- *
- */
 
 public class ConvertTemperatureDialog extends DialogFragment {
 

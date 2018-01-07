@@ -49,14 +49,15 @@
     <string name="array_unit_cup_uk">cup (UK)</string>
     <string name="array_unit_cup_us">cup (US)</string>
     <string name="array_unit_deciliter">deciliter</string>
-    <string name="array_unit_dessertspoon_eu">dessertspoon (EU)</string>
+    <string name="array_unit_dessertspoon_eu">dessertspoon (metric)</string>
     <string name="array_unit_dessertspoon_uk">dessertspoon (UK)</string>
     <string name="array_unit_dessertspoon_us">dessertspoon (US)</string>
     <string name="array_unit_fahrenheit">Fahrenheit</string>
     <string name="array_unit_fluid_ounce_uk">fluid ounce (UK)</string>
     <string name="array_unit_fluid_ounce_us">fluid ounce (US)</string>
     <string name="array_unit_gallon_uk">gallon (UK)</string>
-    <string name="array_unit_gallon_us">gallon (US)</string>
+    <string name="array_unit_gallon_us_dry">gallon (US, dry)</string>
+    <string name="array_unit_gallon_us">gallon (US, liquid)</string>
     <string name="array_unit_gram">gram</string>
     <string name="array_unit_kilogram">kilogram</string>
     <string name="array_unit_liter">liter</string>
@@ -64,14 +65,16 @@
     <string name="array_unit_ounce">ounce</string>
     <string name="array_unit_piece">piece</string>
     <string name="array_unit_pint_uk">pint (UK)</string>
-    <string name="array_unit_pint_us">pint (US)</string>
+    <string name="array_unit_pint_us_dry">pint (US, dry)</string>
+    <string name="array_unit_pint_us">pint (US, liquid)</string>
     <string name="array_unit_pound">pound</string>
     <string name="array_unit_quart_uk">quart (UK)</string>
-    <string name="array_unit_quart_us">quart (US)</string>
-    <string name="array_unit_tablespoon_eu">tablespoon (EU)</string>
+    <string name="array_unit_quart_us_dry">quart (US, dry)</string>
+    <string name="array_unit_quart_us">quart (US, liquid)</string>
+    <string name="array_unit_tablespoon_eu">tablespoon (metric)</string>
     <string name="array_unit_tablespoon_uk">tablespoon (UK)</string>
     <string name="array_unit_tablespoon_us">tablespoon (US)</string>
-    <string name="array_unit_teaspoon_eu">teaspoon (EU)</string>
+    <string name="array_unit_teaspoon_eu">teaspoon (metric)</string>
     <string name="array_unit_teaspoon_uk">teaspoon (UK)</string>
     <string name="array_unit_teaspoon_us">teaspoon (US)</string>
 
@@ -79,13 +82,14 @@
     <string name="array_unit_short_name_cup_uk">cup (UK)</string>
     <string name="array_unit_short_name_cup_us">cup (US)</string>
     <string name="array_unit_short_name_deciliter">dl</string>
-    <string name="array_unit_short_name_dessertspoon_eu">dsp (EU)</string>
+    <string name="array_unit_short_name_dessertspoon_eu">dsp (metric)</string>
     <string name="array_unit_short_name_dessertspoon_uk">dsp (UK)</string>
     <string name="array_unit_short_name_dessertspoon_us">dsp (US)</string>
     <string name="array_unit_short_name_fluid_ounce_uk">fl.oz (UK)</string>
     <string name="array_unit_short_name_fluid_ounce_us">fl.oz (US)</string>
     <string name="array_unit_short_name_gallon_uk">gal (UK)</string>
-    <string name="array_unit_short_name_gallon_us">gal (US)</string>
+    <string name="array_unit_short_name_gallon_us_dry">gal (US, dry)</string>
+    <string name="array_unit_short_name_gallon_us">gal (US, liquid)</string>
     <string name="array_unit_short_name_gram">g</string>
     <string name="array_unit_short_name_kilogram">kg</string>
     <string name="array_unit_short_name_liter">l</string>
@@ -93,14 +97,16 @@
     <string name="array_unit_short_name_ounce">oz</string>
     <string name="array_unit_short_name_piece">pc</string>
     <string name="array_unit_short_name_pint_uk">pt (UK)</string>
-    <string name="array_unit_short_name_pint_us">pt (US)</string>
+    <string name="array_unit_short_name_pint_us_dry">pt (US, dry)</string>
+    <string name="array_unit_short_name_pint_us">pt (US, liquid)</string>
     <string name="array_unit_short_name_pound">lb</string>
     <string name="array_unit_short_name_quart_uk">qt (UK)</string>
-    <string name="array_unit_short_name_quart_us">qt (US)</string>
-    <string name="array_unit_short_name_tablespoon_eu">tbs (EU)</string>
+    <string name="array_unit_short_name_quart_us_dry">qt (US, dry)</string>
+    <string name="array_unit_short_name_quart_us">qt (US, liquid)</string>
+    <string name="array_unit_short_name_tablespoon_eu">tbs (metric)</string>
     <string name="array_unit_short_name_tablespoon_uk">tbs (UK)</string>
     <string name="array_unit_short_name_tablespoon_us">tbs (US)</string>
-    <string name="array_unit_short_name_teaspoon_eu">tsp (EU)</string>
+    <string name="array_unit_short_name_teaspoon_eu">tsp (metric)</string>
     <string name="array_unit_short_name_teaspoon_uk">tsp (UK)</string>
     <string name="array_unit_short_name_teaspoon_us">tsp (US)</string>
 
@@ -109,7 +115,7 @@
 
     <!-- error messages shown in text views and toasts -->
     <string name="error_amount_too_large">Amount is too large</string>
-    <string name="error_multiplier_max_accuracy">Max accuracy exceeded (x.xxx)</string>
+    <string name="error_multiplier_max_accuracy">Max accuracy x.xxx</string>
     <string name="error_multiplier_too_large">Multiplier is too large</string>
     <string name="error_no_amount">Amount is missing</string>
     <string name="error_no_multiplier">Multiplier is missing</string>
@@ -121,17 +127,17 @@
     <string name="help_convert_saved_recipe_content_1.2">2. Tap the top left menu and select Recipes.</string>
     <string name="help_convert_saved_recipe_content_1.3">3.	Select the recipe you want to convert.</string>
     <string name="help_convert_saved_recipe_content_1.4">4.	Tap the top right menu and select Convert.</string>
-    <string name="help_convert_saved_recipe_content_2">Convert view opens up and the ingredient in your recipe are automatically added to each page. You can now convert ingredients by selecting a target unit from Converted ingredients page.</string>
+    <string name="help_convert_saved_recipe_content_2">Convert view opens and the ingredients in your recipe are automatically added to each page. You can now convert ingredients by selecting target units in the Converted ingredients page.</string>
     <string name="help_convert_saved_recipe_content_3">Any changes made to recipe\'s ingredients in Convert view are not saved. To edit ingredients permanently, see \"How to save recipes\".</string>
     <string name="help_convert_saved_recipe_content_4part1_bold">Tips: </string>
     <string name="help_convert_saved_recipe_content_4part2">Once a recipe is loaded to Convert view, you will see a third page that shows you the instructions of the recipe. You can also load a recipe directly in Convert view by selecting Load recipe from top right menu. </string>
 
     <string name="help_convert_temperature_title">How to convert temperature</string>
     <string name="help_convert_temperature_content_1.1">1. Open the Cookvert app.</string>
-    <string name="help_convert_temperature_content_1.2">2. Tap the top left menu and make sure Convert is seleted.</string>
+    <string name="help_convert_temperature_content_1.2">2. Tap the top left menu and make sure Convert is selected.</string>
     <string name="help_convert_temperature_content_1.3">3. Tap the temperature icon in top right or select Convert temperature from top right menu.</string>
     <string name="help_convert_temperature_content_1.4">4. Enter the temperature amount and unit you want to convert.</string>
-    <string name="help_convert_temperature_content_1.5">5. The text at the bottom shows you the converted temperature. The amount is automatically updated when you change original amount or unit. </string>
+    <string name="help_convert_temperature_content_1.5">5. The text at the bottom shows you the converted temperature. The amount is automatically updated when you change the original amount or unit.</string>
 
     <string name="help_convert_units_title">How to convert units</string>
     <string name="help_convert_units_content_1.1">1. Open the Cookvert app.</string>
@@ -140,7 +146,7 @@
     <string name="help_convert_units_content_3part1_bold">Ingredients </string>
     <string name="help_convert_units_content_3part2">page shows you the list of ingredients you are converting.</string>
     <string name="help_convert_units_content_4part1_bold">Converted ingredients </string>
-    <string name="help_convert_units_content_4part2">page shows you a similar list, which represents the ingredients after they are converted into other units. You can change pages by swiping the screen left and right.</string>
+    <string name="help_convert_units_content_4part2">page shows you a similar list, which represents the ingredients after they are converted into other units. You can change pages by swiping the screen left and right, or tapping the tabs.</string>
     <string name="help_convert_units_content_5">To convert an ingredient:</string>
     <string name="help_convert_units_content_5.1">1. Add a new ingredient by entering amount, unit and name.</string>
     <string name="help_convert_units_content_5.2">2. Go to Converted ingredients page and tap the ingredient you just added.</string>
@@ -153,11 +159,11 @@
     <string name="help_save_recipes_title">How to save recipes</string>
     <string name="help_save_recipes_content_1.1">1.	Open the Cookvert app.</string>
     <string name="help_save_recipes_content_1.2">2. Tap the top left menu and select Recipes.</string>
-    <string name="help_save_recipes_content_2">Now you should see a list of recipe categories. Tapping a category will show you all the recipes it contains. You can add new categories from top right menu. New recipes can be added using the button in bottom right corner.</string>
+    <string name="help_save_recipes_content_2">Now you see a list of recipe categories. Tapping a category will show you all the recipes it contains. You can add new categories from top right menu. New recipes can be added using the button in bottom right corner.</string>
     <string name="help_save_recipes_content_3">To create a new recipe:</string>
     <string name="help_save_recipes_content_3.1">1.	To add a new recipe, tap the button at the bottom right.</string>
-    <string name="help_save_recipes_content_3.2">2.	Enter a name , select a category for the recipe and tap DONE. Name and category can be changed later.</string>
-    <string name="help_save_recipes_content_3.3">3.	The recipe is now saved and a new view opens up. Here you can add ingredients and instructions to the recipe, and edit them when necessary. Any changes are saved automatically.</string>
+    <string name="help_save_recipes_content_3.2">2.	Enter a name, select a category for the recipe and tap DONE. Name and category can be changed later.</string>
+    <string name="help_save_recipes_content_3.3">3.	The recipe is now saved and a new view opens. Here you can add ingredients and instructions to the recipe, and edit them when necessary. Any changes are saved automatically.</string>
     <string name="help_save_recipes_content_4">Note that each recipe must be part of a category. If you don\'t want to categorize some recipes, you can use the \"Uncategorized\" category. This is also the category where your recipes are moved to when you delete a category.</string>
     <string name="help_save_recipes_content_5part1_bold">Tip:</string>
     <string name="help_save_recipes_content_5part2">After a recipe is saved, you can easily convert or scale the ingredients by selecting Convert from top right menu. You can also add all the ingredient into a new shopping list.</string>
@@ -174,14 +180,48 @@
     <string name="help_scale_saved_recipe_content_1.1">1. Open the Cookvert app.</string>
     <string name="help_scale_saved_recipe_content_1.2">2. Tap the top left menu and select Recipes.</string>
     <string name="help_scale_saved_recipe_content_1.3">3. Select the recipe you want to scale.</string>
-    <string name="help_scale_saved_recipe_content_1.4">4. Tap the top right menu and select Covert.</string>
-    <string name="help_scale_saved_recipe_content_1.5">Convert view opens up and the ingredients in your recipe are automatically added to each page.</string>
+    <string name="help_scale_saved_recipe_content_1.4">4. Tap the top right menu and select Convert.</string>
+    <string name="help_scale_saved_recipe_content_1.5">Convert view opens and the ingredients in your recipe are automatically added to each page.</string>
     <string name="help_scale_saved_recipe_content_1.6">5. Select Scale size from the upper right menu.</string>
     <string name="help_scale_saved_recipe_content_1.7">6. Enter a multiplier and tap DONE.</string>
     <string name="help_scale_saved_recipe_content_2">Ingredients have now been scaled by the multiplier. Converted ingredients page shows you the scaled amounts, while Ingredients page shows you the original amounts. Current multiplier is also shown at the bottom of the view.</string>
     <string name="help_scale_saved_recipe_content_3">Any changes made to recipe\'s ingredients in Convert view are not saved. To edit ingredients permanently, see \"How to save recipes\".</string>
     <string name="help_scale_saved_recipe_content_4part1_bold">Tips:</string>
     <string name="help_scale_saved_recipe_content_4part2">Once a recipe is loaded to Convert view, you will see a third page that shows you the instructions of the recipe. You can also load a recipe directly in Convert view by selecting Load recipe from top right menu.</string>
+
+    <string name="help_units_title">Which units I should use</string>
+    <string name="help_units_content_1.1">This app uses common units from metric, imperial and US systems. US volume units are defined according to the customary measurements as opposed to the legal ones.</string>
+    <string name="help_units_content_1.2">If you are unsure which units are being used in your recipe, make sure you select all the units from the same system. For example, if your recipe includes cups and teaspoons, you can use US units for all the ingredients and the proportions remain the same even if the recipe was originally developed using UK measurements.</string>
+    <string name="help_units_content_1.3">If you need to use exact measurements for dry ingredients, use mass units. These units are more universally recognized, and they are easier to measure correctly.</string>
+    <string name="help_units_content_1.4">Here is the list of units and their metric conversions:</string>
+    <string name="help_units_content_2_bold">Imperial mass units:</string>
+    <string name="help_units_content_2.1">ounce = 28.34952313 grams</string>
+    <string name="help_units_content_2.2">pound = 453.59237 grams</string>
+    <string name="help_units_content_3_bold">Metric volumes:</string>
+    <string name="help_units_content_3.1">dessertspoon (metric) = 10 milliliters</string>
+    <string name="help_units_content_3.2">tablespoon (metric) = 15 milliliters</string>
+    <string name="help_units_content_3.3">teaspoon (metric) = 5 milliliters</string>
+    <string name="help_units_content_4_bold">US dry volumes:</string>
+    <string name="help_units_content_4.1">gallon (US dry) = 4404.8838 milliliters</string>
+    <string name="help_units_content_4.2">pint (US dry) = 550.61047 milliliters</string>
+    <string name="help_units_content_4.3">quart (US dry) = 1101.22095 milliliters</string>
+    <string name="help_units_content_4.4">gallon (US dry) = 4404.8838 milliliters</string>
+    <string name="help_units_content_5_bold">US liquid volumes:</string>
+    <string name="help_units_content_5.1">cup (UK) = 236.58824 milliliters</string>
+    <string name="help_units_content_5.2">dessertspoon (US) = 9.85784 milliliters</string>
+    <string name="help_units_content_5.3">gallon (US liquid) = 3785.41178 milliliters</string>
+    <string name="help_units_content_5.4">pint (US liquid) = 473.17647 milliliters</string>
+    <string name="help_units_content_5.5">quart (US liquid) = 946.35295 milliliters</string>
+    <string name="help_units_content_5.6">tablespoon (US) = 14.78676 milliliters</string>
+    <string name="help_units_content_5.7">teaspoon (US) = 4.92892 milliliters</string>
+    <string name="help_units_content_6_bold">Imperial (UK) volumes:</string>
+    <string name="help_units_content_6.1">cup (UK) = 284.13063 milliliters</string>
+    <string name="help_units_content_6.2">dessertspoon (UK) = 11.83878 milliliters</string>
+    <string name="help_units_content_6.3">gallon (UK) = 4546.09 milliliters</string>
+    <string name="help_units_content_6.4">pint (UK) = 568.26125 milliliters</string>
+    <string name="help_units_content_6.5">quart (UK) = 1136.5225 milliliters</string>
+    <string name="help_units_content_6.6">tablespoon (UK) = 17.75816 milliliters</string>
+    <string name="help_units_content_6.7">teaspoon (UK) = 5.91939 milliliters</string>
 
     <string name="hint_enter_amount">Enter amount</string>
     <string name="hint_enter_instructions">Enter instructions</string>
@@ -241,6 +281,7 @@
     <string name="title_help_how_to_convert_temperature">How to convert temperature</string>
     <string name="title_help_how_to_save_recipes">How to save recipes</string>
     <string name="title_help_how_to_scale_recipe">How to scale the size of a recipe</string>
+    <string name="title_help_which_units_to_use">Which units I should use</string>
     <string name="title_pager_original_recipe">INGREDIENTS</string>
     <string name="title_pager_ingredients">INGREDIENTS</string>
     <string name="title_pager_converted_recipe">CONVERTED INGREDIENTS</string>
@@ -264,12 +305,15 @@
         <item>@string/array_unit_fluid_ounce_uk</item>
         <item>@string/array_unit_fluid_ounce_us</item>
         <item>@string/array_unit_gallon_uk</item>
+        <item>@string/array_unit_gallon_us_dry</item>
         <item>@string/array_unit_gallon_us</item>
         <item>@string/array_unit_liter</item>
         <item>@string/array_unit_milliliter</item>
         <item>@string/array_unit_pint_uk</item>
+        <item>@string/array_unit_pint_us_dry</item>
         <item>@string/array_unit_pint_us</item>
         <item>@string/array_unit_quart_uk</item>
+        <item>@string/array_unit_quart_us_dry</item>
         <item>@string/array_unit_quart_us</item>
         <item>@string/array_unit_tablespoon_eu</item>
         <item>@string/array_unit_tablespoon_uk</item>
@@ -296,6 +340,7 @@
         <item>@string/array_unit_fluid_ounce_uk</item>
         <item>@string/array_unit_fluid_ounce_us</item>
         <item>@string/array_unit_gallon_uk</item>
+        <item>@string/array_unit_gallon_us_dry</item>
         <item>@string/array_unit_gallon_us</item>
         <item>@string/array_unit_gram</item>
         <item>@string/array_unit_kilogram</item>
@@ -304,9 +349,11 @@
         <item>@string/array_unit_ounce</item>
         <item>@string/array_unit_piece</item>
         <item>@string/array_unit_pint_uk</item>
+        <item>@string/array_unit_pint_us_dry</item>
         <item>@string/array_unit_pint_us</item>
         <item>@string/array_unit_pound</item>
         <item>@string/array_unit_quart_uk</item>
+        <item>@string/array_unit_quart_us_dry</item>
         <item>@string/array_unit_quart_us</item>
         <item>@string/array_unit_tablespoon_eu</item>
         <item>@string/array_unit_tablespoon_uk</item>

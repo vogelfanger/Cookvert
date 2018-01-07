@@ -1,12 +1,8 @@
 package com.cookvert.util;
 
-import java.text.DecimalFormat;
-
 /**
  * Utility class for unit conversions. Contains multipliers and conversion methods for each unit.
  * Only contains static methods and should not be instantiated.
- * TODO add temperature units!
- * TODO final test in UI
  */
 public class Converter {
 
@@ -16,506 +12,647 @@ public class Converter {
     // MASS UNIT MULTIPLIERS:
 
     public static final double GRAM_TO_KILOGRAM = 0.001;
-    public static final double GRAM_TO_OUNCE = 0.03527;
-    public static final double GRAM_TO_POUND = 0.002205;
+    public static final double GRAM_TO_OUNCE = 0.03527396195;
+    public static final double GRAM_TO_POUND = 0.002204622622;
 
     public static final double KILOGRAM_TO_GRAM = 1000;
-    public static final double KILOGRAM_TO_OUNCE = 35.27;
-    public static final double KILOGRAM_TO_POUND = 2.205;
+    public static final double KILOGRAM_TO_OUNCE = 35.27396195;
+    public static final double KILOGRAM_TO_POUND = 2.204622622;
 
-    public static final double OUNCE_TO_GRAM = 28.35;
-    public static final double OUNCE_TO_KILOGRAM = 0.02835;
+    public static final double OUNCE_TO_GRAM = 28.34952313;
+    public static final double OUNCE_TO_KILOGRAM = 0.02834952313;
     public static final double OUNCE_TO_POUND = 0.0625;
 
-    public static final double POUND_TO_GRAM = 453.6;
-    public static final double POUND_TO_KILOGRAM = 0.4536;
+    public static final double POUND_TO_GRAM = 453.59237;
+    public static final double POUND_TO_KILOGRAM = 0.45359237;
     public static final double POUND_TO_OUNCE = 16;
 
     // VOLUME UNIT MULTIPLIERS:
 
-    public static final double CUP_UK_TO_CUP_US = 1.201;
-    public static final double CUP_UK_TO_DECILITER = 2.841;
-    public static final double CUP_UK_TO_DESSERTSPOON_EU = 28.41;
+    public static final double CUP_UK_TO_CUP_US = 1.20095;
+    public static final double CUP_UK_TO_DECILITER = 2.84131;
+    public static final double CUP_UK_TO_DESSERTSPOON_EU = 28.41306;
     public static final double CUP_UK_TO_DESSERTSPOON_UK = 24;
-    public static final double CUP_UK_TO_DESSERTSPOON_US = 28.82;
+    public static final double CUP_UK_TO_DESSERTSPOON_US = 28.82280;
     public static final double CUP_UK_TO_FLUID_OUNCE_UK = 10;
-    public static final double CUP_UK_TO_FLUID_OUNCE_US = 9.608;
+    public static final double CUP_UK_TO_FLUID_OUNCE_US = 9.60760;
     public static final double CUP_UK_TO_GALLON_UK = 0.0625;
-    public static final double CUP_UK_TO_GALLON_US = 0.07505;
-    public static final double CUP_UK_TO_LITER = 0.2841;
-    public static final double CUP_UK_TO_MILLILITER = 284.1;
+    public static final double CUP_UK_TO_GALLON_US_DRY = 0.064504;
+    public static final double CUP_UK_TO_GALLON_US = 0.075059;
+    public static final double CUP_UK_TO_LITER = 0.28413;
+    public static final double CUP_UK_TO_MILLILITER = 284.13063;
     public static final double CUP_UK_TO_PINT_UK = 0.5;
-    public static final double CUP_UK_TO_PINT_US = 0.6005;
+    public static final double CUP_UK_TO_PINT_US_DRY = 0.51603;
+    public static final double CUP_UK_TO_PINT_US = 0.60048;
     public static final double CUP_UK_TO_QUART_UK = 0.25;
-    public static final double CUP_UK_TO_QUART_US = 0.3002;
-    public static final double CUP_UK_TO_TABLESPOON_EU = 18.94;
+    public static final double CUP_UK_TO_QUART_US_DRY = 0.25801;
+    public static final double CUP_UK_TO_QUART_US = 0.30024;
+    public static final double CUP_UK_TO_TABLESPOON_EU = 18.94204;
     public static final double CUP_UK_TO_TABLESPOON_UK = 16;
-    public static final double CUP_UK_TO_TABLESPOON_US = 19.22;
-    public static final double CUP_UK_TO_TEASPOON_EU = 56.83;
+    public static final double CUP_UK_TO_TABLESPOON_US = 19.21520;
+    public static final double CUP_UK_TO_TEASPOON_EU = 56.82613;
     public static final double CUP_UK_TO_TEASPOON_UK = 48;
-    public static final double CUP_UK_TO_TEASPOON_US = 57.65;
+    public static final double CUP_UK_TO_TEASPOON_US = 57.64560;
 
-    public static final double CUP_US_TO_CUP_UK = 0.8327;
-    public static final double CUP_US_TO_DECILITER = 2.366;
-    public static final double CUP_US_TO_DESSERTSPOON_EU = 23.66;
-    public static final double CUP_US_TO_DESSERTSPOON_UK = 19.98;
+    public static final double CUP_US_TO_CUP_UK = 0.83267;
+    public static final double CUP_US_TO_DECILITER = 2.36588;
+    public static final double CUP_US_TO_DESSERTSPOON_EU = 23.65882;
+    public static final double CUP_US_TO_DESSERTSPOON_UK = 19.98418;
     public static final double CUP_US_TO_DESSERTSPOON_US = 24;
-    public static final double CUP_US_TO_FLUID_OUNCE_UK = 8.327;
+    public static final double CUP_US_TO_FLUID_OUNCE_UK = 8.32674;
     public static final double CUP_US_TO_FLUID_OUNCE_US = 8;
-    public static final double CUP_US_TO_GALLON_UK = 0.05204;
+    public static final double CUP_US_TO_GALLON_UK = 0.052042;
+    public static final double CUP_US_TO_GALLON_US_DRY = 0.053710;
     public static final double CUP_US_TO_GALLON_US = 0.0625;
-    public static final double CUP_US_TO_LITER = 2.366;
-    public static final double CUP_US_TO_MILLILITER = 236.6;
-    public static final double CUP_US_TO_PINT_UK = 0.4163;
+    public static final double CUP_US_TO_LITER = 0.23659;
+    public static final double CUP_US_TO_MILLILITER = 236.58824;
+    public static final double CUP_US_TO_PINT_UK = 0.41634;
+    public static final double CUP_US_TO_PINT_US_DRY = 0.42968;
     public static final double CUP_US_TO_PINT_US = 0.5;
-    public static final double CUP_US_TO_QUART_UK = 0.2082;
+    public static final double CUP_US_TO_QUART_UK = 0.20817;
+    public static final double CUP_US_TO_QUART_US_DRY = 0.21484;
     public static final double CUP_US_TO_QUART_US = 0.25;
-    public static final double CUP_US_TO_TABLESPOON_EU = 15.77;
-    public static final double CUP_US_TO_TABLESPOON_UK = 13.32;
+    public static final double CUP_US_TO_TABLESPOON_EU = 15.77255;
+    public static final double CUP_US_TO_TABLESPOON_UK = 13.32279;
     public static final double CUP_US_TO_TABLESPOON_US = 16;
-    public static final double CUP_US_TO_TEASPOON_EU = 47.32;
-    public static final double CUP_US_TO_TEASPOON_UK = 39.97;
+    public static final double CUP_US_TO_TEASPOON_EU = 47.31765;
+    public static final double CUP_US_TO_TEASPOON_UK = 39.96836;
     public static final double CUP_US_TO_TEASPOON_US = 48;
 
-    public static final double DECILITER_TO_CUP_UK = 0.352;
-    public static final double DECILITER_TO_CUP_US = 0.4227;
+    public static final double DECILITER_TO_CUP_UK = 0.35195;
+    public static final double DECILITER_TO_CUP_US = 0.42268;
     public static final double DECILITER_TO_DESSERTSPOON_EU = 10;
-    public static final double DECILITER_TO_DESSERTSPOON_UK = 8.447;
-    public static final double DECILITER_TO_DESSERTSPOON_US = 10.14;
-    public static final double DECILITER_TO_FLUID_OUNCE_UK = 3.52;
-    public static final double DECILITER_TO_FLUID_OUNCE_US = 3.381;
-    public static final double DECILITER_TO_GALLON_UK = 0.022;
-    public static final double DECILITER_TO_GALLON_US = 0.02642;
+    public static final double DECILITER_TO_DESSERTSPOON_UK = 8.44682;
+    public static final double DECILITER_TO_DESSERTSPOON_US = 10.14421;
+    public static final double DECILITER_TO_FLUID_OUNCE_UK = 3.51951;
+    public static final double DECILITER_TO_FLUID_OUNCE_US = 3.38140;
+    public static final double DECILITER_TO_GALLON_UK = 0.021997;
+    public static final double DECILITER_TO_GALLON_US_DRY = 0.022702;
+    public static final double DECILITER_TO_GALLON_US = 0.026417;
     public static final double DECILITER_TO_LITER = 0.1;
     public static final double DECILITER_TO_MILLILITER = 100;
-    public static final double DECILITER_TO_PINT_UK = 0.176;
-    public static final double DECILITER_TO_PINT_US = 0.2113;
-    public static final double DECILITER_TO_QUART_UK = 0.08798;
-    public static final double DECILITER_TO_QUART_US = 0.1057;
-    public static final double DECILITER_TO_TABLESPOON_EU = 6.667;
-    public static final double DECILITER_TO_TABLESPOON_UK = 5.631;
-    public static final double DECILITER_TO_TABLESPOON_US = 6.763;
+    public static final double DECILITER_TO_PINT_UK = 0.17598;
+    public static final double DECILITER_TO_PINT_US_DRY = 0.18162;
+    public static final double DECILITER_TO_PINT_US = 0.21134;
+    public static final double DECILITER_TO_QUART_UK = 0.087988;
+    public static final double DECILITER_TO_QUART_US_DRY = 0.090808;
+    public static final double DECILITER_TO_QUART_US = 0.10567;
+    public static final double DECILITER_TO_TABLESPOON_EU = 6.66667;
+    public static final double DECILITER_TO_TABLESPOON_UK = 5.63121;
+    public static final double DECILITER_TO_TABLESPOON_US = 6.76280;
     public static final double DECILITER_TO_TEASPOON_EU = 20;
-    public static final double DECILITER_TO_TEASPOON_UK = 16.89;
-    public static final double DECILITER_TO_TEASPOON_US = 20.29;
+    public static final double DECILITER_TO_TEASPOON_UK = 16.89364;
+    public static final double DECILITER_TO_TEASPOON_US = 20.28841;
 
-    public static final double DESSERTSPOON_EU_TO_CUP_UK = 0.0352;
-    public static final double DESSERTSPOON_EU_TO_CUP_US = 0.04227;
+    public static final double DESSERTSPOON_EU_TO_CUP_UK = 0.035195;
+    public static final double DESSERTSPOON_EU_TO_CUP_US = 0.042268;
     public static final double DESSERTSPOON_EU_TO_DECILITER = 0.1;
-    public static final double DESSERTSPOON_EU_TO_DESSERTSPOON_UK = 0.8447;
-    public static final double DESSERTSPOON_EU_TO_DESSERTSPOON_US = 1.014;
-    public static final double DESSERTSPOON_EU_TO_FLUID_OUNCE_UK = 0.352;
-    public static final double DESSERTSPOON_EU_TO_FLUID_OUNCE_US = 0.3381;
-    public static final double DESSERTSPOON_EU_TO_GALLON_UK = 0.0022;
-    public static final double DESSERTSPOON_EU_TO_GALLON_US = 0.002642;
+    public static final double DESSERTSPOON_EU_TO_DESSERTSPOON_UK = 0.84468;
+    public static final double DESSERTSPOON_EU_TO_DESSERTSPOON_US = 1.01442;
+    public static final double DESSERTSPOON_EU_TO_FLUID_OUNCE_UK = 0.35195;
+    public static final double DESSERTSPOON_EU_TO_FLUID_OUNCE_US = 0.33814;
+    public static final double DESSERTSPOON_EU_TO_GALLON_UK = 0.0021997;
+    public static final double DESSERTSPOON_EU_TO_GALLON_US_DRY = 0.0022702;
+    public static final double DESSERTSPOON_EU_TO_GALLON_US = 0.0026417;
     public static final double DESSERTSPOON_EU_TO_LITER = 0.01;
     public static final double DESSERTSPOON_EU_TO_MILLILITER = 10;
-    public static final double DESSERTSPOON_EU_TO_PINT_UK = 0.0176;
-    public static final double DESSERTSPOON_EU_TO_PINT_US = 0.02113;
-    public static final double DESSERTSPOON_EU_TO_QUART_UK = 0.008799;
-    public static final double DESSERTSPOON_EU_TO_QUART_US = 0.01057;
-    public static final double DESSERTSPOON_EU_TO_TABLESPOON_EU = 0.6667;
-    public static final double DESSERTSPOON_EU_TO_TABLESPOON_UK = 0.5631;
-    public static final double DESSERTSPOON_EU_TO_TABLESPOON_US = 0.6763;
+    public static final double DESSERTSPOON_EU_TO_PINT_UK = 0.017598;
+    public static final double DESSERTSPOON_EU_TO_PINT_US_DRY = 0.018162;
+    public static final double DESSERTSPOON_EU_TO_PINT_US = 0.021134;
+    public static final double DESSERTSPOON_EU_TO_QUART_UK = 0.0087988;
+    public static final double DESSERTSPOON_EU_TO_QUART_US_DRY = 0.0090808;
+    public static final double DESSERTSPOON_EU_TO_QUART_US = 0.010567;
+    public static final double DESSERTSPOON_EU_TO_TABLESPOON_EU = 0.66667;
+    public static final double DESSERTSPOON_EU_TO_TABLESPOON_UK = 0.56312;
+    public static final double DESSERTSPOON_EU_TO_TABLESPOON_US = 0.67628;
     public static final double DESSERTSPOON_EU_TO_TEASPOON_EU = 2;
-    public static final double DESSERTSPOON_EU_TO_TEASPOON_UK = 1.689;
-    public static final double DESSERTSPOON_EU_TO_TEASPOON_US = 2.029;
+    public static final double DESSERTSPOON_EU_TO_TEASPOON_UK = 1.68936;
+    public static final double DESSERTSPOON_EU_TO_TEASPOON_US = 2.02884;
 
-    public static final double DESSERTSPOON_UK_TO_CUP_UK = 0.04167;
-    public static final double DESSERTSPOON_UK_TO_CUP_US = 0.05004;
-    public static final double DESSERTSPOON_UK_TO_DECILITER = 0.1184;
+    public static final double DESSERTSPOON_UK_TO_CUP_UK = 0.041667;
+    public static final double DESSERTSPOON_UK_TO_CUP_US = 0.050040;
+    public static final double DESSERTSPOON_UK_TO_DECILITER = 0.11839;
     public static final double DESSERTSPOON_UK_TO_DESSERTSPOON_EU = 1.184;
-    public static final double DESSERTSPOON_UK_TO_DESSERTSPOON_US = 1.201;
-    public static final double DESSERTSPOON_UK_TO_FLUID_OUNCE_UK = 0.4167;
-    public static final double DESSERTSPOON_UK_TO_FLUID_OUNCE_US = 0.4003;
-    public static final double DESSERTSPOON_UK_TO_GALLON_UK = 0.002604;
-    public static final double DESSERTSPOON_UK_TO_GALLON_US = 0.003127;
-    public static final double DESSERTSPOON_UK_TO_LITER = 0.01184;
-    public static final double DESSERTSPOON_UK_TO_MILLILITER = 11.84;
-    public static final double DESSERTSPOON_UK_TO_PINT_UK = 0.02083;
-    public static final double DESSERTSPOON_UK_TO_PINT_US = 0.02502;
-    public static final double DESSERTSPOON_UK_TO_QUART_UK = 0.01042;
-    public static final double DESSERTSPOON_UK_TO_QUART_US = 0.01251;
-    public static final double DESSERTSPOON_UK_TO_TABLESPOON_EU = 0.7893;
-    public static final double DESSERTSPOON_UK_TO_TABLESPOON_UK = 0.6667;
-    public static final double DESSERTSPOON_UK_TO_TABLESPOON_US = 0.8006;
-    public static final double DESSERTSPOON_UK_TO_TEASPOON_EU = 2.368;
+    public static final double DESSERTSPOON_UK_TO_DESSERTSPOON_US = 1.20095;
+    public static final double DESSERTSPOON_UK_TO_FLUID_OUNCE_UK = 0.41667;
+    public static final double DESSERTSPOON_UK_TO_FLUID_OUNCE_US = 0.40032;
+    public static final double DESSERTSPOON_UK_TO_GALLON_UK = 0.0026042;
+    public static final double DESSERTSPOON_UK_TO_GALLON_US_DRY = 0.0026876;
+    public static final double DESSERTSPOON_UK_TO_GALLON_US = 0.0031275;
+    public static final double DESSERTSPOON_UK_TO_LITER = 0.011839;
+    public static final double DESSERTSPOON_UK_TO_MILLILITER = 11.83878;
+    public static final double DESSERTSPOON_UK_TO_PINT_UK = 0.020833;
+    public static final double DESSERTSPOON_UK_TO_PINT_US_DRY = 0.021501;
+    public static final double DESSERTSPOON_UK_TO_PINT_US = 0.025020;
+    public static final double DESSERTSPOON_UK_TO_QUART_UK = 0.010417;
+    public static final double DESSERTSPOON_UK_TO_QUART_US_DRY = 0.010751;
+    public static final double DESSERTSPOON_UK_TO_QUART_US = 0.012510;
+    public static final double DESSERTSPOON_UK_TO_TABLESPOON_EU = 0.78925;
+    public static final double DESSERTSPOON_UK_TO_TABLESPOON_UK = 0.66667;
+    public static final double DESSERTSPOON_UK_TO_TABLESPOON_US = 0.80063;
+    public static final double DESSERTSPOON_UK_TO_TEASPOON_EU = 2.36776;
     public static final double DESSERTSPOON_UK_TO_TEASPOON_UK = 2;
-    public static final double DESSERTSPOON_UK_TO_TEASPOON_US = 2.402;
+    public static final double DESSERTSPOON_UK_TO_TEASPOON_US = 2.40190;
 
-    public static final double DESSERTSPOON_US_TO_CUP_UK = 0.0347;
-    public static final double DESSERTSPOON_US_TO_CUP_US = 0.04167;
-    public static final double DESSERTSPOON_US_TO_DECILITER = 0.09858;
-    public static final double DESSERTSPOON_US_TO_DESSERTSPOON_EU = 0.9858;
-    public static final double DESSERTSPOON_US_TO_DESSERTSPOON_UK = 0.8327;
-    public static final double DESSERTSPOON_US_TO_FLUID_OUNCE_UK = 0.3469;
-    public static final double DESSERTSPOON_US_TO_FLUID_OUNCE_US = 0.3333;
-    public static final double DESSERTSPOON_US_TO_GALLON_UK = 0.002168;
-    public static final double DESSERTSPOON_US_TO_GALLON_US = 0.002604;
-    public static final double DESSERTSPOON_US_TO_LITER = 0.009858;
-    public static final double DESSERTSPOON_US_TO_MILLILITER = 9.858;
-    public static final double DESSERTSPOON_US_TO_PINT_UK = 0.3469;
-    public static final double DESSERTSPOON_US_TO_PINT_US = 0.3333;
-    public static final double DESSERTSPOON_US_TO_QUART_UK = 0.008674;
-    public static final double DESSERTSPOON_US_TO_QUART_US = 0.01042;
-    public static final double DESSERTSPOON_US_TO_TABLESPOON_EU = 0.6572;
-    public static final double DESSERTSPOON_US_TO_TABLESPOON_UK = 0.5551;
-    public static final double DESSERTSPOON_US_TO_TABLESPOON_US = 0.6667;
-    public static final double DESSERTSPOON_US_TO_TEASPOON_EU = 1.972;
-    public static final double DESSERTSPOON_US_TO_TEASPOON_UK = 1.665;
+    public static final double DESSERTSPOON_US_TO_CUP_UK = 0.034695;
+    public static final double DESSERTSPOON_US_TO_CUP_US = 0.041667;
+    public static final double DESSERTSPOON_US_TO_DECILITER = 0.098578;
+    public static final double DESSERTSPOON_US_TO_DESSERTSPOON_EU = 0.98578;
+    public static final double DESSERTSPOON_US_TO_DESSERTSPOON_UK = 0.83267;
+    public static final double DESSERTSPOON_US_TO_FLUID_OUNCE_UK = 0.34695;
+    public static final double DESSERTSPOON_US_TO_FLUID_OUNCE_US = 0.33333;
+    public static final double DESSERTSPOON_US_TO_GALLON_UK = 0.0021684;
+    public static final double DESSERTSPOON_US_TO_GALLON_US_DRY = 0.0022379;
+    public static final double DESSERTSPOON_US_TO_GALLON_US = 0.0026042;
+    public static final double DESSERTSPOON_US_TO_LITER = 0.0098578;
+    public static final double DESSERTSPOON_US_TO_MILLILITER = 9.85784;
+    public static final double DESSERTSPOON_US_TO_PINT_UK = 0.017347;
+    public static final double DESSERTSPOON_US_TO_PINT_US_DRY = 0.017903;
+    public static final double DESSERTSPOON_US_TO_PINT_US = 0.020833;
+    public static final double DESSERTSPOON_US_TO_QUART_UK = 0.0086737;
+    public static final double DESSERTSPOON_US_TO_QUART_US_DRY = 0.0089517;
+    public static final double DESSERTSPOON_US_TO_QUART_US = 0.010417;
+    public static final double DESSERTSPOON_US_TO_TABLESPOON_EU = 0.65719;
+    public static final double DESSERTSPOON_US_TO_TABLESPOON_UK = 0.55512;
+    public static final double DESSERTSPOON_US_TO_TABLESPOON_US = 0.66667;
+    public static final double DESSERTSPOON_US_TO_TEASPOON_EU = 1.97157;
+    public static final double DESSERTSPOON_US_TO_TEASPOON_UK = 1.66535;
     public static final double DESSERTSPOON_US_TO_TEASPOON_US = 2;
 
     public static final double FLUID_OUNCE_UK_TO_CUP_UK = 0.1;
-    public static final double FLUID_OUNCE_UK_TO_CUP_US = 0.1201;
-    public static final double FLUID_OUNCE_UK_TO_DECILITER = 0.2841;
-    public static final double FLUID_OUNCE_UK_TO_DESSERTSPOON_EU = 2.841;
+    public static final double FLUID_OUNCE_UK_TO_CUP_US = 0.12009;
+    public static final double FLUID_OUNCE_UK_TO_DECILITER = 0.28413;
+    public static final double FLUID_OUNCE_UK_TO_DESSERTSPOON_EU = 2.84131;
     public static final double FLUID_OUNCE_UK_TO_DESSERTSPOON_UK = 2.4;
-    public static final double FLUID_OUNCE_UK_TO_DESSERTSPOON_US = 2.882;
-    public static final double FLUID_OUNCE_UK_TO_FLUID_OUNCE_US = 0.9608;
+    public static final double FLUID_OUNCE_UK_TO_DESSERTSPOON_US = 2.88228;
+    public static final double FLUID_OUNCE_UK_TO_FLUID_OUNCE_US = 0.96076;
     public static final double FLUID_OUNCE_UK_TO_GALLON_UK = 0.00625;
-    public static final double FLUID_OUNCE_UK_TO_GALLON_US = 0.007506;
-    public static final double FLUID_OUNCE_UK_TO_LITER = 0.02841;
-    public static final double FLUID_OUNCE_UK_TO_MILLILITER = 28.41;
+    public static final double FLUID_OUNCE_UK_TO_GALLON_US_DRY = 0.0064504;
+    public static final double FLUID_OUNCE_UK_TO_GALLON_US = 0.0075059;
+    public static final double FLUID_OUNCE_UK_TO_LITER = 0.028413;
+    public static final double FLUID_OUNCE_UK_TO_MILLILITER = 28.41306;
     public static final double FLUID_OUNCE_UK_TO_PINT_UK = 0.05;
-    public static final double FLUID_OUNCE_UK_TO_PINT_US = 0.06005;
+    public static final double FLUID_OUNCE_UK_TO_PINT_US_DRY = 0.051603;
+    public static final double FLUID_OUNCE_UK_TO_PINT_US = 0.060047;
     public static final double FLUID_OUNCE_UK_TO_QUART_UK = 0.025;
-    public static final double FLUID_OUNCE_UK_TO_QUART_US = 0.03002;
-    public static final double FLUID_OUNCE_UK_TO_TABLESPOON_EU = 1.894;
+    public static final double FLUID_OUNCE_UK_TO_QUART_US_DRY = 0.025801;
+    public static final double FLUID_OUNCE_UK_TO_QUART_US = 0.030024;
+    public static final double FLUID_OUNCE_UK_TO_TABLESPOON_EU = 1.89420;
     public static final double FLUID_OUNCE_UK_TO_TABLESPOON_UK = 1.6;
-    public static final double FLUID_OUNCE_UK_TO_TABLESPOON_US = 1.922;
-    public static final double FLUID_OUNCE_UK_TO_TEASPOON_EU = 5.683;
+    public static final double FLUID_OUNCE_UK_TO_TABLESPOON_US = 1.92152;
+    public static final double FLUID_OUNCE_UK_TO_TEASPOON_EU = 5.68261;
     public static final double FLUID_OUNCE_UK_TO_TEASPOON_UK = 4.8;
-    public static final double FLUID_OUNCE_UK_TO_TEASPOON_US = 5.765;
+    public static final double FLUID_OUNCE_UK_TO_TEASPOON_US = 5.76456;
 
-    public static final double FLUID_OUNCE_US_TO_CUP_UK = 0.1041;
+    public static final double FLUID_OUNCE_US_TO_CUP_UK = 0.10408;
     public static final double FLUID_OUNCE_US_TO_CUP_US = 0.125;
-    public static final double FLUID_OUNCE_US_TO_DECILITER = 0.2957;
-    public static final double FLUID_OUNCE_US_TO_DESSERTSPOON_EU = 2.957;
-    public static final double FLUID_OUNCE_US_TO_DESSERTSPOON_UK = 2.498;
+    public static final double FLUID_OUNCE_US_TO_DECILITER = 0.29574;
+    public static final double FLUID_OUNCE_US_TO_DESSERTSPOON_EU = 2.95735;
+    public static final double FLUID_OUNCE_US_TO_DESSERTSPOON_UK = 2.49802;
     public static final double FLUID_OUNCE_US_TO_DESSERTSPOON_US = 3;
-    public static final double FLUID_OUNCE_US_TO_FLUID_OUNCE_UK = 1.041;
-    public static final double FLUID_OUNCE_US_TO_GALLON_UK = 0.006505;
-    public static final double FLUID_OUNCE_US_TO_GALLON_US = 0.007813;
-    public static final double FLUID_OUNCE_US_TO_LITER = 0.02957;
-    public static final double FLUID_OUNCE_US_TO_MILLILITER = 29.57;
-    public static final double FLUID_OUNCE_US_TO_PINT_UK = 0.05204;
+    public static final double FLUID_OUNCE_US_TO_FLUID_OUNCE_UK = 1.04084;
+    public static final double FLUID_OUNCE_US_TO_GALLON_UK = 0.0065053;
+    public static final double FLUID_OUNCE_US_TO_GALLON_US_DRY = 0.0067138;
+    public static final double FLUID_OUNCE_US_TO_GALLON_US = 0.0078125;
+    public static final double FLUID_OUNCE_US_TO_LITER = 0.029574;
+    public static final double FLUID_OUNCE_US_TO_MILLILITER = 29.57353;
+    public static final double FLUID_OUNCE_US_TO_PINT_UK = 0.052042;
+    public static final double FLUID_OUNCE_US_TO_PINT_US_DRY = 0.053710;
     public static final double FLUID_OUNCE_US_TO_PINT_US = 0.0625;
-    public static final double FLUID_OUNCE_US_TO_QUART_UK = 0.02602;
+    public static final double FLUID_OUNCE_US_TO_QUART_UK = 0.026021;
+    public static final double FLUID_OUNCE_US_TO_QUART_US_DRY = 0.026855;
     public static final double FLUID_OUNCE_US_TO_QUART_US = 0.03125;
-    public static final double FLUID_OUNCE_US_TO_TABLESPOON_EU = 1.972;
-    public static final double FLUID_OUNCE_US_TO_TABLESPOON_UK = 1.665;
+    public static final double FLUID_OUNCE_US_TO_TABLESPOON_EU = 1.97157;
+    public static final double FLUID_OUNCE_US_TO_TABLESPOON_UK = 1.66535;
     public static final double FLUID_OUNCE_US_TO_TABLESPOON_US = 2;
-    public static final double FLUID_OUNCE_US_TO_TEASPOON_EU = 5.915;
-    public static final double FLUID_OUNCE_US_TO_TEASPOON_UK = 4.996;
+    public static final double FLUID_OUNCE_US_TO_TEASPOON_EU = 5.91471;
+    public static final double FLUID_OUNCE_US_TO_TEASPOON_UK = 4.99605;
     public static final double FLUID_OUNCE_US_TO_TEASPOON_US = 6;
 
     public static final double GALLON_UK_TO_CUP_UK = 16;
-    public static final double GALLON_UK_TO_CUP_US = 19.22;
-    public static final double GALLON_UK_TO_DECILITER = 1000;
-    public static final double GALLON_UK_TO_DESSERTSPOON_EU = 454.6;
+    public static final double GALLON_UK_TO_CUP_US = 19.21520;
+    public static final double GALLON_UK_TO_DECILITER = 45.4609;
+    public static final double GALLON_UK_TO_DESSERTSPOON_EU = 454.609;
     public static final double GALLON_UK_TO_DESSERTSPOON_UK = 384;
-    public static final double GALLON_UK_TO_DESSERTSPOON_US = 461.1;
+    public static final double GALLON_UK_TO_DESSERTSPOON_US = 461.16477;
     public static final double GALLON_UK_TO_FLUID_OUNCE_UK = 160;
-    public static final double GALLON_UK_TO_FLUID_OUNCE_US = 153.7;
-    public static final double GALLON_UK_TO_GALLON_US = 1.201;
-    public static final double GALLON_UK_TO_LITER = 4.546;
-    public static final double GALLON_UK_TO_MILLILITER = 4546;
+    public static final double GALLON_UK_TO_FLUID_OUNCE_US = 153.72159;
+    public static final double GALLON_UK_TO_GALLON_US_DRY = 1.03206;
+    public static final double GALLON_UK_TO_GALLON_US = 1.20095;
+    public static final double GALLON_UK_TO_LITER = 4.54609;
+    public static final double GALLON_UK_TO_MILLILITER = 4546.09;
     public static final double GALLON_UK_TO_PINT_UK = 8;
-    public static final double GALLON_UK_TO_PINT_US = 9.608;
+    public static final double GALLON_UK_TO_PINT_US_DRY = 8.25645;
+    public static final double GALLON_UK_TO_PINT_US = 9.60760;
     public static final double GALLON_UK_TO_QUART_UK = 4;
-    public static final double GALLON_UK_TO_QUART_US = 4.804;
-    public static final double GALLON_UK_TO_TABLESPOON_EU = 303.1;
+    public static final double GALLON_UK_TO_QUART_US_DRY = 4.12823;
+    public static final double GALLON_UK_TO_QUART_US = 4.80380;
+    public static final double GALLON_UK_TO_TABLESPOON_EU = 303.07267;
     public static final double GALLON_UK_TO_TABLESPOON_UK = 256;
-    public static final double GALLON_UK_TO_TABLESPOON_US = 307.4;
-    public static final double GALLON_UK_TO_TEASPOON_EU = 909.2;
+    public static final double GALLON_UK_TO_TABLESPOON_US = 307.44318;
+    public static final double GALLON_UK_TO_TEASPOON_EU = 909.218;
     public static final double GALLON_UK_TO_TEASPOON_UK = 768;
-    public static final double GALLON_UK_TO_TEASPOON_US = 922.3;
+    public static final double GALLON_UK_TO_TEASPOON_US = 922.32954;
 
-    public static final double GALLON_US_TO_CUP_UK = 13.32;
+    public static final double GALLON_US_DRY_TO_CUP_UK = 15.50302;
+    public static final double GALLON_US_DRY_TO_CUP_US = 18.61836;
+    public static final double GALLON_US_DRY_TO_DECILITER = 44.04884;
+    public static final double GALLON_US_DRY_TO_DESSERTSPOON_EU = 440.48838;
+    public static final double GALLON_US_DRY_TO_DESSERTSPOON_UK = 372.07257;
+    public static final double GALLON_US_DRY_TO_DESSERTSPOON_US = 446.84052;
+    public static final double GALLON_US_DRY_TO_FLUID_OUNCE_UK = 155.03024;
+    public static final double GALLON_US_DRY_TO_FLUID_OUNCE_US = 148.94684;
+    public static final double GALLON_US_DRY_TO_GALLON_UK = 0.96894;
+    public static final double GALLON_US_DRY_TO_GALLON_US = 1.16365;
+    public static final double GALLON_US_DRY_TO_LITER = 4.40488;
+    public static final double GALLON_US_DRY_TO_MILLILITER = 4404.8838;
+    public static final double GALLON_US_DRY_TO_PINT_UK = 7.75151;
+    public static final double GALLON_US_DRY_TO_PINT_US_DRY = 8;
+    public static final double GALLON_US_DRY_TO_PINT_US = 9.30918;
+    public static final double GALLON_US_DRY_TO_QUART_UK = 3.87576;
+    public static final double GALLON_US_DRY_TO_QUART_US_DRY = 4;
+    public static final double GALLON_US_DRY_TO_QUART_US = 4.65459;
+    public static final double GALLON_US_DRY_TO_TABLESPOON_EU = 293.65892;
+    public static final double GALLON_US_DRY_TO_TABLESPOON_UK = 248.04838;
+    public static final double GALLON_US_DRY_TO_TABLESPOON_US = 297.89368;
+    public static final double GALLON_US_DRY_TO_TEASPOON_EU = 880.97676;
+    public static final double GALLON_US_DRY_TO_TEASPOON_UK = 744.14513;
+    public static final double GALLON_US_DRY_TO_TEASPOON_US = 893.68104;
+
+    public static final double GALLON_US_TO_CUP_UK = 13.32279;
     public static final double GALLON_US_TO_CUP_US = 16;
-    public static final double GALLON_US_TO_DECILITER = 37.85;
-    public static final double GALLON_US_TO_DESSERTSPOON_EU = 378.5;
-    public static final double GALLON_US_TO_DESSERTSPOON_UK = 319.7;
+    public static final double GALLON_US_TO_DECILITER = 37.85412;
+    public static final double GALLON_US_TO_DESSERTSPOON_EU = 378.54418;
+    public static final double GALLON_US_TO_DESSERTSPOON_UK = 319.74689;
     public static final double GALLON_US_TO_DESSERTSPOON_US = 384;
-    public static final double GALLON_US_TO_FLUID_OUNCE_UK = 133.2;
+    public static final double GALLON_US_TO_FLUID_OUNCE_UK = 133.22787;
     public static final double GALLON_US_TO_FLUID_OUNCE_US = 128;
-    public static final double GALLON_US_TO_GALLON_UK = 0.8327;
-    public static final double GALLON_US_TO_LITER = 3.785;
-    public static final double GALLON_US_TO_MILLILITER = 3785;
-    public static final double GALLON_US_TO_PINT_UK = 6.661;
+    public static final double GALLON_US_TO_GALLON_UK = 0.83267;
+    public static final double GALLON_US_TO_GALLON_US_DRY = 0.85937;
+    public static final double GALLON_US_TO_LITER = 3.78541;
+    public static final double GALLON_US_TO_MILLILITER = 3785.41178;
+    public static final double GALLON_US_TO_PINT_UK = 6.66139;
+    public static final double GALLON_US_TO_PINT_US_DRY = 6.87494;
     public static final double GALLON_US_TO_PINT_US = 8;
-    public static final double GALLON_US_TO_QUART_UK = 3.331;
+    public static final double GALLON_US_TO_QUART_UK = 3.33070;
+    public static final double GALLON_US_TO_QUART_US_DRY = 3.43747;
     public static final double GALLON_US_TO_QUART_US = 4;
-    public static final double GALLON_US_TO_TABLESPOON_EU = 252.4;
-    public static final double GALLON_US_TO_TABLESPOON_UK = 213.2;
+    public static final double GALLON_US_TO_TABLESPOON_EU = 252.36079;
+    public static final double GALLON_US_TO_TABLESPOON_UK = 213.16459;
     public static final double GALLON_US_TO_TABLESPOON_US = 256;
-    public static final double GALLON_US_TO_TEASPOON_EU = 757.1;
-    public static final double GALLON_US_TO_TEASPOON_UK = 639.5;
+    public static final double GALLON_US_TO_TEASPOON_EU = 757.08236;
+    public static final double GALLON_US_TO_TEASPOON_UK = 639.49378;
     public static final double GALLON_US_TO_TEASPOON_US = 768;
 
-    public static final double LITER_TO_CUP_UK = 3.52;
-    public static final double LITER_TO_CUP_US = 4.227;
+    public static final double LITER_TO_CUP_UK = 3.51951;
+    public static final double LITER_TO_CUP_US = 4.22675;
     public static final double LITER_TO_DECILITER = 10;
     public static final double LITER_TO_DESSERTSPOON_EU = 100;
-    public static final double LITER_TO_DESSERTSPOON_UK = 84.47;
-    public static final double LITER_TO_DESSERTSPOON_US = 101.4;
-    public static final double LITER_TO_FLUID_OUNCE_UK = 35.2;
-    public static final double LITER_TO_FLUID_OUNCE_US = 33.81;
-    public static final double LITER_TO_GALLON_UK = 0.22;
-    public static final double LITER_TO_GALLON_US = 0.2642;
+    public static final double LITER_TO_DESSERTSPOON_UK = 84.46819;
+    public static final double LITER_TO_DESSERTSPOON_US = 101.44207;
+    public static final double LITER_TO_FLUID_OUNCE_UK = 35.19508;
+    public static final double LITER_TO_FLUID_OUNCE_US = 33.81402;
+    public static final double LITER_TO_GALLON_UK = 0.21997;
+    public static final double LITER_TO_GALLON_US_DRY = 0.22702;
+    public static final double LITER_TO_GALLON_US = 0.26417;
     public static final double LITER_TO_MILLILITER = 1000;
-    public static final double LITER_TO_PINT_UK = 1.76;
-    public static final double LITER_TO_PINT_US = 2.113;
-    public static final double LITER_TO_QUART_UK = 0.8799;
-    public static final double LITER_TO_QUART_US = 1.057;
-    public static final double LITER_TO_TABLESPOON_EU = 66.67;
-    public static final double LITER_TO_TABLESPOON_UK = 56.31;
-    public static final double LITER_TO_TABLESPOON_US = 67.63;
+    public static final double LITER_TO_PINT_UK = 1.75975;
+    public static final double LITER_TO_PINT_US_DRY = 1.81617;
+    public static final double LITER_TO_PINT_US = 2.11338;
+    public static final double LITER_TO_QUART_UK = 0.87988;
+    public static final double LITER_TO_QUART_US_DRY = 0.90808;
+    public static final double LITER_TO_QUART_US = 1.05669;
+    public static final double LITER_TO_TABLESPOON_EU = 66.66667;
+    public static final double LITER_TO_TABLESPOON_UK = 56.31213;
+    public static final double LITER_TO_TABLESPOON_US = 67.62805;
     public static final double LITER_TO_TEASPOON_EU = 200;
-    public static final double LITER_TO_TEASPOON_UK = 168.9;
-    public static final double LITER_TO_TEASPOON_US = 202.9;
+    public static final double LITER_TO_TEASPOON_UK = 168.93638;
+    public static final double LITER_TO_TEASPOON_US = 202.88414;
 
-    public static final double MILLILITER_TO_CUP_UK = 0.00352;
-    public static final double MILLILITER_TO_CUP_US = 0.004227;
+    public static final double MILLILITER_TO_CUP_UK = 0.0035195;
+    public static final double MILLILITER_TO_CUP_US = 0.0042268;
     public static final double MILLILITER_TO_DECILITER = 0.01;
     public static final double MILLILITER_TO_DESSERTSPOON_EU = 0.1;
-    public static final double MILLILITER_TO_DESSERTSPOON_UK = 0.08447;
-    public static final double MILLILITER_TO_DESSERTSPOON_US = 0.1014;
-    public static final double MILLILITER_TO_FLUID_OUNCE_UK = 0.0352;
-    public static final double MILLILITER_TO_FLUID_OUNCE_US = 0.03381;
-    public static final double MILLILITER_TO_GALLON_UK = 0.00022;
-    public static final double MILLILITER_TO_GALLON_US = 0.0002642;
+    public static final double MILLILITER_TO_DESSERTSPOON_UK = 0.084468;
+    public static final double MILLILITER_TO_DESSERTSPOON_US = 0.10144;
+    public static final double MILLILITER_TO_FLUID_OUNCE_UK = 0.035195;
+    public static final double MILLILITER_TO_FLUID_OUNCE_US = 0.033814;
+    public static final double MILLILITER_TO_GALLON_UK = 0.00021997;
+    public static final double MILLILITER_TO_GALLON_US_DRY = 0.00022702;
+    public static final double MILLILITER_TO_GALLON_US = 0.00026417;
     public static final double MILLILITER_TO_LITER = 0.001;
-    public static final double MILLILITER_TO_PINT_UK = 0.00176;
-    public static final double MILLILITER_TO_PINT_US = 0.002113;
-    public static final double MILLILITER_TO_QUART_UK = 0.0008799;
-    public static final double MILLILITER_TO_QUART_US = 0.001057;
-    public static final double MILLILITER_TO_TABLESPOON_EU = 0.06667;
-    public static final double MILLILITER_TO_TABLESPOON_UK = 0.05631;
-    public static final double MILLILITER_TO_TABLESPOON_US = 0.06763;
+    public static final double MILLILITER_TO_PINT_UK = 0.0017598;
+    public static final double MILLILITER_TO_PINT_US_DRY = 0.0018162;
+    public static final double MILLILITER_TO_PINT_US = 0.0021134;
+    public static final double MILLILITER_TO_QUART_UK = 0.00087988;
+    public static final double MILLILITER_TO_QUART_US_DRY = 0.00090808;
+    public static final double MILLILITER_TO_QUART_US = 0.0010567;
+    public static final double MILLILITER_TO_TABLESPOON_EU = 0.066667;
+    public static final double MILLILITER_TO_TABLESPOON_UK = 0.056312;
+    public static final double MILLILITER_TO_TABLESPOON_US = 0.067628;
     public static final double MILLILITER_TO_TEASPOON_EU = 0.2;
-    public static final double MILLILITER_TO_TEASPOON_UK = 0.1689;
-    public static final double MILLILITER_TO_TEASPOON_US = 0.2029;
+    public static final double MILLILITER_TO_TEASPOON_UK = 0.16894;
+    public static final double MILLILITER_TO_TEASPOON_US = 0.20288;
 
     public static final double PINT_UK_TO_CUP_UK = 2;
-    public static final double PINT_UK_TO_CUP_US = 2.402;
-    public static final double PINT_UK_TO_DECILITER = 5.683;
-    public static final double PINT_UK_TO_DESSERTSPOON_EU = 56.83;
+    public static final double PINT_UK_TO_CUP_US = 2.40190;
+    public static final double PINT_UK_TO_DECILITER = 5.68261;
+    public static final double PINT_UK_TO_DESSERTSPOON_EU = 56.82613;
     public static final double PINT_UK_TO_DESSERTSPOON_UK = 48;
-    public static final double PINT_UK_TO_DESSERTSPOON_US = 57.65;
+    public static final double PINT_UK_TO_DESSERTSPOON_US = 57.64560;
     public static final double PINT_UK_TO_FLUID_OUNCE_UK = 20;
-    public static final double PINT_UK_TO_FLUID_OUNCE_US = 19.22;
+    public static final double PINT_UK_TO_FLUID_OUNCE_US = 19.21520;
     public static final double PINT_UK_TO_GALLON_UK = 0.125;
-    public static final double PINT_UK_TO_GALLON_US = 0.1501;
-    public static final double PINT_UK_TO_LITER = 0.5683;
-    public static final double PINT_UK_TO_MILLILITER = 568.3;
-    public static final double PINT_UK_TO_PINT_US = 1.201;
+    public static final double PINT_UK_TO_GALLON_US_DRY = 0.12901;
+    public static final double PINT_UK_TO_GALLON_US = 0.15012;
+    public static final double PINT_UK_TO_LITER = 0.56826;
+    public static final double PINT_UK_TO_MILLILITER = 568.26125;
+    public static final double PINT_UK_TO_PINT_US_DRY = 1.03206;
+    public static final double PINT_UK_TO_PINT_US = 1.20095;
     public static final double PINT_UK_TO_QUART_UK = 0.5;
-    public static final double PINT_UK_TO_QUART_US = 0.6005;
-    public static final double PINT_UK_TO_TABLESPOON_EU = 37.88;
+    public static final double PINT_UK_TO_QUART_US_DRY = 0.51603;
+    public static final double PINT_UK_TO_QUART_US = 0.60047;
+    public static final double PINT_UK_TO_TABLESPOON_EU = 37.88408;
     public static final double PINT_UK_TO_TABLESPOON_UK = 32;
-    public static final double PINT_UK_TO_TABLESPOON_US = 38.43;
-    public static final double PINT_UK_TO_TEASPOON_EU = 113.7;
+    public static final double PINT_UK_TO_TABLESPOON_US = 38.43040;
+    public static final double PINT_UK_TO_TEASPOON_EU = 113.65225;
     public static final double PINT_UK_TO_TEASPOON_UK = 96;
-    public static final double PINT_UK_TO_TEASPOON_US = 115.3;
+    public static final double PINT_UK_TO_TEASPOON_US = 115.29119;
 
-    public static final double PINT_US_TO_CUP_UK = 1.665;
+    public static final double PINT_US_DRY_TO_CUP_UK = 1.93788;
+    public static final double PINT_US_DRY_TO_CUP_US = 2.32729;
+    public static final double PINT_US_DRY_TO_DECILITER = 5.50610;
+    public static final double PINT_US_DRY_TO_DESSERTSPOON_EU = 55.06105;
+    public static final double PINT_US_DRY_TO_DESSERTSPOON_UK = 46.50907;
+    public static final double PINT_US_DRY_TO_DESSERTSPOON_US = 55.85507;
+    public static final double PINT_US_DRY_TO_FLUID_OUNCE_UK = 19.37878;
+    public static final double PINT_US_DRY_TO_FLUID_OUNCE_US = 18.61836;
+    public static final double PINT_US_DRY_TO_GALLON_UK = 0.12112;
+    public static final double PINT_US_DRY_TO_GALLON_US_DRY = 0.125;
+    public static final double PINT_US_DRY_TO_GALLON_US = 0.14546;
+    public static final double PINT_US_DRY_TO_LITER = 0.55061;
+    public static final double PINT_US_DRY_TO_MILLILITER = 550.61047;
+    public static final double PINT_US_DRY_TO_PINT_UK = 0.96894;
+    public static final double PINT_US_DRY_TO_PINT_US = 1.16365;
+    public static final double PINT_US_DRY_TO_QUART_UK = 0.48447;
+    public static final double PINT_US_DRY_TO_QUART_US_DRY = 0.5;
+    public static final double PINT_US_DRY_TO_QUART_US = 0.58182;
+    public static final double PINT_US_DRY_TO_TABLESPOON_EU = 36.70736;
+    public static final double PINT_US_DRY_TO_TABLESPOON_UK = 31.00605;
+    public static final double PINT_US_DRY_TO_TABLESPOON_US = 37.23671;
+    public static final double PINT_US_DRY_TO_TEASPOON_EU = 110.12209;
+    public static final double PINT_US_DRY_TO_TEASPOON_UK = 93.01814;
+    public static final double PINT_US_DRY_TO_TEASPOON_US = 111.71013;
+
+    public static final double PINT_US_TO_CUP_UK = 1.66535;
     public static final double PINT_US_TO_CUP_US = 2;
-    public static final double PINT_US_TO_DECILITER = 4.732;
-    public static final double PINT_US_TO_DESSERTSPOON_EU = 47.32;
-    public static final double PINT_US_TO_DESSERTSPOON_UK = 39.97;
+    public static final double PINT_US_TO_DECILITER = 4.73176;
+    public static final double PINT_US_TO_DESSERTSPOON_EU = 47.31765;
+    public static final double PINT_US_TO_DESSERTSPOON_UK = 39.96836;
     public static final double PINT_US_TO_DESSERTSPOON_US = 48;
-    public static final double PINT_US_TO_FLUID_OUNCE_UK = 16.65;
+    public static final double PINT_US_TO_FLUID_OUNCE_UK = 16.65348;
     public static final double PINT_US_TO_FLUID_OUNCE_US = 16;
-    public static final double PINT_US_TO_GALLON_UK = 0.1041;
+    public static final double PINT_US_TO_GALLON_UK = 0.10408;
+    public static final double PINT_US_TO_GALLON_US_DRY = 0.10742;
     public static final double PINT_US_TO_GALLON_US = 0.125;
-    public static final double PINT_US_TO_LITER = 0.4732;
-    public static final double PINT_US_TO_MILLILITER = 473.2;
-    public static final double PINT_US_TO_PINT_UK = 0.8327;
-    public static final double PINT_US_TO_QUART_UK = 0.4163;
-    public static final double PINT_US_TO_QUART_US = 0.8327;
-    public static final double PINT_US_TO_TABLESPOON_EU = 31.55;
-    public static final double PINT_US_TO_TABLESPOON_UK = 26.65;
+    public static final double PINT_US_TO_LITER = 0.47318;
+    public static final double PINT_US_TO_MILLILITER = 473.17647;
+    public static final double PINT_US_TO_PINT_US_DRY = 0.85937;
+    public static final double PINT_US_TO_PINT_UK = 0.83267;
+    public static final double PINT_US_TO_QUART_UK = 0.41634;
+    public static final double PINT_US_TO_QUART_US_DRY = 0.42968;
+    public static final double PINT_US_TO_QUART_US = 0.5;
+    public static final double PINT_US_TO_TABLESPOON_EU = 31.54510;
+    public static final double PINT_US_TO_TABLESPOON_UK = 26.64557;
     public static final double PINT_US_TO_TABLESPOON_US = 32;
-    public static final double PINT_US_TO_TEASPOON_EU = 94.64;
-    public static final double PINT_US_TO_TEASPOON_UK = 79.94;
+    public static final double PINT_US_TO_TEASPOON_EU = 94.63529;
+    public static final double PINT_US_TO_TEASPOON_UK = 79.93672;
     public static final double PINT_US_TO_TEASPOON_US = 96;
 
     public static final double QUART_UK_TO_CUP_UK = 4;
-    public static final double QUART_UK_TO_CUP_US = 4.804;
-    public static final double QUART_UK_TO_DECILITER = 11.37;
-    public static final double QUART_UK_TO_DESSERTSPOON_EU = 113.7;
+    public static final double QUART_UK_TO_CUP_US = 4.80380;
+    public static final double QUART_UK_TO_DECILITER = 11.36523;
+    public static final double QUART_UK_TO_DESSERTSPOON_EU = 113.65225;
     public static final double QUART_UK_TO_DESSERTSPOON_UK = 96;
-    public static final double QUART_UK_TO_DESSERTSPOON_US = 115.3;
+    public static final double QUART_UK_TO_DESSERTSPOON_US = 115.29119;
     public static final double QUART_UK_TO_FLUID_OUNCE_UK = 40;
-    public static final double QUART_UK_TO_FLUID_OUNCE_US = 38.43;
+    public static final double QUART_UK_TO_FLUID_OUNCE_US = 38.43040;
     public static final double QUART_UK_TO_GALLON_UK = 0.25;
-    public static final double QUART_UK_TO_GALLON_US = 0.3002;
-    public static final double QUART_UK_TO_LITER = 1.137;
-    public static final double QUART_UK_TO_MILLILITER = 1137;
+    public static final double QUART_UK_TO_GALLON_US_DRY = 0.25801;
+    public static final double QUART_UK_TO_GALLON_US = 0.30024;
+    public static final double QUART_UK_TO_LITER = 1.13652;
+    public static final double QUART_UK_TO_MILLILITER = 1136.5225;
     public static final double QUART_UK_TO_PINT_UK = 2;
-    public static final double QUART_UK_TO_PINT_US = 2.402;
-    public static final double QUART_UK_TO_QUART_US = 1.201;
-    public static final double QUART_UK_TO_TABLESPOON_EU = 75.77;
+    public static final double QUART_UK_TO_PINT_US_DRY = 2.064113;
+    public static final double QUART_UK_TO_PINT_US = 2.40190;
+    public static final double QUART_UK_TO_QUART_US_DRY = 1.03206;
+    public static final double QUART_UK_TO_QUART_US = 1.20095;
+    public static final double QUART_UK_TO_TABLESPOON_EU = 75.76817;
     public static final double QUART_UK_TO_TABLESPOON_UK = 64;
-    public static final double QUART_UK_TO_TABLESPOON_US = 76.86;
-    public static final double QUART_UK_TO_TEASPOON_EU = 227.3;
+    public static final double QUART_UK_TO_TABLESPOON_US = 76.86080;
+    public static final double QUART_UK_TO_TEASPOON_EU = 227.3045;
     public static final double QUART_UK_TO_TEASPOON_UK = 192;
-    public static final double QUART_UK_TO_TEASPOON_US = 230.6;
+    public static final double QUART_UK_TO_TEASPOON_US = 230.58239;
 
-    public static final double QUART_US_TO_CUP_UK = 3.331;
+    public static final double QUART_US_DRY_TO_CUP_UK = 3.87576;
+    public static final double QUART_US_DRY_TO_CUP_US = 4.65459;
+    public static final double QUART_US_DRY_TO_DECILITER = 11.01221;
+    public static final double QUART_US_DRY_TO_DESSERTSPOON_EU = 110.12210;
+    public static final double QUART_US_DRY_TO_DESSERTSPOON_UK = 93.01814;
+    public static final double QUART_US_DRY_TO_DESSERTSPOON_US = 111.71013;
+    public static final double QUART_US_DRY_TO_FLUID_OUNCE_UK = 38.75756;
+    public static final double QUART_US_DRY_TO_FLUID_OUNCE_US = 37.23671;
+    public static final double QUART_US_DRY_TO_GALLON_UK = 0.24223;
+    public static final double QUART_US_DRY_TO_GALLON_US_DRY = 0.25;
+    public static final double QUART_US_DRY_TO_GALLON_US = 0.29091;
+    public static final double QUART_US_DRY_TO_LITER = 1.10122;
+    public static final double QUART_US_DRY_TO_MILLILITER = 1101.22095;
+    public static final double QUART_US_DRY_TO_PINT_UK = 1.93788;
+    public static final double QUART_US_DRY_TO_PINT_US_DRY = 2;
+    public static final double QUART_US_DRY_TO_PINT_US = 2.32729;
+    public static final double QUART_US_DRY_TO_QUART_UK = 0.96894;
+    public static final double QUART_US_DRY_TO_QUART_US = 1.16365;
+    public static final double QUART_US_DRY_TO_TABLESPOON_EU = 73.41473;
+    public static final double QUART_US_DRY_TO_TABLESPOON_UK = 62.01209;
+    public static final double QUART_US_DRY_TO_TABLESPOON_US = 74.47342;
+    public static final double QUART_US_DRY_TO_TEASPOON_EU = 220.24419;
+    public static final double QUART_US_DRY_TO_TEASPOON_UK = 186.03628;
+    public static final double QUART_US_DRY_TO_TEASPOON_US = 223.42026;
+
+    public static final double QUART_US_TO_CUP_UK = 3.33070;
     public static final double QUART_US_TO_CUP_US = 4;
-    public static final double QUART_US_TO_DECILITER = 9.464;
-    public static final double QUART_US_TO_DESSERTSPOON_EU = 94.64;
-    public static final double QUART_US_TO_DESSERTSPOON_UK = 79.94;
+    public static final double QUART_US_TO_DECILITER = 9.46353;
+    public static final double QUART_US_TO_DESSERTSPOON_EU = 94.63530;
+    public static final double QUART_US_TO_DESSERTSPOON_UK = 79.93672;
     public static final double QUART_US_TO_DESSERTSPOON_US = 96;
-    public static final double QUART_US_TO_FLUID_OUNCE_UK = 33.31;
+    public static final double QUART_US_TO_FLUID_OUNCE_UK = 33.30697;
     public static final double QUART_US_TO_FLUID_OUNCE_US = 32;
-    public static final double QUART_US_TO_GALLON_UK = 0.2082;
+    public static final double QUART_US_TO_GALLON_UK = 0.20817;
+    public static final double QUART_US_TO_GALLON_US_DRY = 0.21484;
     public static final double QUART_US_TO_GALLON_US = 0.25;
-    public static final double QUART_US_TO_LITER = 0.9464;
-    public static final double QUART_US_TO_MILLILITER = 946.4;
-    public static final double QUART_US_TO_PINT_UK = 1.665;
+    public static final double QUART_US_TO_LITER = 0.94635;
+    public static final double QUART_US_TO_MILLILITER = 946.35295;
+    public static final double QUART_US_TO_PINT_UK = 1.66535;
+    public static final double QUART_US_TO_PINT_US_DRY = 1.71873;
     public static final double QUART_US_TO_PINT_US = 2;
-    public static final double QUART_US_TO_QUART_UK = 0.8327;
-    public static final double QUART_US_TO_TABLESPOON_EU = 63.1;
-    public static final double QUART_US_TO_TABLESPOON_UK = 53.29;
+    public static final double QUART_US_TO_QUART_UK = 0.83267;
+    public static final double QUART_US_TO_QUART_US_DRY = 0.85937;
+    public static final double QUART_US_TO_TABLESPOON_EU = 63.09010;
+    public static final double QUART_US_TO_TABLESPOON_UK = 53.29115;
     public static final double QUART_US_TO_TABLESPOON_US = 64;
-    public static final double QUART_US_TO_TEASPOON_EU = 189.3;
-    public static final double QUART_US_TO_TEASPOON_UK = 159.9;
+    public static final double QUART_US_TO_TEASPOON_EU = 189.27059;
+    public static final double QUART_US_TO_TEASPOON_UK = 159.87344;
     public static final double QUART_US_TO_TEASPOON_US = 192;
 
-    public static final double TABLESPOON_EU_TO_CUP_UK = 0.05279;
-    public static final double TABLESPOON_EU_TO_CUP_US = 0.0634;
+    public static final double TABLESPOON_EU_TO_CUP_UK = 0.052793;
+    public static final double TABLESPOON_EU_TO_CUP_US = 0.063401;
     public static final double TABLESPOON_EU_TO_DECILITER = 0.15;
     public static final double TABLESPOON_EU_TO_DESSERTSPOON_EU = 1.5;
-    public static final double TABLESPOON_EU_TO_DESSERTSPOON_UK = 1.267;
-    public static final double TABLESPOON_EU_TO_DESSERTSPOON_US = 1.522;
-    public static final double TABLESPOON_EU_TO_FLUID_OUNCE_UK = 0.5279;
-    public static final double TABLESPOON_EU_TO_FLUID_OUNCE_US = 0.5072;
-    public static final double TABLESPOON_EU_TO_GALLON_UK = 0.0033;
-    public static final double TABLESPOON_EU_TO_GALLON_US = 0.003963;
+    public static final double TABLESPOON_EU_TO_DESSERTSPOON_UK = 1.26702;
+    public static final double TABLESPOON_EU_TO_DESSERTSPOON_US = 1.52163;
+    public static final double TABLESPOON_EU_TO_FLUID_OUNCE_UK = 0.52793;
+    public static final double TABLESPOON_EU_TO_FLUID_OUNCE_US = 0.50721;
+    public static final double TABLESPOON_EU_TO_GALLON_UK = 0.0032995;
+    public static final double TABLESPOON_EU_TO_GALLON_US_DRY = 0.0034053;
+    public static final double TABLESPOON_EU_TO_GALLON_US = 0.0039626;
     public static final double TABLESPOON_EU_TO_LITER = 0.015;
     public static final double TABLESPOON_EU_TO_MILLILITER = 15;
-    public static final double TABLESPOON_EU_TO_PINT_UK = 0.0264;
-    public static final double TABLESPOON_EU_TO_PINT_US = 0.0317;
-    public static final double TABLESPOON_EU_TO_QUART_UK = 0.0132;
-    public static final double TABLESPOON_EU_TO_QUART_US = 0.01585;
-    public static final double TABLESPOON_EU_TO_TABLESPOON_UK = 0.8447;
-    public static final double TABLESPOON_EU_TO_TABLESPOON_US = 1.014;
+    public static final double TABLESPOON_EU_TO_PINT_UK = 0.026396;
+    public static final double TABLESPOON_EU_TO_PINT_US_DRY = 0.027242;
+    public static final double TABLESPOON_EU_TO_PINT_US = 0.031701;
+    public static final double TABLESPOON_EU_TO_QUART_UK = 0.013198;
+    public static final double TABLESPOON_EU_TO_QUART_US_DRY = 0.013621;
+    public static final double TABLESPOON_EU_TO_QUART_US = 0.015850;
+    public static final double TABLESPOON_EU_TO_TABLESPOON_UK = 0.84468;
+    public static final double TABLESPOON_EU_TO_TABLESPOON_US = 1.01442;
     public static final double TABLESPOON_EU_TO_TEASPOON_EU = 3;
-    public static final double TABLESPOON_EU_TO_TEASPOON_UK = 2.534;
-    public static final double TABLESPOON_EU_TO_TEASPOON_US = 3.043;
+    public static final double TABLESPOON_EU_TO_TEASPOON_UK = 2.53405;
+    public static final double TABLESPOON_EU_TO_TEASPOON_US = 3.04326;
 
     public static final double TABLESPOON_UK_TO_CUP_UK = 0.0625;
-    public static final double TABLESPOON_UK_TO_CUP_US = 0.07506;
-    public static final double TABLESPOON_UK_TO_DECILITER = 0.1776;
-    public static final double TABLESPOON_UK_TO_DESSERTSPOON_EU = 1.776;
+    public static final double TABLESPOON_UK_TO_CUP_US = 0.075059;
+    public static final double TABLESPOON_UK_TO_DECILITER = 0.17758;
+    public static final double TABLESPOON_UK_TO_DESSERTSPOON_EU = 1.77582;
     public static final double TABLESPOON_UK_TO_DESSERTSPOON_UK = 1.5;
-    public static final double TABLESPOON_UK_TO_DESSERTSPOON_US = 1.801;
+    public static final double TABLESPOON_UK_TO_DESSERTSPOON_US = 1.80142;
     public static final double TABLESPOON_UK_TO_FLUID_OUNCE_UK = 0.625;
-    public static final double TABLESPOON_UK_TO_FLUID_OUNCE_US = 0.6005;
-    public static final double TABLESPOON_UK_TO_GALLON_UK = 0.003906;
-    public static final double TABLESPOON_UK_TO_GALLON_US = 0.004691;
-    public static final double TABLESPOON_UK_TO_LITER = 0.01776;
-    public static final double TABLESPOON_UK_TO_MILLILITER = 17.76;
+    public static final double TABLESPOON_UK_TO_FLUID_OUNCE_US = 0.60047;
+    public static final double TABLESPOON_UK_TO_GALLON_UK = 0.0039063;
+    public static final double TABLESPOON_UK_TO_GALLON_US_DRY = 0.0046912;
+    public static final double TABLESPOON_UK_TO_GALLON_US = 0.0040315;
+    public static final double TABLESPOON_UK_TO_LITER = 0.017758;
+    public static final double TABLESPOON_UK_TO_MILLILITER = 17.75816;
     public static final double TABLESPOON_UK_TO_PINT_UK = 0.03125;
-    public static final double TABLESPOON_UK_TO_PINT_US = 0.03753;
-    public static final double TABLESPOON_UK_TO_QUART_UK = 0.01563;
-    public static final double TABLESPOON_UK_TO_QUART_US = 0.01876;
-    public static final double TABLESPOON_UK_TO_TABLESPOON_EU = 1.184;
-    public static final double TABLESPOON_UK_TO_TABLESPOON_US = 1.201;
-    public static final double TABLESPOON_UK_TO_TEASPOON_EU = 3.552;
+    public static final double TABLESPOON_UK_TO_PINT_US_DRY = 0.032252;
+    public static final double TABLESPOON_UK_TO_PINT_US = 0.037530;
+    public static final double TABLESPOON_UK_TO_QUART_UK = 0.015625;
+    public static final double TABLESPOON_UK_TO_QUART_US_DRY = 0.016126;
+    public static final double TABLESPOON_UK_TO_QUART_US = 0.018765;
+    public static final double TABLESPOON_UK_TO_TABLESPOON_EU = 1.18388;
+    public static final double TABLESPOON_UK_TO_TABLESPOON_US = 1.20095;
+    public static final double TABLESPOON_UK_TO_TEASPOON_EU = 3.55163;
     public static final double TABLESPOON_UK_TO_TEASPOON_UK = 3;
-    public static final double TABLESPOON_UK_TO_TEASPOON_US = 3.603;
+    public static final double TABLESPOON_UK_TO_TEASPOON_US = 3.60285;
 
-    public static final double TABLESPOON_US_TO_CUP_UK = 0.0520;
-    public static final double TABLESPOON_US_TO_CUP_US = 0.0634;
-    public static final double TABLESPOON_US_TO_DECILITER = 0.1479;
-    public static final double TABLESPOON_US_TO_DESSERTSPOON_EU = 1.479;
-    public static final double TABLESPOON_US_TO_DESSERTSPOON_UK = 1.249;
+    public static final double TABLESPOON_US_TO_CUP_UK = 0.052042;
+    public static final double TABLESPOON_US_TO_CUP_US = 0.0625;
+    public static final double TABLESPOON_US_TO_DECILITER = 0.14787;
+    public static final double TABLESPOON_US_TO_DESSERTSPOON_EU = 1.47868;
+    public static final double TABLESPOON_US_TO_DESSERTSPOON_UK = 1.24901;
     public static final double TABLESPOON_US_TO_DESSERTSPOON_US = 1.5;
-    public static final double TABLESPOON_US_TO_FLUID_OUNCE_UK = 0.5204;
+    public static final double TABLESPOON_US_TO_FLUID_OUNCE_UK = 0.52042;
     public static final double TABLESPOON_US_TO_FLUID_OUNCE_US = 0.5;
-    public static final double TABLESPOON_US_TO_GALLON_UK = 0.003253;
-    public static final double TABLESPOON_US_TO_GALLON_US = 0.003906;
-    public static final double TABLESPOON_US_TO_LITER = 0.01479;
-    public static final double TABLESPOON_US_TO_MILLILITER = 14.79;
-    public static final double TABLESPOON_US_TO_PINT_UK = 0.02602;
+    public static final double TABLESPOON_US_TO_GALLON_UK = 0.0032526;
+    public static final double TABLESPOON_US_TO_GALLON_US_DRY = 0.0033569;
+    public static final double TABLESPOON_US_TO_GALLON_US = 0.0039063;
+    public static final double TABLESPOON_US_TO_LITER = 0.014787;
+    public static final double TABLESPOON_US_TO_MILLILITER = 14.78676;
+    public static final double TABLESPOON_US_TO_PINT_UK = 0.026021;
+    public static final double TABLESPOON_US_TO_PINT_US_DRY = 0.026855;
     public static final double TABLESPOON_US_TO_PINT_US = 0.03125;
-    public static final double TABLESPOON_US_TO_QUART_UK = 0.01301;
-    public static final double TABLESPOON_US_TO_QUART_US = 0.01563;
-    public static final double TABLESPOON_US_TO_TABLESPOON_EU = 0.9858;
-    public static final double TABLESPOON_US_TO_TABLESPOON_UK = 0.8327;
-    public static final double TABLESPOON_US_TO_TEASPOON_EU = 2.957;
-    public static final double TABLESPOON_US_TO_TEASPOON_UK = 2.498;
+    public static final double TABLESPOON_US_TO_QUART_UK = 0.013011;
+    public static final double TABLESPOON_US_TO_QUART_US_DRY = 0.013428;
+    public static final double TABLESPOON_US_TO_QUART_US = 0.015625;
+    public static final double TABLESPOON_US_TO_TABLESPOON_EU = 0.98578;
+    public static final double TABLESPOON_US_TO_TABLESPOON_UK = 0.83267;
+    public static final double TABLESPOON_US_TO_TEASPOON_EU = 2.95735;
+    public static final double TABLESPOON_US_TO_TEASPOON_UK = 2.49802;
     public static final double TABLESPOON_US_TO_TEASPOON_US = 3;
 
-    public static final double TEASPOON_EU_TO_CUP_UK = 0.0176;
-    public static final double TEASPOON_EU_TO_CUP_US = 0.02113;
+    public static final double TEASPOON_EU_TO_CUP_UK = 0.017598;
+    public static final double TEASPOON_EU_TO_CUP_US = 0.021134;
     public static final double TEASPOON_EU_TO_DECILITER = 0.05;
     public static final double TEASPOON_EU_TO_DESSERTSPOON_EU = 0.5;
-    public static final double TEASPOON_EU_TO_DESSERTSPOON_UK = 0.4223;
-    public static final double TEASPOON_EU_TO_DESSERTSPOON_US = 0.5072;
-    public static final double TEASPOON_EU_TO_FLUID_OUNCE_UK = 0.176;
-    public static final double TEASPOON_EU_TO_FLUID_OUNCE_US = 0.1691;
-    public static final double TEASPOON_EU_TO_GALLON_UK = 0.0011;
-    public static final double TEASPOON_EU_TO_GALLON_US = 0.001321;
+    public static final double TEASPOON_EU_TO_DESSERTSPOON_UK = 0.42234;
+    public static final double TEASPOON_EU_TO_DESSERTSPOON_US = 0.50721;
+    public static final double TEASPOON_EU_TO_FLUID_OUNCE_UK = 0.17598;
+    public static final double TEASPOON_EU_TO_FLUID_OUNCE_US = 0.16907;
+    public static final double TEASPOON_EU_TO_GALLON_UK = 0.0010998;
+    public static final double TEASPOON_EU_TO_GALLON_US_DRY = 0.0011351;
+    public static final double TEASPOON_EU_TO_GALLON_US = 0.0013209;
     public static final double TEASPOON_EU_TO_LITER = 0.005;
     public static final double TEASPOON_EU_TO_MILLILITER = 5;
-    public static final double TEASPOON_EU_TO_PINT_UK = 0.008799;
-    public static final double TEASPOON_EU_TO_PINT_US = 0.01057;
-    public static final double TEASPOON_EU_TO_QUART_UK = 0.0044;
-    public static final double TEASPOON_EU_TO_QUART_US = 0.005283;
-    public static final double TEASPOON_EU_TO_TABLESPOON_EU = 0.3333;
-    public static final double TEASPOON_EU_TO_TABLESPOON_UK = 0.2816;
-    public static final double TEASPOON_EU_TO_TABLESPOON_US = 0.3381;
-    public static final double TEASPOON_EU_TO_TEASPOON_UK = 0.8447;
-    public static final double TEASPOON_EU_TO_TEASPOON_US = 1.014;
+    public static final double TEASPOON_EU_TO_PINT_UK = 0.0087988;
+    public static final double TEASPOON_EU_TO_PINT_US_DRY = 0.0090808;
+    public static final double TEASPOON_EU_TO_PINT_US = 0.010567;
+    public static final double TEASPOON_EU_TO_QUART_UK = 0.0043994;
+    public static final double TEASPOON_EU_TO_QUART_US_DRY = 0.0045404;
+    public static final double TEASPOON_EU_TO_QUART_US = 0.0052834;
+    public static final double TEASPOON_EU_TO_TABLESPOON_EU = 0.33333;
+    public static final double TEASPOON_EU_TO_TABLESPOON_UK = 0.28156;
+    public static final double TEASPOON_EU_TO_TABLESPOON_US = 0.33814;
+    public static final double TEASPOON_EU_TO_TEASPOON_UK = 0.84468;
+    public static final double TEASPOON_EU_TO_TEASPOON_US = 1.01442;
 
-    public static final double TEASPOON_UK_TO_CUP_UK = 0.02083;
+    public static final double TEASPOON_UK_TO_CUP_UK = 0.020833;
     public static final double TEASPOON_UK_TO_CUP_US = 0.02502;
-    public static final double TEASPOON_UK_TO_DECILITER = 0.05919;
-    public static final double TEASPOON_UK_TO_DESSERTSPOON_EU = 0.5919;
+    public static final double TEASPOON_UK_TO_DECILITER = 0.059194;
+    public static final double TEASPOON_UK_TO_DESSERTSPOON_EU = 0.59194;
     public static final double TEASPOON_UK_TO_DESSERTSPOON_UK = 0.5;
-    public static final double TEASPOON_UK_TO_DESSERTSPOON_US = 0.6005;
-    public static final double TEASPOON_UK_TO_FLUID_OUNCE_UK = 0.2083;
-    public static final double TEASPOON_UK_TO_FLUID_OUNCE_US = 0.2002;
-    public static final double TEASPOON_UK_TO_GALLON_UK = 0.001302;
-    public static final double TEASPOON_UK_TO_GALLON_US = 0.001564;
-    public static final double TEASPOON_UK_TO_LITER = 0.005919;
-    public static final double TEASPOON_UK_TO_MILLILITER = 5.919;
-    public static final double TEASPOON_UK_TO_PINT_UK = 0.01042;
+    public static final double TEASPOON_UK_TO_DESSERTSPOON_US = 0.60047;
+    public static final double TEASPOON_UK_TO_FLUID_OUNCE_UK = 0.20833;
+    public static final double TEASPOON_UK_TO_FLUID_OUNCE_US = 0.20016;
+    public static final double TEASPOON_UK_TO_GALLON_UK = 0.0013021;
+    public static final double TEASPOON_UK_TO_GALLON_US_DRY = 0.0013438;
+    public static final double TEASPOON_UK_TO_GALLON_US = 0.0015637;
+    public static final double TEASPOON_UK_TO_LITER = 0.0059194;
+    public static final double TEASPOON_UK_TO_MILLILITER = 5.91939;
+    public static final double TEASPOON_UK_TO_PINT_UK = 0.010417;
+    public static final double TEASPOON_UK_TO_PINT_US_DRY = 0.010751;
     public static final double TEASPOON_UK_TO_PINT_US = 0.01251;
-    public static final double TEASPOON_UK_TO_QUART_UK = 0.005208;
+    public static final double TEASPOON_UK_TO_QUART_UK = 0.0052083;
+    public static final double TEASPOON_UK_TO_QUART_US_DRY = 0.0053753;
     public static final double TEASPOON_UK_TO_QUART_US = 0.006255;
-    public static final double TEASPOON_UK_TO_TABLESPOON_EU = 0.3946;
-    public static final double TEASPOON_UK_TO_TABLESPOON_UK = 0.3333;
-    public static final double TEASPOON_UK_TO_TABLESPOON_US = 0.4003;
-    public static final double TEASPOON_UK_TO_TEASPOON_EU = 1.184;
-    public static final double TEASPOON_UK_TO_TEASPOON_US = 1.201;
+    public static final double TEASPOON_UK_TO_TABLESPOON_EU = 0.39463;
+    public static final double TEASPOON_UK_TO_TABLESPOON_UK = 0.33333;
+    public static final double TEASPOON_UK_TO_TABLESPOON_US = 0.40032;
+    public static final double TEASPOON_UK_TO_TEASPOON_EU = 1.18388;
+    public static final double TEASPOON_UK_TO_TEASPOON_US = 1.20095;
 
-    public static final double TEASPOON_US_TO_CUP_UK = 0.01735;
-    public static final double TEASPOON_US_TO_CUP_US = 0.02083;
-    public static final double TEASPOON_US_TO_DECILITER = 0.04929;
-    public static final double TEASPOON_US_TO_DESSERTSPOON_EU = 0.4929;
-    public static final double TEASPOON_US_TO_DESSERTSPOON_UK = 0.4163;
+    public static final double TEASPOON_US_TO_CUP_UK = 0.017347;
+    public static final double TEASPOON_US_TO_CUP_US = 0.020833;
+    public static final double TEASPOON_US_TO_DECILITER = 0.049289;
+    public static final double TEASPOON_US_TO_DESSERTSPOON_EU = 0.49289;
+    public static final double TEASPOON_US_TO_DESSERTSPOON_UK = 0.41634;
     public static final double TEASPOON_US_TO_DESSERTSPOON_US = 0.5;
-    public static final double TEASPOON_US_TO_FLUID_OUNCE_UK = 0.1735;
-    public static final double TEASPOON_US_TO_FLUID_OUNCE_US = 0.1667;
-    public static final double TEASPOON_US_TO_GALLON_UK = 0.001084;
-    public static final double TEASPOON_US_TO_GALLON_US = 0.001302;
-    public static final double TEASPOON_US_TO_LITER = 0.004929;
-    public static final double TEASPOON_US_TO_MILLILITER = 4.929;
-    public static final double TEASPOON_US_TO_PINT_UK = 0.008674;
-    public static final double TEASPOON_US_TO_PINT_US = 0.01042;
-    public static final double TEASPOON_US_TO_QUART_UK = 0.004337;
-    public static final double TEASPOON_US_TO_QUART_US = 0.005208;
-    public static final double TEASPOON_US_TO_TABLESPOON_EU = 0.3286;
-    public static final double TEASPOON_US_TO_TABLESPOON_UK = 0.2776;
-    public static final double TEASPOON_US_TO_TABLESPOON_US = 0.3333;
-    public static final double TEASPOON_US_TO_TEASPOON_EU = 0.9858;
-    public static final double TEASPOON_US_TO_TEASPOON_UK = 0.8327;
+    public static final double TEASPOON_US_TO_FLUID_OUNCE_UK = 0.17347;
+    public static final double TEASPOON_US_TO_FLUID_OUNCE_US = 0.16667;
+    public static final double TEASPOON_US_TO_GALLON_UK = 0.0010842;
+    public static final double TEASPOON_US_TO_GALLON_US_DRY = 0.0011190;
+    public static final double TEASPOON_US_TO_GALLON_US = 0.0013021;
+    public static final double TEASPOON_US_TO_LITER = 0.0049289;
+    public static final double TEASPOON_US_TO_MILLILITER = 4.92892;
+    public static final double TEASPOON_US_TO_PINT_UK = 0.0086737;
+    public static final double TEASPOON_US_TO_PINT_US_DRY = 0.0089517;
+    public static final double TEASPOON_US_TO_PINT_US = 0.010417;
+    public static final double TEASPOON_US_TO_QUART_UK = 0.0043368;
+    public static final double TEASPOON_US_TO_QUART_US_DRY = 0.0044759;
+    public static final double TEASPOON_US_TO_QUART_US = 0.0052083;
+    public static final double TEASPOON_US_TO_TABLESPOON_EU = 0.32859;
+    public static final double TEASPOON_US_TO_TABLESPOON_UK = 0.27756;
+    public static final double TEASPOON_US_TO_TABLESPOON_US = 0.33333;
+    public static final double TEASPOON_US_TO_TEASPOON_EU = 0.98578;
+    public static final double TEASPOON_US_TO_TEASPOON_UK = 0.83267;
 
 
 
@@ -593,6 +730,9 @@ public class Converter {
     public static double cupUKToGallonUK(double amount){
         return amount*CUP_UK_TO_GALLON_UK;
     }
+    public static double cupUKToGallonUSDry(double amount){
+        return amount*CUP_UK_TO_GALLON_US_DRY;
+    }
     public static double cupUKToGallonUS(double amount){
         return amount*CUP_UK_TO_GALLON_US;
     }
@@ -605,11 +745,17 @@ public class Converter {
     public static double cupUKToPintUK(double amount){
         return amount*CUP_UK_TO_PINT_UK;
     }
+    public static double cupUKToPintUSDry(double amount){
+        return amount*CUP_UK_TO_PINT_US_DRY;
+    }
     public static double cupUKToPintUS(double amount){
         return amount*CUP_UK_TO_PINT_US;
     }
     public static double cupUKToQuartUK(double amount){
         return amount*CUP_UK_TO_QUART_UK;
+    }
+    public static double cupUKToQuartUSDry(double amount){
+        return amount*CUP_UK_TO_QUART_US_DRY;
     }
     public static double cupUKToQuartUS(double amount){
         return amount*CUP_UK_TO_QUART_US;
@@ -659,6 +805,9 @@ public class Converter {
     public static double cupUSToGallonUK(double amount){
         return amount*CUP_US_TO_GALLON_UK;
     }
+    public static double cupUSToGallonUSDry(double amount){
+        return amount*CUP_US_TO_GALLON_US_DRY;
+    }
     public static double cupUSToGallonUS(double amount){
         return amount*CUP_US_TO_GALLON_US;
     }
@@ -671,11 +820,17 @@ public class Converter {
     public static double cupUSToPintUK(double amount){
         return amount*CUP_US_TO_PINT_UK;
     }
+    public static double cupUSToPintUSDry(double amount){
+        return amount*CUP_US_TO_PINT_US_DRY;
+    }
     public static double cupUSToPintUS(double amount){
         return amount*CUP_US_TO_PINT_US;
     }
     public static double cupUSToQuartUK(double amount){
         return amount*CUP_US_TO_QUART_UK;
+    }
+    public static double cupUSToQuartUSDry(double amount){
+        return amount*CUP_US_TO_QUART_US_DRY;
     }
     public static double cupUSToQuartUS(double amount){
         return amount*CUP_US_TO_QUART_US;
@@ -725,6 +880,9 @@ public class Converter {
     public static double deciliterToGallonUK(double amount){
         return amount*DECILITER_TO_GALLON_UK;
     }
+    public static double deciliterToGallonUSDry(double amount){
+        return amount*DECILITER_TO_GALLON_US_DRY;
+    }
     public static double deciliterToGallonUS(double amount){
         return amount*DECILITER_TO_GALLON_US;
     }
@@ -737,11 +895,17 @@ public class Converter {
     public static double deciliterToPintUK(double amount){
         return amount*DECILITER_TO_PINT_UK;
     }
+    public static double deciliterToPintUSDry(double amount){
+        return amount*DECILITER_TO_PINT_US_DRY;
+    }
     public static double deciliterToPintUS(double amount){
         return amount*DECILITER_TO_PINT_US;
     }
     public static double deciliterToQuartUK(double amount){
         return amount*DECILITER_TO_QUART_UK;
+    }
+    public static double deciliterToQuartUSDry(double amount){
+        return amount*DECILITER_TO_QUART_US_DRY;
     }
     public static double deciliterToQuartUS(double amount){
         return amount*DECILITER_TO_QUART_US;
@@ -791,6 +955,9 @@ public class Converter {
     public static double dessertspoonEUToGallonUK(double amount){
         return amount*DESSERTSPOON_EU_TO_GALLON_UK;
     }
+    public static double dessertspoonEUToGallonUSDry(double amount){
+        return amount*DESSERTSPOON_EU_TO_GALLON_US_DRY;
+    }
     public static double dessertspoonEUToGallonUS(double amount){
         return amount*DESSERTSPOON_EU_TO_GALLON_US;
     }
@@ -803,11 +970,17 @@ public class Converter {
     public static double dessertspoonEUToPintUK(double amount){
         return amount*DESSERTSPOON_EU_TO_PINT_UK;
     }
+    public static double dessertspoonEUToPintUSDry(double amount){
+        return amount*DESSERTSPOON_EU_TO_PINT_US_DRY;
+    }
     public static double dessertspoonEUToPintUS(double amount){
         return amount*DESSERTSPOON_EU_TO_PINT_US;
     }
     public static double dessertspoonEUToQuartUK(double amount){
         return amount*DESSERTSPOON_EU_TO_QUART_UK;
+    }
+    public static double dessertspoonEUToQuartUSDry(double amount){
+        return amount*DESSERTSPOON_EU_TO_QUART_US_DRY;
     }
     public static double dessertspoonEUToQuartUS(double amount){
         return amount*DESSERTSPOON_EU_TO_QUART_US;
@@ -857,6 +1030,9 @@ public class Converter {
     public static double dessertspoonUKToGallonUK(double amount){
         return amount*DESSERTSPOON_UK_TO_GALLON_UK;
     }
+    public static double dessertspoonUKToGallonUSDry(double amount){
+        return amount*DESSERTSPOON_UK_TO_GALLON_US_DRY;
+    }
     public static double dessertspoonUKToGallonUS(double amount){
         return amount*DESSERTSPOON_UK_TO_GALLON_US;
     }
@@ -869,11 +1045,17 @@ public class Converter {
     public static double dessertspoonUKToPintUK(double amount){
         return amount*DESSERTSPOON_UK_TO_PINT_UK;
     }
+    public static double dessertspoonUKToPintUSDry(double amount){
+        return amount*DESSERTSPOON_UK_TO_PINT_US_DRY;
+    }
     public static double dessertspoonUKToPintUS(double amount){
         return amount*DESSERTSPOON_UK_TO_PINT_US;
     }
     public static double dessertspoonUKToQuartUK(double amount){
         return amount*DESSERTSPOON_UK_TO_QUART_UK;
+    }
+    public static double dessertspoonUKToQuartUSDry(double amount){
+        return amount*DESSERTSPOON_UK_TO_QUART_US_DRY;
     }
     public static double dessertspoonUKToQuartUS(double amount){
         return amount*DESSERTSPOON_UK_TO_QUART_US;
@@ -923,6 +1105,9 @@ public class Converter {
     public static double dessertspoonUSToGallonUK(double amount){
         return amount*DESSERTSPOON_US_TO_GALLON_UK;
     }
+    public static double dessertspoonUSToGallonUSDry(double amount){
+        return amount*DESSERTSPOON_US_TO_GALLON_US_DRY;
+    }
     public static double dessertspoonUSToGallonUS(double amount){
         return amount*DESSERTSPOON_US_TO_GALLON_US;
     }
@@ -935,11 +1120,17 @@ public class Converter {
     public static double dessertspoonUSToPintUK(double amount){
         return amount*DESSERTSPOON_US_TO_PINT_UK;
     }
+    public static double dessertspoonUSToPintUSDry(double amount){
+        return amount*DESSERTSPOON_US_TO_PINT_US_DRY;
+    }
     public static double dessertspoonUSToPintUS(double amount){
         return amount*DESSERTSPOON_US_TO_PINT_US;
     }
     public static double dessertspoonUSToQuartUK(double amount){
         return amount*DESSERTSPOON_US_TO_QUART_UK;
+    }
+    public static double dessertspoonUSToQuartUSDry(double amount){
+        return amount*DESSERTSPOON_US_TO_QUART_US_DRY;
     }
     public static double dessertspoonUSToQuartUS(double amount){
         return amount*DESSERTSPOON_US_TO_QUART_US;
@@ -989,6 +1180,9 @@ public class Converter {
     public static double fluidOunceUKToGallonUK(double amount){
         return amount*FLUID_OUNCE_UK_TO_GALLON_UK;
     }
+    public static double fluidOunceUKToGallonUSDry(double amount){
+        return amount*FLUID_OUNCE_UK_TO_GALLON_US_DRY;
+    }
     public static double fluidOunceUKToGallonUS(double amount){
         return amount*FLUID_OUNCE_UK_TO_GALLON_US;
     }
@@ -1001,11 +1195,17 @@ public class Converter {
     public static double fluidOunceUKToPintUK(double amount){
         return amount*FLUID_OUNCE_UK_TO_PINT_UK;
     }
+    public static double fluidOunceUKToPintUSDry(double amount){
+        return amount*FLUID_OUNCE_UK_TO_PINT_US_DRY;
+    }
     public static double fluidOunceUKToPintUS(double amount){
         return amount*FLUID_OUNCE_UK_TO_PINT_US;
     }
     public static double fluidOunceUKToQuartUK(double amount){
         return amount*FLUID_OUNCE_UK_TO_QUART_UK;
+    }
+    public static double fluidOunceUKToQuartUSDry(double amount){
+        return amount*FLUID_OUNCE_UK_TO_QUART_US_DRY;
     }
     public static double fluidOunceUKToQuartUS(double amount){
         return amount*FLUID_OUNCE_UK_TO_QUART_US;
@@ -1055,6 +1255,9 @@ public class Converter {
     public static double fluidOunceUSToGallonUK(double amount){
         return amount*FLUID_OUNCE_US_TO_GALLON_UK;
     }
+    public static double fluidOunceUSToGallonUSDry(double amount){
+        return amount*FLUID_OUNCE_US_TO_GALLON_US_DRY;
+    }
     public static double fluidOunceUSToGallonUS(double amount){
         return amount*FLUID_OUNCE_US_TO_GALLON_US;
     }
@@ -1067,11 +1270,17 @@ public class Converter {
     public static double fluidOunceUSToPintUK(double amount){
         return amount*FLUID_OUNCE_US_TO_PINT_UK;
     }
+    public static double fluidOunceUSToPintUSDry(double amount){
+        return amount*FLUID_OUNCE_US_TO_PINT_US_DRY;
+    }
     public static double fluidOunceUSToPintUS(double amount){
         return amount*FLUID_OUNCE_US_TO_PINT_US;
     }
     public static double fluidOunceUSToQuartUK(double amount){
         return amount*FLUID_OUNCE_US_TO_QUART_UK;
+    }
+    public static double fluidOunceUSToQuartUSDry(double amount){
+        return amount*FLUID_OUNCE_US_TO_QUART_US_DRY;
     }
     public static double fluidOunceUSToQuartUS(double amount){
         return amount*FLUID_OUNCE_US_TO_QUART_US;
@@ -1121,6 +1330,9 @@ public class Converter {
     public static double gallonUKToFluidOunceUS(double amount){
         return amount*GALLON_UK_TO_FLUID_OUNCE_US;
     }
+    public static double gallonUKToGallonUSDry(double amount){
+        return amount*GALLON_UK_TO_GALLON_US_DRY;
+    }
     public static double gallonUKToGallonUS(double amount){
         return amount*GALLON_UK_TO_GALLON_US;
     }
@@ -1133,11 +1345,17 @@ public class Converter {
     public static double gallonUKToPintUK(double amount){
         return amount*GALLON_UK_TO_PINT_UK;
     }
+    public static double gallonUKToPintUSDry(double amount){
+        return amount*GALLON_UK_TO_PINT_US_DRY;
+    }
     public static double gallonUKToPintUS(double amount){
         return amount*GALLON_UK_TO_PINT_US;
     }
     public static double gallonUKToQuartUK(double amount){
         return amount*GALLON_UK_TO_QUART_UK;
+    }
+    public static double gallonUKToQuartUSDry(double amount){
+        return amount*GALLON_UK_TO_QUART_US_DRY;
     }
     public static double gallonUKToQuartUS(double amount){
         return amount*GALLON_UK_TO_QUART_US;
@@ -1161,7 +1379,82 @@ public class Converter {
         return amount*GALLON_UK_TO_TEASPOON_US;
     }
 
-    //************************************** CONVERT FROM GALLON (US) *********************************************
+    //************************************** CONVERT FROM GALLON (US, DRY) *********************************************
+
+    public static double gallonUSDryToCupUK(double amount){
+        return amount*GALLON_US_DRY_TO_CUP_UK;
+    }
+    public static double gallonUSDryToCupUS(double amount){
+        return amount*GALLON_US_DRY_TO_CUP_US;
+    }
+    public static double gallonUSDryToDeciliter(double amount){
+        return amount*GALLON_US_DRY_TO_DECILITER;
+    }
+    public static double gallonUSDryToDessertspoonEU(double amount){
+        return amount*GALLON_US_DRY_TO_DESSERTSPOON_EU;
+    }
+    public static double gallonUSDryToDessertspoonUK(double amount){
+        return amount*GALLON_US_DRY_TO_DESSERTSPOON_UK;
+    }
+    public static double gallonUSDryToDessertspoonUS(double amount){
+        return amount*GALLON_US_DRY_TO_DESSERTSPOON_US;
+    }
+    public static double gallonUSDryToFluidOunceUK(double amount){
+        return amount*GALLON_US_DRY_TO_FLUID_OUNCE_UK;
+    }
+    public static double gallonUSDryToFluidOunceUS(double amount){
+        return amount*GALLON_US_DRY_TO_FLUID_OUNCE_US;
+    }
+    public static double gallonUSDryToGallonUK(double amount){
+        return amount*GALLON_US_DRY_TO_GALLON_UK;
+    }
+    public static double gallonUSDryToGallonUS(double amount){
+        return amount*GALLON_US_DRY_TO_GALLON_US;
+    }
+    public static double gallonUSDryToLiter(double amount){
+        return amount*GALLON_US_DRY_TO_LITER;
+    }
+    public static double gallonUSDryToMilliliter(double amount){
+        return amount*GALLON_US_DRY_TO_MILLILITER;
+    }
+    public static double gallonUSDryToPintUK(double amount){
+        return amount*GALLON_US_DRY_TO_PINT_UK;
+    }
+    public static double gallonUSDryToPintUSDry(double amount){
+        return amount*GALLON_US_DRY_TO_PINT_US_DRY;
+    }
+    public static double gallonUSDryToPintUS(double amount){
+        return amount*GALLON_US_DRY_TO_PINT_US;
+    }
+    public static double gallonUSDryToQuartUK(double amount){
+        return amount*GALLON_US_DRY_TO_QUART_UK;
+    }
+    public static double gallonUSDryToQuartUSDry(double amount){
+        return amount*GALLON_US_DRY_TO_QUART_US_DRY;
+    }
+    public static double gallonUSDryToQuartUS(double amount){
+        return amount*GALLON_US_DRY_TO_QUART_US;
+    }
+    public static double gallonUSDryToTablespoonEU(double amount){
+        return amount*GALLON_US_DRY_TO_TABLESPOON_EU;
+    }
+    public static double gallonUSDryToTablespoonUK(double amount){
+        return amount*GALLON_US_DRY_TO_TABLESPOON_UK;
+    }
+    public static double gallonUSDryToTablespoonUS(double amount){
+        return amount*GALLON_US_DRY_TO_TABLESPOON_US;
+    }
+    public static double gallonUSDryToTeaspoonEU(double amount){
+        return amount*GALLON_US_DRY_TO_TEASPOON_EU;
+    }
+    public static double gallonUSDryToTeaspoonUK(double amount){
+        return amount*GALLON_US_DRY_TO_TEASPOON_UK;
+    }
+    public static double gallonUSDryToTeaspoonUS(double amount){
+        return amount*GALLON_US_DRY_TO_TEASPOON_US;
+    }
+
+    //************************************** CONVERT FROM GALLON (US, LIQUID) *********************************************
 
     public static double gallonUSToCupUK(double amount){
         return amount*GALLON_US_TO_CUP_UK;
@@ -1190,6 +1483,9 @@ public class Converter {
     public static double gallonUSToGallonUK(double amount){
         return amount*GALLON_US_TO_GALLON_UK;
     }
+    public static double gallonUSToGallonUSDry(double amount){
+        return amount*GALLON_US_TO_GALLON_US_DRY;
+    }
     public static double gallonUSToLiter(double amount){
         return amount*GALLON_US_TO_LITER;
     }
@@ -1199,11 +1495,17 @@ public class Converter {
     public static double gallonUSToPintUK(double amount){
         return amount*GALLON_US_TO_PINT_UK;
     }
+    public static double gallonUSToPintUSDry(double amount){
+        return amount*GALLON_US_TO_PINT_US_DRY;
+    }
     public static double gallonUSToPintUS(double amount){
         return amount*GALLON_US_TO_PINT_US;
     }
     public static double gallonUSToQuartUK(double amount){
         return amount*GALLON_US_TO_QUART_UK;
+    }
+    public static double gallonUSToQuartUSDry(double amount){
+        return amount*GALLON_US_TO_QUART_US_DRY;
     }
     public static double gallonUSToQuartUS(double amount){
         return amount*GALLON_US_TO_QUART_US;
@@ -1256,6 +1558,9 @@ public class Converter {
     public static double literToGallonUK(double amount){
         return amount*LITER_TO_GALLON_UK;
     }
+    public static double literToGallonUSDry(double amount){
+        return amount*LITER_TO_GALLON_US_DRY;
+    }
     public static double literToGallonUS(double amount){
         return amount*LITER_TO_GALLON_US;
     }
@@ -1265,11 +1570,17 @@ public class Converter {
     public static double literToPintUK(double amount){
         return amount*LITER_TO_PINT_UK;
     }
+    public static double literToPintUSDry(double amount){
+        return amount*LITER_TO_PINT_US_DRY;
+    }
     public static double literToPintUS(double amount){
         return amount*LITER_TO_PINT_US;
     }
     public static double literToQuartUK(double amount){
         return amount*LITER_TO_QUART_UK;
+    }
+    public static double literToQuartUSDry(double amount){
+        return amount*LITER_TO_QUART_US_DRY;
     }
     public static double literToQuartUS(double amount){
         return amount*LITER_TO_QUART_US;
@@ -1322,6 +1633,9 @@ public class Converter {
     public static double milliliterToGallonUK(double amount){
         return amount*MILLILITER_TO_GALLON_UK;
     }
+    public static double milliliterToGallonUSDry(double amount){
+        return amount*MILLILITER_TO_GALLON_US_DRY;
+    }
     public static double milliliterToGallonUS(double amount){
         return amount*MILLILITER_TO_GALLON_US;
     }
@@ -1331,11 +1645,17 @@ public class Converter {
     public static double milliliterToPintUK(double amount){
         return amount*MILLILITER_TO_PINT_UK;
     }
+    public static double milliliterToPintUSDry(double amount){
+        return amount*MILLILITER_TO_PINT_US_DRY;
+    }
     public static double milliliterToPintUS(double amount){
         return amount*MILLILITER_TO_PINT_US;
     }
     public static double milliliterToQuartUK(double amount){
         return amount*MILLILITER_TO_QUART_UK;
+    }
+    public static double milliliterToQuartUSDry(double amount){
+        return amount*MILLILITER_TO_QUART_US_DRY;
     }
     public static double milliliterToQuartUS(double amount){
         return amount*MILLILITER_TO_QUART_US;
@@ -1388,6 +1708,9 @@ public class Converter {
     public static double pintUKToGallonUK(double amount){
         return amount*PINT_UK_TO_GALLON_UK;
     }
+    public static double pintUKToGallonUSDry(double amount){
+        return amount*PINT_UK_TO_GALLON_US_DRY;
+    }
     public static double pintUKToGallonUS(double amount){
         return amount*PINT_UK_TO_GALLON_US;
     }
@@ -1397,11 +1720,17 @@ public class Converter {
     public static double pintUKToMilliliter(double amount){
         return amount*PINT_UK_TO_MILLILITER;
     }
+    public static double pintUKToPintUSDry(double amount){
+        return amount*PINT_UK_TO_PINT_US_DRY;
+    }
     public static double pintUKToPintUS(double amount){
         return amount*PINT_UK_TO_PINT_US;
     }
     public static double pintUKToQuartUK(double amount){
         return amount*PINT_UK_TO_QUART_UK;
+    }
+    public static double pintUKToQuartUSDry(double amount){
+        return amount*PINT_UK_TO_QUART_US_DRY;
     }
     public static double pintUKToQuartUS(double amount){
         return amount*PINT_UK_TO_QUART_US;
@@ -1425,7 +1754,82 @@ public class Converter {
         return amount*PINT_UK_TO_TEASPOON_US;
     }
 
-    //************************************** CONVERT FROM PINT (US) ***********************************************
+    //************************************** CONVERT FROM PINT (US, DRY) ***********************************************
+
+    public static double pintUSDryToCupUK(double amount){
+        return amount*PINT_US_DRY_TO_CUP_UK;
+    }
+    public static double pintUSDryToCupUS(double amount){
+        return amount*PINT_US_DRY_TO_CUP_US;
+    }
+    public static double pintUSDryToDeciliter(double amount){
+        return amount*PINT_US_DRY_TO_DECILITER;
+    }
+    public static double pintUSDryToDessertspoonEU(double amount){
+        return amount*PINT_US_DRY_TO_DESSERTSPOON_EU;
+    }
+    public static double pintUSDryToDessertspoonUK(double amount){
+        return amount*PINT_US_DRY_TO_DESSERTSPOON_UK;
+    }
+    public static double pintUSDryToDessertspoonUS(double amount){
+        return amount*PINT_US_DRY_TO_DESSERTSPOON_US;
+    }
+    public static double pintUSDryToFluidOunceUK(double amount){
+        return amount*PINT_US_DRY_TO_FLUID_OUNCE_UK;
+    }
+    public static double pintUSDryToFluidOunceUS(double amount){
+        return amount*PINT_US_DRY_TO_FLUID_OUNCE_US;
+    }
+    public static double pintUSDryToGallonUK(double amount){
+        return amount*PINT_US_DRY_TO_GALLON_UK;
+    }
+    public static double pintUSDryToGallonUSDry(double amount){
+        return amount*PINT_US_DRY_TO_GALLON_US_DRY;
+    }
+    public static double pintUSDryToGallonUS(double amount){
+        return amount*PINT_US_DRY_TO_GALLON_US;
+    }
+    public static double pintUSDryToLiter(double amount){
+        return amount*PINT_US_DRY_TO_LITER;
+    }
+    public static double pintUSDryToMilliliter(double amount){
+        return amount*PINT_US_DRY_TO_MILLILITER;
+    }
+    public static double pintUSDryToPintUK(double amount){
+        return amount*PINT_US_DRY_TO_PINT_UK;
+    }
+    public static double pintUSDryToPintUS(double amount){
+        return amount*PINT_US_DRY_TO_PINT_US;
+    }
+    public static double pintUSDryToQuartUK(double amount){
+        return amount*PINT_US_DRY_TO_QUART_UK;
+    }
+    public static double pintUSDryToQuartUSDry(double amount){
+        return amount*PINT_US_DRY_TO_QUART_US_DRY;
+    }
+    public static double pintUSDryToQuartUS(double amount){
+        return amount*PINT_US_DRY_TO_QUART_US;
+    }
+    public static double pintUSDryToTablespoonEU(double amount){
+        return amount*PINT_US_DRY_TO_TABLESPOON_EU;
+    }
+    public static double pintUSDryToTablespoonUK(double amount){
+        return amount*PINT_US_DRY_TO_TABLESPOON_UK;
+    }
+    public static double pintUSDryToTablespoonUS(double amount){
+        return amount*PINT_US_DRY_TO_TABLESPOON_US;
+    }
+    public static double pintUSDryToTeaspoonEU(double amount){
+        return amount*PINT_US_DRY_TO_TEASPOON_EU;
+    }
+    public static double pintUSDryToTeaspoonUK(double amount){
+        return amount*PINT_US_DRY_TO_TEASPOON_UK;
+    }
+    public static double pintUSDryToTeaspoonUS(double amount){
+        return amount*PINT_US_DRY_TO_TEASPOON_US;
+    }
+
+    //************************************** CONVERT FROM PINT (US, LIQUID) ***********************************************
 
     public static double pintUSToCupUK(double amount){
         return amount*PINT_US_TO_CUP_UK;
@@ -1454,6 +1858,9 @@ public class Converter {
     public static double pintUSToGallonUK(double amount){
         return amount*PINT_US_TO_GALLON_UK;
     }
+    public static double pintUSToGallonUSDry(double amount){
+        return amount*PINT_US_TO_GALLON_US_DRY;
+    }
     public static double pintUSToGallonUS(double amount){
         return amount*PINT_US_TO_GALLON_US;
     }
@@ -1466,8 +1873,14 @@ public class Converter {
     public static double pintUSToPintUK(double amount){
         return amount*PINT_US_TO_PINT_UK;
     }
+    public static double pintUSToPintUSDry(double amount){
+        return amount*PINT_US_TO_PINT_US_DRY;
+    }
     public static double pintUSToQuartUK(double amount){
         return amount*PINT_US_TO_QUART_UK;
+    }
+    public static double pintUSToQuartUSDry(double amount){
+        return amount*PINT_US_TO_QUART_US_DRY;
     }
     public static double pintUSToQuartUS(double amount){
         return amount*PINT_US_TO_QUART_US;
@@ -1520,6 +1933,9 @@ public class Converter {
     public static double quartUKToGallonUK(double amount){
         return amount*QUART_UK_TO_GALLON_UK;
     }
+    public static double quartUKToGallonUSDry(double amount){
+        return amount*QUART_UK_TO_GALLON_US_DRY;
+    }
     public static double quartUKToGallonUS(double amount){
         return amount*QUART_UK_TO_GALLON_US;
     }
@@ -1532,8 +1948,14 @@ public class Converter {
     public static double quartUKToPintUK(double amount){
         return amount*QUART_UK_TO_PINT_UK;
     }
+    public static double quartUKToPintUSDry(double amount){
+        return amount*QUART_UK_TO_PINT_US_DRY;
+    }
     public static double quartUKToPintUS(double amount){
         return amount*QUART_UK_TO_PINT_US;
+    }
+    public static double quartUKToQuartUSDry(double amount){
+        return amount*QUART_UK_TO_QUART_US_DRY;
     }
     public static double quartUKToQuartUS(double amount){
         return amount*QUART_UK_TO_QUART_US;
@@ -1557,7 +1979,82 @@ public class Converter {
         return amount*QUART_UK_TO_TEASPOON_US;
     }
 
-    //************************************** CONVERT FROM QUART (US) **********************************************
+    //************************************** CONVERT FROM QUART (US, DRY) **********************************************
+
+    public static double quartUSDryToCupUK(double amount){
+        return amount*QUART_US_DRY_TO_CUP_UK;
+    }
+    public static double quartUSDryToCupUS(double amount){
+        return amount*QUART_US_DRY_TO_CUP_US;
+    }
+    public static double quartUSDryToDeciliter(double amount){
+        return amount*QUART_US_DRY_TO_DECILITER;
+    }
+    public static double quartUSDryToDessertspoonEU(double amount){
+        return amount*QUART_US_DRY_TO_DESSERTSPOON_EU;
+    }
+    public static double quartUSDryToDessertspoonUK(double amount){
+        return amount*QUART_US_DRY_TO_DESSERTSPOON_UK;
+    }
+    public static double quartUSDryToDessertspoonUS(double amount){
+        return amount*QUART_US_DRY_TO_DESSERTSPOON_US;
+    }
+    public static double quartUSDryToFluidOunceUK(double amount){
+        return amount*QUART_US_DRY_TO_FLUID_OUNCE_UK;
+    }
+    public static double quartUSDryToFluidOunceUS(double amount){
+        return amount*QUART_US_DRY_TO_FLUID_OUNCE_US;
+    }
+    public static double quartUSDryToGallonUK(double amount){
+        return amount*QUART_US_DRY_TO_GALLON_UK;
+    }
+    public static double quartUSDryToGallonUSDry(double amount){
+        return amount*QUART_US_DRY_TO_GALLON_US_DRY;
+    }
+    public static double quartUSDryToGallonUS(double amount){
+        return amount*QUART_US_DRY_TO_GALLON_US;
+    }
+    public static double quartUSDryToLiter(double amount){
+        return amount*QUART_US_DRY_TO_LITER;
+    }
+    public static double quartUSDryToMilliliter(double amount){
+        return amount*QUART_US_DRY_TO_MILLILITER;
+    }
+    public static double quartUSDryToPintUK(double amount){
+        return amount*QUART_US_DRY_TO_PINT_UK;
+    }
+    public static double quartUSDryToPintUSDry(double amount){
+        return amount*QUART_US_DRY_TO_PINT_US_DRY;
+    }
+    public static double quartUSDryToPintUS(double amount){
+        return amount*QUART_US_DRY_TO_PINT_US;
+    }
+    public static double quartUSDryToQuartUK(double amount){
+        return amount*QUART_US_DRY_TO_QUART_UK;
+    }
+    public static double quartUSDryToQuartUS(double amount){
+        return amount*QUART_US_DRY_TO_QUART_US;
+    }
+    public static double quartUSDryToTablespoonEU(double amount){
+        return amount*QUART_US_DRY_TO_TABLESPOON_EU;
+    }
+    public static double quartUSDryToTablespoonUK(double amount){
+        return amount*QUART_US_DRY_TO_TABLESPOON_UK;
+    }
+    public static double quartUSDryToTablespoonUS(double amount){
+        return amount*QUART_US_DRY_TO_TABLESPOON_US;
+    }
+    public static double quartUSDryToTeaspoonEU(double amount){
+        return amount*QUART_US_DRY_TO_TEASPOON_EU;
+    }
+    public static double quartUSDryToTeaspoonUK(double amount){
+        return amount*QUART_US_DRY_TO_TEASPOON_UK;
+    }
+    public static double quartUSDryToTeaspoonUS(double amount){
+        return amount*QUART_US_DRY_TO_TEASPOON_US;
+    }
+
+    //************************************** CONVERT FROM QUART (US, LIQUID) **********************************************
 
     public static double quartUSToCupUK(double amount){
         return amount*QUART_US_TO_CUP_UK;
@@ -1586,6 +2083,9 @@ public class Converter {
     public static double quartUSToGallonUK(double amount){
         return amount*QUART_US_TO_GALLON_UK;
     }
+    public static double quartUSToGallonUSDry(double amount){
+        return amount*QUART_US_TO_GALLON_US_DRY;
+    }
     public static double quartUSToGallonUS(double amount){
         return amount*QUART_US_TO_GALLON_US;
     }
@@ -1598,11 +2098,17 @@ public class Converter {
     public static double quartUSToPintUK(double amount){
         return amount*QUART_US_TO_PINT_UK;
     }
+    public static double quartUSToPintUSDry(double amount){
+        return amount*QUART_US_TO_PINT_US_DRY;
+    }
     public static double quartUSToPintUS(double amount){
         return amount*QUART_US_TO_PINT_US;
     }
     public static double quartUSToQuartUK(double amount){
         return amount*QUART_US_TO_QUART_UK;
+    }
+    public static double quartUSToQuartUSDry(double amount){
+        return amount*QUART_US_TO_QUART_US_DRY;
     }
     public static double quartUSToTablespoonEU(double amount){
         return amount*QUART_US_TO_TABLESPOON_EU;
@@ -1652,6 +2158,9 @@ public class Converter {
     public static double tablespoonEUToGallonUK(double amount){
         return amount*TABLESPOON_EU_TO_GALLON_UK;
     }
+    public static double tablespoonEUToGallonUSDry(double amount){
+        return amount*TABLESPOON_EU_TO_GALLON_US_DRY;
+    }
     public static double tablespoonEUToGallonUS(double amount){
         return amount*TABLESPOON_EU_TO_GALLON_US;
     }
@@ -1664,11 +2173,17 @@ public class Converter {
     public static double tablespoonEUToPintUK(double amount){
         return amount*TABLESPOON_EU_TO_PINT_UK;
     }
+    public static double tablespoonEUToPintUSDry(double amount){
+        return amount*TABLESPOON_EU_TO_PINT_US_DRY;
+    }
     public static double tablespoonEUToPintUS(double amount){
         return amount*TABLESPOON_EU_TO_PINT_US;
     }
     public static double tablespoonEUToQuartUK(double amount){
         return amount*TABLESPOON_EU_TO_QUART_UK;
+    }
+    public static double tablespoonEUToQuartUSDry(double amount){
+        return amount*TABLESPOON_EU_TO_QUART_US_DRY;
     }
     public static double tablespoonEUToQuartUS(double amount){
         return amount*TABLESPOON_EU_TO_QUART_US;
@@ -1718,6 +2233,9 @@ public class Converter {
     public static double tablespoonUKToGallonUK(double amount){
         return amount*TABLESPOON_UK_TO_GALLON_UK;
     }
+    public static double tablespoonUKToGallonUSDry(double amount){
+        return amount*TABLESPOON_UK_TO_GALLON_US_DRY;
+    }
     public static double tablespoonUKToGallonUS(double amount){
         return amount*TABLESPOON_UK_TO_GALLON_US;
     }
@@ -1730,11 +2248,17 @@ public class Converter {
     public static double tablespoonUKToPintUK(double amount){
         return amount*TABLESPOON_UK_TO_PINT_UK;
     }
+    public static double tablespoonUKToPintUSDry(double amount){
+        return amount*TABLESPOON_UK_TO_PINT_US_DRY;
+    }
     public static double tablespoonUKToPintUS(double amount){
         return amount*TABLESPOON_UK_TO_PINT_US;
     }
     public static double tablespoonUKToQuartUK(double amount){
         return amount*TABLESPOON_UK_TO_QUART_UK;
+    }
+    public static double tablespoonUKToQuartUSDry(double amount){
+        return amount*TABLESPOON_UK_TO_QUART_US_DRY;
     }
     public static double tablespoonUKToQuartUS(double amount){
         return amount*TABLESPOON_UK_TO_QUART_US;
@@ -1784,6 +2308,9 @@ public class Converter {
     public static double tablespoonUSToGallonUK(double amount){
         return amount*TABLESPOON_US_TO_GALLON_UK;
     }
+    public static double tablespoonUSToGallonUSDry(double amount){
+        return amount*TABLESPOON_US_TO_GALLON_US_DRY;
+    }
     public static double tablespoonUSToGallonUS(double amount){
         return amount*TABLESPOON_US_TO_GALLON_US;
     }
@@ -1796,11 +2323,17 @@ public class Converter {
     public static double tablespoonUSToPintUK(double amount){
         return amount*TABLESPOON_US_TO_PINT_UK;
     }
+    public static double tablespoonUSToPintUSDry(double amount){
+        return amount*TABLESPOON_US_TO_PINT_US_DRY;
+    }
     public static double tablespoonUSToPintUS(double amount){
         return amount*TABLESPOON_US_TO_PINT_US;
     }
     public static double tablespoonUSToQuartUK(double amount){
         return amount*TABLESPOON_US_TO_QUART_UK;
+    }
+    public static double tablespoonUSToQuartUSDry(double amount){
+        return amount*TABLESPOON_US_TO_QUART_US_DRY;
     }
     public static double tablespoonUSToQuartUS(double amount){
         return amount*TABLESPOON_US_TO_QUART_US;
@@ -1850,6 +2383,9 @@ public class Converter {
     public static double teaspoonEUToGallonUK(double amount){
         return amount*TEASPOON_EU_TO_GALLON_UK;
     }
+    public static double teaspoonEUToGallonUSDry(double amount){
+        return amount*TEASPOON_EU_TO_GALLON_US_DRY;
+    }
     public static double teaspoonEUToGallonUS(double amount){
         return amount*TEASPOON_EU_TO_GALLON_US;
     }
@@ -1862,11 +2398,17 @@ public class Converter {
     public static double teaspoonEUToPintUK(double amount){
         return amount*TEASPOON_EU_TO_PINT_UK;
     }
+    public static double teaspoonEUToPintUSDry(double amount){
+        return amount*TEASPOON_EU_TO_PINT_US_DRY;
+    }
     public static double teaspoonEUToPintUS(double amount){
         return amount*TEASPOON_EU_TO_PINT_US;
     }
     public static double teaspoonEUToQuartUK(double amount){
         return amount*TEASPOON_EU_TO_QUART_UK;
+    }
+    public static double teaspoonEUToQuartUSDry(double amount){
+        return amount*TEASPOON_EU_TO_QUART_US_DRY;
     }
     public static double teaspoonEUToQuartUS(double amount){
         return amount*TEASPOON_EU_TO_QUART_US;
@@ -1916,6 +2458,9 @@ public class Converter {
     public static double teaspoonUKToGallonUK(double amount){
         return amount*TEASPOON_UK_TO_GALLON_UK;
     }
+    public static double teaspoonUKToGallonUSDry(double amount){
+        return amount*TEASPOON_UK_TO_GALLON_US_DRY;
+    }
     public static double teaspoonUKToGallonUS(double amount){
         return amount*TEASPOON_UK_TO_GALLON_US;
     }
@@ -1928,11 +2473,17 @@ public class Converter {
     public static double teaspoonUKToPintUK(double amount){
         return amount*TEASPOON_UK_TO_PINT_UK;
     }
+    public static double teaspoonUKToPintUSDry(double amount){
+        return amount*TEASPOON_UK_TO_PINT_US_DRY;
+    }
     public static double teaspoonUKToPintUS(double amount){
         return amount*TEASPOON_UK_TO_PINT_US;
     }
     public static double teaspoonUKToQuartUK(double amount){
         return amount*TEASPOON_UK_TO_QUART_UK;
+    }
+    public static double teaspoonUKToQuartUSDry(double amount){
+        return amount*TEASPOON_UK_TO_QUART_US_DRY;
     }
     public static double teaspoonUKToQuartUS(double amount){
         return amount*TEASPOON_UK_TO_QUART_US;
@@ -1982,6 +2533,9 @@ public class Converter {
     public static double teaspoonUSToGallonUK(double amount){
         return amount*TEASPOON_US_TO_GALLON_UK;
     }
+    public static double teaspoonUSToGallonUSDry(double amount){
+        return amount*TEASPOON_US_TO_GALLON_US_DRY;
+    }
     public static double teaspoonUSToGallonUS(double amount){
         return amount*TEASPOON_US_TO_GALLON_US;
     }
@@ -1994,11 +2548,17 @@ public class Converter {
     public static double teaspoonUSToPintUK(double amount){
         return amount*TEASPOON_US_TO_PINT_UK;
     }
+    public static double teaspoonUSToPintUSDry(double amount){
+        return amount*TEASPOON_US_TO_PINT_US_DRY;
+    }
     public static double teaspoonUSToPintUS(double amount){
         return amount*TEASPOON_US_TO_PINT_US;
     }
     public static double teaspoonUSToQuartUK(double amount){
         return amount*TEASPOON_US_TO_QUART_UK;
+    }
+    public static double teaspoonUSToQuartUSDry(double amount){
+        return amount*TEASPOON_US_TO_QUART_US_DRY;
     }
     public static double teaspoonUSToQuartUS(double amount){
         return amount*TEASPOON_US_TO_QUART_US;

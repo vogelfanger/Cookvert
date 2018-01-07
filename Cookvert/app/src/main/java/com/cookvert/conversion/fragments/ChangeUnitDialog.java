@@ -1,7 +1,6 @@
 package com.cookvert.conversion.fragments;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -22,13 +20,10 @@ import com.cookvert.R;
 import com.cookvert.recipes.model.Unit;
 import com.cookvert.util.ResourceHelper;
 
-import java.util.ArrayList;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ChangeUnitDialog#newInstance} factory method to
  * create an instance of this fragment.
- * //TODO actions for dialog through an interface
  */
 public class ChangeUnitDialog extends DialogFragment {
     // the fragment initialization parameters

@@ -23,7 +23,7 @@ public enum Unit {
 
         @Override
         public int wholeListPosition() {
-            return 10;
+            return 11;
         }
 
         @Override
@@ -77,7 +77,7 @@ public enum Unit {
 
         @Override
         public int wholeListPosition() {
-            return 11;
+            return 12;
         }
 
         @Override
@@ -132,7 +132,7 @@ public enum Unit {
 
         @Override
         public int wholeListPosition() {
-            return 14;
+            return 15;
         }
 
         @Override
@@ -187,7 +187,7 @@ public enum Unit {
 
         @Override
         public int wholeListPosition() {
-            return 18;
+            return 20;
         }
 
         @Override
@@ -298,6 +298,10 @@ public enum Unit {
             return Converter.gallonUKToCupUK(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToCupUK(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToCupUK(amount);
         }
@@ -314,12 +318,20 @@ public enum Unit {
             return Converter.pintUKToCupUK(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToCupUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToCupUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToCupUK(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToCupUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -425,6 +437,10 @@ public enum Unit {
             return Converter.gallonUKToCupUS(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToCupUS(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToCupUS(amount);
         }
@@ -441,12 +457,20 @@ public enum Unit {
             return Converter.pintUKToCupUS(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToCupUS(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToCupUS(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToCupUS(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToCupUS(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -517,7 +541,7 @@ public enum Unit {
         }
         @Override
         public double convertFromCupUK(double amount) {
-            return Converter.cupUSToDeciliter(amount);
+            return Converter.cupUKToDeciliter(amount);
         }
         @Override
         public double convertFromCupUS(double amount) {
@@ -552,6 +576,10 @@ public enum Unit {
             return Converter.gallonUKToDeciliter(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToDeciliter(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToDeciliter(amount);
         }
@@ -568,12 +596,20 @@ public enum Unit {
             return Converter.pintUKToDeciliter(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToDeciliter(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToDeciliter(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToDeciliter(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToDeciliter(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -679,6 +715,10 @@ public enum Unit {
             return Converter.gallonUKToDessertspoonEU(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToDessertspoonEU(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToDessertspoonEU(amount);
         }
@@ -695,12 +735,20 @@ public enum Unit {
             return Converter.pintUKToDessertspoonEU(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToDessertspoonEU(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToDessertspoonEU(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToDessertspoonEU(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToDessertspoonEU(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -806,6 +854,10 @@ public enum Unit {
             return Converter.gallonUKToDessertspoonUK(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToDessertspoonUK(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToDessertspoonUK(amount);
         }
@@ -822,12 +874,20 @@ public enum Unit {
             return Converter.pintUKToDessertspoonUK(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToDessertspoonUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToDessertspoonUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToDessertspoonUK(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToDessertspoonUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -933,6 +993,10 @@ public enum Unit {
             return Converter.gallonUKToDessertspoonUS(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToDessertspoonUS(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToDessertspoonUS(amount);
         }
@@ -949,12 +1013,20 @@ public enum Unit {
             return Converter.pintUKToDessertspoonUS(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToDessertspoonUS(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToDessertspoonUS(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToDessertspoonUS(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToDessertspoonUS(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1057,7 +1129,11 @@ public enum Unit {
         }
         @Override
         public double convertFromGallonUK(double amount){
-            return Converter.fluidOunceUSToFluidOunceUK(amount);
+            return Converter.gallonUKToFluidOunceUK(amount);
+        }
+        @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToFluidOunceUK(amount);
         }
         @Override
         public double convertFromGallonUS(double amount){
@@ -1076,12 +1152,20 @@ public enum Unit {
             return Converter.pintUKToFluidOunceUK(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToFluidOunceUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToFluidOunceUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToFluidOunceUK(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToFluidOunceUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1187,6 +1271,10 @@ public enum Unit {
             return Converter.gallonUKToFluidOunceUS(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToFluidOunceUS(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToFluidOunceUS(amount);
         }
@@ -1203,12 +1291,20 @@ public enum Unit {
             return Converter.pintUKToFluidOunceUS(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToFluidOunceUS(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToFluidOunceUS(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToFluidOunceUS(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToFluidOunceUS(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1314,6 +1410,10 @@ public enum Unit {
             return amount;
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToGallonUK(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToGallonUK(amount);
         }
@@ -1330,12 +1430,20 @@ public enum Unit {
             return Converter.pintUKToGallonUK(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToGallonUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToGallonUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToGallonUK(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToGallonUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1367,9 +1475,9 @@ public enum Unit {
         }
     },
 
-    //**************************************** GALLON (US) **************************************************
+    //**************************************** GALLON (US, DRY) **************************************************
 
-    GALLON_US {
+    GALLON_US_DRY {
 
         private final int unitKey = 14;
 
@@ -1386,6 +1494,145 @@ public enum Unit {
         @Override
         public int wholeListPosition() {
             return 9;
+        }
+
+        @Override
+        public int getRes() {
+            return R.string.array_unit_short_name_gallon_us_dry;
+        }
+
+        @Override
+        public boolean isMassUnit() {
+            return false;
+        }
+
+        // CONVERSION METHODS
+
+        @Override
+        public double convert(Unit target, double amount){
+            return target.convertFromGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromCupUK(double amount) {
+            return Converter.cupUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromCupUS(double amount) {
+            return Converter.cupUSToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromDeciliter(double amount) {
+            return Converter.deciliterToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonEU(double amount){
+            return Converter.dessertspoonEUToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonUK(double amount){
+            return Converter.dessertspoonUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonUS(double amount){
+            return Converter.dessertspoonUSToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromFluidOunceUK(double amount){
+            return Converter.fluidOunceUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromFluidOunceUS(double amount){
+            return Converter.fluidOunceUSToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUK(double amount){
+            return Converter.gallonUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUSDry(double amount){
+            return amount;
+        }
+        @Override
+        public double convertFromGallonUS(double amount){
+            return Converter.gallonUSToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromLiter(double amount){
+            return Converter.literToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromMilliliter(double amount){
+            return Converter.milliliterToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUK(double amount){
+            return Converter.pintUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUS(double amount){
+            return Converter.pintUSToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUK(double amount){
+            return Converter.quartUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUS(double amount){
+            return Converter.quartUSToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonEU(double amount){
+            return Converter.tablespoonEUToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonUK(double amount){
+            return Converter.tablespoonUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonUS(double amount){
+            return Converter.tablespoonUSToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonEU(double amount){
+            return Converter.teaspoonEUToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonUK(double amount){
+            return Converter.teaspoonUKToGallonUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonUS(double amount){
+            return Converter.teaspoonUSToGallonUSDry(amount);
+        }
+    },
+
+    //**************************************** GALLON (US, LIQUID) **************************************************
+
+    GALLON_US {
+
+        private final int unitKey = 15;
+
+        @Override
+        public int getUnitKey(){
+            return unitKey;
+        }
+
+        @Override
+        public int volumeListPosition() {
+            return 10;
+        }
+
+        @Override
+        public int wholeListPosition() {
+            return 10;
         }
 
         @Override
@@ -1441,6 +1688,10 @@ public enum Unit {
             return Converter.gallonUKToGallonUS(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToGallonUS(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return amount;
         }
@@ -1457,12 +1708,20 @@ public enum Unit {
             return Converter.pintUKToGallonUS(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToGallonUS(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToGallonUS(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToGallonUS(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToGallonUS(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1498,7 +1757,7 @@ public enum Unit {
 
     LITER{
 
-        private final int unitKey = 15;
+        private final int unitKey = 16;
 
         @Override
         public int getUnitKey(){
@@ -1507,12 +1766,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 10;
+            return 11;
         }
 
         @Override
         public int wholeListPosition() {
-            return 12;
+            return 13;
         }
 
         @Override
@@ -1566,6 +1825,10 @@ public enum Unit {
             return Converter.gallonUKToLiter(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToLiter(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToLiter(amount);
         }
@@ -1582,12 +1845,20 @@ public enum Unit {
             return Converter.pintUKToLiter(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToLiter(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToLiter(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToLiter(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToLiter(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1623,7 +1894,7 @@ public enum Unit {
 
     MILLILITER {
 
-        private final int unitKey = 16;
+        private final int unitKey = 17;
 
         @Override
         public int getUnitKey(){
@@ -1632,12 +1903,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 11;
+            return 12;
         }
 
         @Override
         public int wholeListPosition() {
-            return 13;
+            return 14;
         }
 
         @Override
@@ -1693,6 +1964,10 @@ public enum Unit {
             return Converter.gallonUKToMilliliter(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToMilliliter(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToMilliliter(amount);
         }
@@ -1709,12 +1984,19 @@ public enum Unit {
             return Converter.pintUKToMilliliter(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToMilliliter(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToMilliliter(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToMilliliter(amount);
+        }@Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToMilliliter(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1750,7 +2032,7 @@ public enum Unit {
 
     PINT_UK {
 
-        private final int unitKey = 17;
+        private final int unitKey = 18;
 
         @Override
         public int getUnitKey(){
@@ -1759,12 +2041,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 12;
+            return 13;
         }
 
         @Override
         public int wholeListPosition() {
-            return 16;
+            return 17;
         }
 
         @Override
@@ -1820,6 +2102,10 @@ public enum Unit {
             return Converter.gallonUKToPintUK(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToPintUK(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToPintUK(amount);
         }
@@ -1836,12 +2122,20 @@ public enum Unit {
             return amount;
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToPintUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToPintUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToPintUK(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToPintUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -1874,11 +2168,11 @@ public enum Unit {
 
     },
 
-    //**************************************** PINT (US) **************************************************
+    //**************************************** PINT (US, DRY) **************************************************
 
-    PINT_US {
+    PINT_US_DRY {
 
-        private final int unitKey = 18;
+        private final int unitKey = 19;
 
         @Override
         public int getUnitKey(){
@@ -1887,12 +2181,151 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 13;
+            return 14;
         }
 
         @Override
         public int wholeListPosition() {
-            return 17;
+            return 18;
+        }
+
+        @Override
+        public int getRes() {
+            return R.string.array_unit_short_name_pint_us_dry;
+        }
+
+        @Override
+        public boolean isMassUnit() {
+            return false;
+        }
+
+        // CONVERSION METHODS
+
+        @Override
+        public double convert(Unit target, double amount){
+            return target.convertFromPintUSDry(amount);
+        }
+        @Override
+        public double convertFromCupUK(double amount) {
+            return Converter.cupUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromCupUS(double amount) {
+            return Converter.cupUSToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromDeciliter(double amount) {
+            return Converter.deciliterToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonEU(double amount){
+            return Converter.dessertspoonEUToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonUK(double amount){
+            return Converter.dessertspoonUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonUS(double amount){
+            return Converter.dessertspoonUSToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromFluidOunceUK(double amount){
+            return Converter.fluidOunceUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromFluidOunceUS(double amount){
+            return Converter.fluidOunceUSToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUK(double amount){
+            return Converter.gallonUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUS(double amount){
+            return Converter.gallonUSToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromLiter(double amount){
+            return Converter.literToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromMilliliter(double amount){
+            return Converter.milliliterToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUK(double amount){
+            return Converter.pintUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUSDry(double amount){
+            return amount;
+        }
+        @Override
+        public double convertFromPintUS(double amount){
+            return Converter.pintUSToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUK(double amount){
+            return Converter.quartUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUS(double amount){
+            return Converter.quartUSToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonEU(double amount){
+            return Converter.tablespoonEUToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonUK(double amount){
+            return Converter.tablespoonUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonUS(double amount){
+            return Converter.tablespoonUSToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonEU(double amount){
+            return Converter.teaspoonEUToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonUK(double amount){
+            return Converter.teaspoonUKToPintUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonUS(double amount){
+            return Converter.teaspoonUSToPintUSDry(amount);
+        }
+    },
+
+    //**************************************** PINT (US, LIQUID) **************************************************
+
+    PINT_US {
+
+        private final int unitKey = 20;
+
+        @Override
+        public int getUnitKey(){
+            return unitKey;
+        }
+
+        @Override
+        public int volumeListPosition() {
+            return 15;
+        }
+
+        @Override
+        public int wholeListPosition() {
+            return 19;
         }
 
         @Override
@@ -1948,6 +2381,10 @@ public enum Unit {
             return Converter.gallonUKToPintUS(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToPintUS(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToPintUS(amount);
         }
@@ -1964,12 +2401,20 @@ public enum Unit {
             return Converter.pintUKToPintUS(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToPintUS(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return amount;
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToPintUS(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToPintUS(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2005,7 +2450,7 @@ public enum Unit {
 
     QUART_UK {
 
-        private final int unitKey = 19;
+        private final int unitKey = 21;
 
         @Override
         public int getUnitKey(){
@@ -2014,12 +2459,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 14;
+            return 16;
         }
 
         @Override
         public int wholeListPosition() {
-            return 19;
+            return 21;
         }
 
         @Override
@@ -2075,6 +2520,10 @@ public enum Unit {
             return Converter.gallonUKToQuartUK(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToQuartUK(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToQuartUK(amount);
         }
@@ -2091,12 +2540,20 @@ public enum Unit {
             return Converter.pintUKToQuartUK(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToQuartUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToQuartUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return amount;
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToQuartUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2129,11 +2586,11 @@ public enum Unit {
 
     },
 
-    //**************************************** QUART (US) **************************************************
+    //**************************************** QUART (US, DRY) **************************************************
 
-    QUART_US {
+    QUART_US_DRY {
 
-        private final int unitKey = 20;
+        private final int unitKey = 22;
 
         @Override
         public int getUnitKey(){
@@ -2142,12 +2599,151 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 15;
+            return 17;
         }
 
         @Override
         public int wholeListPosition() {
-            return 20;
+            return 22;
+        }
+
+        @Override
+        public int getRes() {
+            return R.string.array_unit_short_name_quart_us_dry;
+        }
+
+        @Override
+        public boolean isMassUnit() {
+            return false;
+        }
+
+        // CONVERSION METHODS
+
+        @Override
+        public double convert(Unit target, double amount){
+            return target.convertFromQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromCupUK(double amount) {
+            return Converter.cupUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromCupUS(double amount) {
+            return Converter.cupUSToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromDeciliter(double amount) {
+            return Converter.deciliterToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonEU(double amount){
+            return Converter.dessertspoonEUToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonUK(double amount){
+            return Converter.dessertspoonUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromDessertspoonUS(double amount){
+            return Converter.dessertspoonUSToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromFluidOunceUK(double amount){
+            return Converter.fluidOunceUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromFluidOunceUS(double amount){
+            return Converter.fluidOunceUSToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUK(double amount){
+            return Converter.gallonUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromGallonUS(double amount){
+            return Converter.gallonUSToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromLiter(double amount){
+            return Converter.literToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromMilliliter(double amount){
+            return Converter.milliliterToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUK(double amount){
+            return Converter.pintUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromPintUS(double amount){
+            return Converter.pintUSToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUK(double amount){
+            return Converter.quartUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return amount;
+        }
+        @Override
+        public double convertFromQuartUS(double amount){
+            return Converter.quartUSToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonEU(double amount){
+            return Converter.tablespoonEUToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonUK(double amount){
+            return Converter.tablespoonUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromTablespoonUS(double amount){
+            return Converter.tablespoonUSToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonEU(double amount){
+            return Converter.teaspoonEUToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonUK(double amount){
+            return Converter.teaspoonUKToQuartUSDry(amount);
+        }
+        @Override
+        public double convertFromTeaspoonUS(double amount){
+            return Converter.teaspoonUSToQuartUSDry(amount);
+        }
+    },
+
+    //**************************************** QUART (US, LIQUID) **************************************************
+
+    QUART_US {
+
+        private final int unitKey = 23;
+
+        @Override
+        public int getUnitKey(){
+            return unitKey;
+        }
+
+        @Override
+        public int volumeListPosition() {
+            return 18;
+        }
+
+        @Override
+        public int wholeListPosition() {
+            return 23;
         }
 
         @Override
@@ -2203,6 +2799,10 @@ public enum Unit {
             return Converter.gallonUKToQuartUS(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToQuartUS(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToQuartUS(amount);
         }
@@ -2219,12 +2819,20 @@ public enum Unit {
             return Converter.pintUKToQuartUS(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToQuartUS(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToQuartUS(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToQuartUS(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToQuartUS(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2260,7 +2868,7 @@ public enum Unit {
 
     TABLESPOON_EU {
 
-        private final int unitKey = 21;
+        private final int unitKey = 24;
 
         @Override
         public int getUnitKey(){
@@ -2269,12 +2877,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 16;
+            return 19;
         }
 
         @Override
         public int wholeListPosition() {
-            return 21;
+            return 24;
         }
 
         @Override
@@ -2330,6 +2938,10 @@ public enum Unit {
             return Converter.gallonUKToTablespoonEU(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToTablespoonEU(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToTablespoonEU(amount);
         }
@@ -2346,12 +2958,20 @@ public enum Unit {
             return Converter.pintUKToTablespoonEU(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToTablespoonEU(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToTablespoonEU(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToTablespoonEU(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToTablespoonEU(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2387,7 +3007,7 @@ public enum Unit {
 
     TABLESPOON_UK {
 
-        private final int unitKey = 22;
+        private final int unitKey = 25;
 
         @Override
         public int getUnitKey(){
@@ -2396,12 +3016,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 17;
+            return 20;
         }
 
         @Override
         public int wholeListPosition() {
-            return 22;
+            return 25;
         }
 
         @Override
@@ -2457,12 +3077,16 @@ public enum Unit {
             return Converter.gallonUKToTablespoonUK(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToTablespoonUK(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToTablespoonUK(amount);
         }
         @Override
         public double convertFromLiter(double amount){
-            return Converter.literToCupUK(amount);
+            return Converter.literToTablespoonUK(amount);
         }
         @Override
         public double convertFromMilliliter(double amount){
@@ -2473,12 +3097,20 @@ public enum Unit {
             return Converter.pintUKToTablespoonUK(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToTablespoonUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToTablespoonUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToTablespoonUK(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToTablespoonUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2514,7 +3146,7 @@ public enum Unit {
 
     TABLESPOON_US {
 
-        private final int unitKey = 23;
+        private final int unitKey = 26;
 
         @Override
         public int getUnitKey(){
@@ -2523,12 +3155,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 18;
+            return 21;
         }
 
         @Override
         public int wholeListPosition() {
-            return 23;
+            return 26;
         }
 
         @Override
@@ -2584,6 +3216,10 @@ public enum Unit {
             return Converter.gallonUKToTablespoonUS(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToTablespoonUS(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToTablespoonUS(amount);
         }
@@ -2600,12 +3236,20 @@ public enum Unit {
             return Converter.pintUKToTablespoonUS(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToTablespoonUS(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToTablespoonUS(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToTablespoonUS(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToTablespoonUS(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2641,7 +3285,7 @@ public enum Unit {
     //**************************************** TEASPOON (EU) **************************************************
     TEASPOON_EU{
 
-        private final int unitKey = 24;
+        private final int unitKey = 27;
 
         @Override
         public int getUnitKey(){
@@ -2650,12 +3294,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 19;
+            return 22;
         }
 
         @Override
         public int wholeListPosition() {
-            return 24;
+            return 27;
         }
 
         @Override
@@ -2711,6 +3355,10 @@ public enum Unit {
             return Converter.gallonUKToTeaspoonEU(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToTeaspoonEU(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToTeaspoonEU(amount);
         }
@@ -2727,12 +3375,20 @@ public enum Unit {
             return Converter.pintUKToTeaspoonEU(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToTeaspoonEU(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToTeaspoonEU(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToTeaspoonEU(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToTeaspoonEU(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2768,7 +3424,7 @@ public enum Unit {
     //**************************************** TEASPOON (UK) **************************************************
     TEASPOON_UK{
 
-        private final int unitKey = 25;
+        private final int unitKey = 28;
 
         @Override
         public int getUnitKey(){
@@ -2777,12 +3433,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 20;
+            return 23;
         }
 
         @Override
         public int wholeListPosition() {
-            return 25;
+            return 28;
         }
 
         @Override
@@ -2838,6 +3494,10 @@ public enum Unit {
             return Converter.gallonUKToTeaspoonUK(amount);
         }
         @Override
+        public double convertFromGallonUSDry(double amount){
+            return Converter.gallonUSDryToTeaspoonUK(amount);
+        }
+        @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToTeaspoonUK(amount);
         }
@@ -2854,12 +3514,20 @@ public enum Unit {
             return Converter.pintUKToTeaspoonUK(amount);
         }
         @Override
+        public double convertFromPintUSDry(double amount){
+            return Converter.pintUSDryToTeaspoonUK(amount);
+        }
+        @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToTeaspoonUK(amount);
         }
         @Override
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToTeaspoonUK(amount);
+        }
+        @Override
+        public double convertFromQuartUSDry(double amount){
+            return Converter.quartUSDryToTeaspoonUK(amount);
         }
         @Override
         public double convertFromQuartUS(double amount){
@@ -2895,7 +3563,7 @@ public enum Unit {
 
     TEASPOON_US {
 
-        private final int unitKey = 26;
+        private final int unitKey = 29;
 
         @Override
         public int getUnitKey(){
@@ -2904,12 +3572,12 @@ public enum Unit {
 
         @Override
         public int volumeListPosition() {
-            return 21;
+            return 24;
         }
 
         @Override
         public int wholeListPosition() {
-            return 26;
+            return 29;
         }
 
         @Override
@@ -2964,6 +3632,12 @@ public enum Unit {
         public double convertFromGallonUK(double amount){
             return Converter.gallonUKToTeaspoonUS(amount);
         }
+
+        @Override
+        public double convertFromGallonUSDry(double amount) {
+            return Converter.gallonUSDryToTeaspoonUS(amount);
+        }
+
         @Override
         public double convertFromGallonUS(double amount){
             return Converter.gallonUSToTeaspoonUS(amount);
@@ -2980,6 +3654,12 @@ public enum Unit {
         public double convertFromPintUK(double amount){
             return Converter.pintUKToTeaspoonUS(amount);
         }
+
+        @Override
+        public double convertFromPintUSDry(double amount) {
+            return Converter.pintUSDryToTeaspoonUS(amount);
+        }
+
         @Override
         public double convertFromPintUS(double amount){
             return Converter.pintUSToTeaspoonUS(amount);
@@ -2988,6 +3668,12 @@ public enum Unit {
         public double convertFromQuartUK(double amount){
             return Converter.quartUKToTeaspoonUS(amount);
         }
+
+        @Override
+        public double convertFromQuartUSDry(double amount) {
+            return Converter.quartUSDryToTeaspoonUS(amount);
+        }
+
         @Override
         public double convertFromQuartUS(double amount){
             return Converter.quartUSToTeaspoonUS(amount);
@@ -3023,7 +3709,7 @@ public enum Unit {
 
     PIECE {
 
-        private final int unitKey = 27;
+        private final int unitKey = 30;
 
         @Override
         public int getUnitKey(){
@@ -3032,7 +3718,7 @@ public enum Unit {
 
         @Override
         public int wholeListPosition() {
-            return 15;
+            return 16;
         }
 
         @Override
@@ -3061,7 +3747,7 @@ public enum Unit {
 
     CELSIUS {
 
-        private final int unitKey = 28;
+        private final int unitKey = 30;
 
         @Override
         public int getUnitKey(){
@@ -3103,16 +3789,11 @@ public enum Unit {
 
     FAHRENHEIT {
 
-        private final int unitKey = 29;
+        private final int unitKey = 31;
 
         @Override
         public int getUnitKey(){
             return unitKey;
-        }
-
-        @Override
-        public int wholeListPosition() {
-            return 28;
         }
 
         @Override
@@ -3238,6 +3919,10 @@ public enum Unit {
         return amount;
     }
 
+    public double convertFromGallonUSDry(double amount){
+        return amount;
+    }
+
     public double convertFromGallonUS(double amount){
         return amount;
     }
@@ -3254,11 +3939,19 @@ public enum Unit {
         return amount;
     }
 
+    public double convertFromPintUSDry(double amount){
+        return amount;
+    }
+
     public double convertFromPintUS(double amount){
         return amount;
     }
 
     public double convertFromQuartUK(double amount){
+        return amount;
+    }
+
+    public double convertFromQuartUSDry(double amount){
         return amount;
     }
 

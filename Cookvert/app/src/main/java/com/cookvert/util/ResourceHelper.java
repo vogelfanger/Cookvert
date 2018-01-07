@@ -7,7 +7,6 @@ import com.cookvert.recipes.model.Unit;
 
 /**
  * Created by vogelfanger on 18.9.2016.
- * TODO should this class be instantiated at Activity to access context directly?
  */
 public class ResourceHelper {
 
@@ -56,8 +55,10 @@ public class ResourceHelper {
             return Unit.FLUID_OUNCE_US;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_gallon_uk))) {
             return Unit.GALLON_UK;
+        }else if(name.equals(context.getResources().getString(R.string.array_unit_gallon_us_dry))) {
+            return Unit.GALLON_US_DRY;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_gallon_us))) {
-            return Unit.GALLON_UK;
+            return Unit.GALLON_US;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_gram))) {
             return Unit.GRAM;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_kilogram))){
@@ -72,14 +73,18 @@ public class ResourceHelper {
             return Unit.PIECE;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_pint_uk))) {
             return Unit.PINT_UK;
+        }else if(name.equals(context.getResources().getString(R.string.array_unit_pint_us_dry))) {
+            return Unit.PINT_US_DRY;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_pint_us))) {
-            return Unit.PINT_UK;
+            return Unit.PINT_US;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_pound))){
             return Unit.POUND;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_quart_uk))) {
             return Unit.QUART_UK;
+        }else if(name.equals(context.getResources().getString(R.string.array_unit_quart_us_dry))) {
+            return Unit.QUART_US_DRY;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_quart_us))) {
-            return Unit.QUART_UK;
+            return Unit.QUART_US;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_tablespoon_eu))) {
             return Unit.TABLESPOON_EU;
         }else if(name.equals(context.getResources().getString(R.string.array_unit_tablespoon_uk))) {

@@ -17,12 +17,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,7 +114,6 @@ public class ConvertActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        // this line prevents fragment from disappearing on orientation change
 
         setContentView(R.layout.activity_convert);
 
@@ -244,6 +241,10 @@ public class ConvertActivity extends AppCompatActivity
 
         // preselect item based on current activity
         navigationView.getMenu().getItem(0).setChecked(true);
+
+        // Set activity title manually,
+        // otherwise newer Android versions use the title also as the app label.
+        getSupportActionBar().setTitle(R.string.title_activity_convert);
     }
 
 
@@ -277,31 +278,19 @@ public class ConvertActivity extends AppCompatActivity
     //****************************************************************************************************
 
 
+
     /**
-     * Called when user interacts with a list item in OriginalRecipeFragment.
-     * Opens a popup menu, where the user can edit the ingredient.
-     * @param item
+     * Called when ingredient in list is long clicked (Context menu is created).
+     * Sets selected ingredient position to focus in ConvertManager, so that actions from
+     * Context menu are executed on the right list item.
+     * @param itemPosition Selected ingredient position in list
      */
     @Override
-    public void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item,
-                                                  int itemPosition) {
-        //set selected ingredient to focus, so that ConvertManager can edit the correct ingredient
+    public void onContextMenuCreated(int itemPosition) {
         ConvertManager.getInstance().setFocusPosition(itemPosition);
-
-        //create dialog using selected ingredient data as arguments
-        String argAmount = Double.toString(ConvertManager.getInstance().getOriginalFocusIngredient().getAmount());
-        //selected unit's position when spinner contains all units
-        int argUnitPos1 = ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().wholeListPosition();
-        String argName = ConvertManager.getInstance().getOriginalFocusIngredient().getName();
-
-        EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
-        eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
     }
 
-    @Override
-    public void setOriginalRecipeAdapter(MyIngredientRecyclerViewAdapter adapter) {
-        originalAdapter = adapter;
-    }
+
 
     /**
      * Called when user interacts with a list item in ConvertedRecipeFragment.
@@ -336,26 +325,59 @@ public class ConvertActivity extends AppCompatActivity
     }
 
     /**
-     * Called when ingredient in list is long clicked (Context menu is created).
-     * Sets selected ingredient position to focus in ConvertManager, so that actions from
-     * Context menu are executed on the right list item.
-     * @param itemPosition Selected ingredient position in list
-     */
-    @Override
-    public void onContextMenuCreated(int itemPosition) {
-        ConvertManager.getInstance().setFocusPosition(itemPosition);
-    }
-
-    @Override
-    public void setConvertedRecipeAdapter(MyConvertedIngredientRecyclerViewAdapter adapter) {
-        convertedAdapter = adapter;
-    }
-
-    /**
      * Instructions are uneditable in this Activity, so this method does nothing
      */
     @Override
     public void onEditInstructions(String instructions) {
+    }
+
+
+
+    @Override
+    public void onChangeUnit(int unitKey) {
+        ConvertManager.getInstance().changeUnit(unitKey);
+        originalAdapter.notifyDataSetChanged();
+        convertedAdapter.notifyDataSetChanged();
+    }
+
+
+
+    @Override
+    public void onEditIngredient(Double amount, int unitKey, String name) {
+        ConvertManager.getInstance().editIngredient(amount, unitKey, name);
+        originalAdapter.notifyDataSetChanged();
+        convertedAdapter.notifyDataSetChanged();
+    }
+
+
+
+    @Override
+    public void onExportRecipe(String name, boolean useOriginal) {
+        // set up recipe in convert manager
+        Recipe recipe = ConvertManager.getInstance().exportAsRecipe(name, useOriginal);
+        // add recipe to recipe manager
+        RecipeManager.getInstance().importRecipe(recipe);
+        startActivity(new Intent(ConvertActivity.this, EditRecipeActivity.class));
+
+        //show toast
+        Toast toast = Toast.makeText(
+                this, R.string.toast_recipe_saved, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    @Override
+    public void onExportShopList(String name) {
+        // Set up new shop list in convert manager
+        ShopList list = ConvertManager.getInstance().exportAsShopList(
+                getApplicationContext(), name);
+        // add shop list to shop list manager
+        ShopListManager.getInstance().importShopList(list);
+        startActivity(new Intent(ConvertActivity.this, EditShopListActivity.class));
+
+        // show toast
+        Toast toast = Toast.makeText(
+                this, R.string.toast_shop_list_saved, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
 
@@ -388,11 +410,8 @@ public class ConvertActivity extends AppCompatActivity
         toast.show();
     }
 
-    /**
-     *
-     *
-     *
-     */
+
+
     @Override
     public void onNewIngredient(Double amount, int unitKey, String name){
         ConvertManager.getInstance().addIngredient(amount, unitKey, name);
@@ -400,56 +419,34 @@ public class ConvertActivity extends AppCompatActivity
         convertedAdapter.notifyDataSetChanged();
     }
 
+
+
     /**
-     *
-     *
-     *
+     * Called when user interacts with a list item in OriginalRecipeFragment.
+     * Opens a popup menu, where the user can edit the ingredient.
+     * @param item
      */
     @Override
-    public void onEditIngredient(Double amount, int unitKey, String name) {
-        ConvertManager.getInstance().editIngredient(amount, unitKey, name);
-        originalAdapter.notifyDataSetChanged();
-        convertedAdapter.notifyDataSetChanged();
+    public void onOriginalListFragmentInteraction(MyIngredientRecyclerViewAdapter.ViewHolder item,
+                                                  int itemPosition) {
+        //set selected ingredient to focus, so that ConvertManager can edit the correct ingredient
+        ConvertManager.getInstance().setFocusPosition(itemPosition);
+
+        //create dialog using selected ingredient data as arguments
+        String argAmount = Double.toString(ConvertManager.getInstance().getOriginalFocusIngredient().getAmount());
+        //selected unit's position when spinner contains all units
+        int argUnitPos1 = ConvertManager.getInstance().getOriginalFocusIngredient().getUnit().wholeListPosition();
+        String argName = ConvertManager.getInstance().getOriginalFocusIngredient().getName();
+
+        EditIngredientDialog eDialog = EditIngredientDialog.newInstance(argAmount, argUnitPos1, argName);
+        eDialog.show(getSupportFragmentManager(), "editIngredientDialog");
     }
 
-    @Override
-    public void onChangeUnit(int unitKey) {
-        ConvertManager.getInstance().changeUnit(unitKey);
-        originalAdapter.notifyDataSetChanged();
-        convertedAdapter.notifyDataSetChanged();
-    }
 
-    @Override
-    public void onExportRecipe(String name, boolean useOriginal) {
-        // set up recipe in convert manager
-        Recipe recipe = ConvertManager.getInstance().exportAsRecipe(name, useOriginal);
-        // add recipe to recipe manager
-        RecipeManager.getInstance().importRecipe(recipe);
-        startActivity(new Intent(ConvertActivity.this, EditRecipeActivity.class));
-
-        //show toast
-        Toast toast = Toast.makeText(
-                this, R.string.toast_recipe_saved, Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    @Override
-    public void onExportShopList(String name) {
-        // Set up new shop list in convert manager
-        ShopList list = ConvertManager.getInstance().exportAsShopList(
-                getApplicationContext(), name);
-        // add shop list to shop list manager
-        ShopListManager.getInstance().importShopList(list);
-        startActivity(new Intent(ConvertActivity.this, EditShopListActivity.class));
-
-        // show toast
-        Toast toast = Toast.makeText(
-                this, R.string.toast_shop_list_saved, Toast.LENGTH_SHORT);
-        toast.show();
-    }
 
     /**
-     *
+     * Called when recipe is being scaled.
+     * Calls scaling method in ConvertManager and updates the UI components.
      * @param multiplier
      */
     @Override
@@ -459,6 +456,22 @@ public class ConvertActivity extends AppCompatActivity
         convertedAdapter.notifyDataSetChanged();
         multiplierView.setText(muliplierText + " " + String.valueOf(multiplier));
     }
+
+
+
+    @Override
+    public void setOriginalRecipeAdapter(MyIngredientRecyclerViewAdapter adapter) {
+        originalAdapter = adapter;
+    }
+
+
+
+    @Override
+    public void setConvertedRecipeAdapter(MyConvertedIngredientRecyclerViewAdapter adapter) {
+        convertedAdapter = adapter;
+    }
+
+
 
 
     //****************************************************************************************************

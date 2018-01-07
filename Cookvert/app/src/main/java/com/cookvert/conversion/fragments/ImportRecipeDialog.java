@@ -18,10 +18,6 @@ import com.cookvert.R;
 import com.cookvert.recipes.RecipeManager;
 import java.util.List;
 
-/**
- *
- */
-
 public class ImportRecipeDialog extends DialogFragment{
 
     private OnImportRecipeListener mListener;

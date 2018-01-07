@@ -18,7 +18,7 @@ import com.cookvert.recipes.model.Ingredient;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
+ * Fragment containing the list of converted ingredients.
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnConvertedListFragmentInteractionListener}
  * interface.

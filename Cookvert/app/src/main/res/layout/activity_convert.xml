@@ -35,21 +35,22 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <!-- ViewPager layout -->
+        <include layout="@layout/pager_recipe_viewpager"/>
+
         <!-- Shows multiplier amount at the bottom of the view -->
         <TextView
             android:id="@+id/text_multiplier_covert_activity"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="@dimen/text_margin"
+            android:padding="8dp"
             android:gravity="center"
             android:text="@string/text_multiplier_amount"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textStyle="bold"
-            android:background="@color/colorDarkGray"/>
-
-        <!-- ViewPager layout -->
-        <include layout="@layout/pager_recipe_viewpager"/>
+            android:background="@drawable/rounded_corners"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

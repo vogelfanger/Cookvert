@@ -61,6 +61,8 @@ public class HelpManager {
                 R.string.title_help_how_to_save_recipes));
         helpTopics.add(Cookvert.getAppContext().getResources().getString(
                 R.string.title_help_how_to_scale_recipe));
+        helpTopics.add(Cookvert.getAppContext().getResources().getString(
+                R.string.title_help_which_units_to_use));
     }
 
     public String getFocusedHelpTopic(){

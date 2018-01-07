@@ -19,6 +19,7 @@ import com.cookvert.help.fragments.HelpConvertTemperatureFragment;
 import com.cookvert.help.fragments.HelpConvertUnitsFragment;
 import com.cookvert.help.fragments.HelpSaveRecipesFragment;
 import com.cookvert.help.fragments.HelpScaleSavedRecipeFragment;
+import com.cookvert.help.fragments.HelpUnitsFragment;
 
 /**
  *
@@ -65,7 +66,6 @@ public class HelpContentActivity extends AppCompatActivity {
     /**
      * Returns a new fragment based on data taken from intent extras
      * @return new fragment object
-     * TODO add all help fragments when ready
      */
     private Fragment getContentFragment(){
         String key = getIntent().getExtras().getString(HelpManager.ARG_HELP_CONTENT);
@@ -90,6 +90,9 @@ public class HelpContentActivity extends AppCompatActivity {
 
         else if(key.equals(getResources().getString(R.string.title_help_how_to_scale_recipe))){
             return HelpScaleSavedRecipeFragment.newInstance();
+        }
+        else if(key.equals(getResources().getString(R.string.title_help_which_units_to_use))){
+            return HelpUnitsFragment.newInstance();
         }
 
         return null;

@@ -79,7 +79,7 @@ public class ShopItemRecyclerViewAdapter extends
         // change background color if checkbox is checked
         if(holder.mCheckBox.isChecked()){
             holder.mView.setBackgroundColor(
-                    Cookvert.getAppContext().getResources().getColor(R.color.colorPrimaryVeryLight));
+                    Cookvert.getAppContext().getResources().getColor(R.color.colorPrimaryLight));
         }
         // change background color back if checkbox is not checked
         else{

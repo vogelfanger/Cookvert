@@ -1,10 +1,7 @@
 package com.cookvert.conversion;
 
 import android.content.Context;
-import android.content.Intent;
 
-import com.cookvert.R;
-import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.model.Ingredient;
 import com.cookvert.recipes.model.Recipe;
@@ -13,18 +10,14 @@ import com.cookvert.shoppinglist.model.ShopItem;
 import com.cookvert.shoppinglist.model.ShopList;
 import com.cookvert.util.ResourceHelper;
 
-import java.text.DecimalFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * Contains all the actions that the conversion ui needs for the conversions.
- * This class also contains the temporary recipe objects that can be seen in the conversion view.
- * Transfers temporary objects to recipe and shopping list databases when necessary.
- *
+ * Control object that acts as a handle between UI, database and conversion logic.
+ * This class only manages the data in ConvertActivity,
+ * there are separate managers for other activities.
  */
 public class ConvertManager {
 
