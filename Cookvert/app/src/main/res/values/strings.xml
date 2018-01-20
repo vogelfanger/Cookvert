@@ -25,6 +25,8 @@
     <string name="action_select_shop_item">Select</string>
     <string name="action_select_shop_list">Select</string>
     <string name="action_scale_recipe">Scale size</string>
+    <string name="action_sign_in_not_now">Not now</string>
+    <string name="action_sign_out">Sign out</string>
 
     <!-- basic texts used in buttons, dialogs and menus -->
     <!-- TODO some of these may be old and unused -->
@@ -115,12 +117,16 @@
 
     <!-- error messages shown in text views and toasts -->
     <string name="error_amount_too_large">Amount is too large</string>
-    <string name="error_multiplier_max_accuracy">Max accuracy x.xxx</string>
+    <string name="error_multiplier_max_accuracy">Max accuracy is x.xxx</string>
     <string name="error_multiplier_too_large">Multiplier is too large</string>
     <string name="error_no_amount">Amount is missing</string>
     <string name="error_no_multiplier">Multiplier is missing</string>
     <string name="error_no_name">Name is missing</string>
     <string name="error_unit_piece_converted">Piece can\'t be converted</string>
+
+    <string name="help_about_content_1">Temperature icon was provided by Icons8 (https://icons8.com/icon/3907/temperature)</string>
+    <string name="help_about_content_2">Other icons were provided by Google Material Design (https://material.io/icons/)</string>
+    <string name="help_about_version">v.</string>
 
     <string name="help_convert_saved_recipe_title">How to convert units from a saved recipe</string>
     <string name="help_convert_saved_recipe_content_1.1">1.	Open the Cookvert app.</string>
@@ -148,13 +154,20 @@
     <string name="help_convert_units_content_4part1_bold">Converted ingredients </string>
     <string name="help_convert_units_content_4part2">page shows you a similar list, which represents the ingredients after they are converted into other units. You can change pages by swiping the screen left and right, or tapping the tabs.</string>
     <string name="help_convert_units_content_5">To convert an ingredient:</string>
-    <string name="help_convert_units_content_5.1">1. Add a new ingredient by entering amount, unit and name.</string>
+    <string name="help_convert_units_content_5.1">1. Add a new ingredient by tapping the bottom right button and entering amount, unit and name.</string>
     <string name="help_convert_units_content_5.2">2. Go to Converted ingredients page and tap the ingredient you just added.</string>
     <string name="help_convert_units_content_5.3">3. Select a target unit and tap DONE.</string>
     <string name="help_convert_units_content_5.4">4. The ingredient has now been converted into selected unit. Ingredients page shows you the original amount and unit, while Converted Ingredients page shows you the converted amount and unit.</string>
     <string name="help_convert_units_content_6">Note that the amounts shown at the Converted ingredients page are also affected by current multiplier, that is located at the bottom of the view.</string>
     <string name="help_convert_units_content_7part1_bold">Tip: </string>
     <string name="help_convert_units_content_7part2">You can easily convert multiple ingredients, or even a whole recipe by adding all the ingredients you need into the lists and individually selecting a target unit for each. You can also scale your recipe by changing the multiplier. This will both convert the ingredients, and scale their amount. </string>
+
+    <string name="help_edit_items_title">How to edit and delete items in lists</string>
+    <string name="help_edit_items_content_1">Editing and deleting list items works in the same way with recipes, recipe categories, ingredients, shopping lists and shop items.</string>
+    <string name="help_edit_items_content_2.1">1. Open the list you want to edit.</string>
+    <string name="help_edit_items_content_2.2">2. Hold down the item you want to edit until a menu opens.</string>
+    <string name="help_edit_items_content_2.3">3. Select the action you want to perform. These may vary depending on the type of list you\'re working with.</string>
+    <string name="help_edit_items_content_3">Note that deleting a recipe category will not remove the recipes it contains. Instead, all the recipes are relocated under the "Uncategorized" category. If you want to delete the recipes permanently, open the recipe list and follow the steps above.</string>
 
     <string name="help_save_recipes_title">How to save recipes</string>
     <string name="help_save_recipes_content_1.1">1.	Open the Cookvert app.</string>
@@ -192,8 +205,7 @@
     <string name="help_units_title">Which units I should use</string>
     <string name="help_units_content_1.1">This app uses common units from metric, imperial and US systems. US volume units are defined according to the customary measurements as opposed to the legal ones.</string>
     <string name="help_units_content_1.2">If you are unsure which units are being used in your recipe, make sure you select all the units from the same system. For example, if your recipe includes cups and teaspoons, you can use US units for all the ingredients and the proportions remain the same even if the recipe was originally developed using UK measurements.</string>
-    <string name="help_units_content_1.3">If you need to use exact measurements for dry ingredients, use mass units. These units are more universally recognized, and they are easier to measure correctly.</string>
-    <string name="help_units_content_1.4">Here is the list of units and their metric conversions:</string>
+    <string name="help_units_content_1.3">Here is the list of units and their metric conversions:</string>
     <string name="help_units_content_2_bold">Imperial mass units:</string>
     <string name="help_units_content_2.1">ounce = 28.34952313 grams</string>
     <string name="help_units_content_2.2">pound = 453.59237 grams</string>
@@ -232,11 +244,6 @@
     <string name="hint_enter_temperature">Enter temperature</string>
     <string name="hint_tap_to_edit">Tap to edit ingredient</string>
 
-    <string name="main_button_convert">CONVERT</string>
-    <string name="main_button_recipes">RECIPES</string>
-    <string name="main_button_shopping_lists">SHOPPING LISTS</string>
-    <string name="main_button_help">HELP</string>
-
     <string name="message_change_unit">Select target unit to convert ingredient</string>
     <string name="message_dialog_convert_temperature">
         Enter amount and select unit to convert temperature</string>
@@ -250,16 +257,24 @@
     <string name="message_dialog_scale_recipe">
         Multiply all ingredient amounts by given number</string>
     <string name="message_dialog_delete_category">
-        Recipes in this category will be moved under UNCATEGORIZED</string>
+        Recipes in this category will be moved under Uncategorized</string>
+
+    <string name="sign_in_dialog_text">Signing in with your Google account allows you to back up the app\'s data to Google Drive.</string>
+    <string name="sign_in_dialog_text2">If you choose not to sign in, the data remains saved only on this device.</string>
+    <string name="sign_in_info">Signing in with your Google account allows you to save recipes and shopping lists to Google Drive. All changes are automatically updated to Drive, making it possible for you to use your recipes on multiple devices. If you choose not to sign in, all data remains saved only on this device.</string>
+    <string name="sign_in_info_when_signed_in">You are now signed in as</string>
+    <string name="sign_in_info_when_signed_in2">You have already signed in with a Google account.</string>
+    <string name="sign_in_info_when_signed_out">You haven\'t signed in with Google yet.</string>
 
     <string name="text_about_link_header">About</string>
     <string name="text_help_list_header">Help topics</string>
-    <string name="text_multiplier_amount">Current multiplier: </string>
+    <string name="text_multiplier_amount">Multiplier: </string>
 
     <string name="title_activity_convert">Convert</string>
     <string name="title_activity_help">Help</string>
     <string name="title_activity_recipes">Recipes</string>
     <string name="title_activity_shoplists">Shopping Lists</string>
+    <string name="title_activity_sign_in">Google sign in</string>
     <string name="title_context_menu">Select action</string>
     <string name="title_dialog_change_category">Change category</string>
     <string name="title_dialog_convert_temperature">Convert temperature</string>
@@ -274,11 +289,15 @@
     <string name="title_dialog_new_recipe">New recipe</string>
     <string name="title_dialog_new_shop_item">New shop item</string>
     <string name="title_dialog_new_shop_list">New shopping list</string>
+    <string name="title_dialog_rename_recipe">Rename recipe</string>
     <string name="title_dialog_rename_shop_list">Rename shopping list</string>
     <string name="title_dialog_scale_recipe">Scale recipe size</string>
+    <string name="title_dialog_sign_in">Sign in with Google?</string>
+    <string name="title_drawer_sign_in">Sign in</string>
     <string name="title_help_how_to_convert_saved_recipe">How to convert units from saved recipe</string>
     <string name="title_help_how_to_convert">How to convert units</string>
     <string name="title_help_how_to_convert_temperature">How to convert temperature</string>
+    <string name="title_help_how_to_edit_items">How to edit and delete items in lists</string>
     <string name="title_help_how_to_save_recipes">How to save recipes</string>
     <string name="title_help_how_to_scale_recipe">How to scale the size of a recipe</string>
     <string name="title_help_which_units_to_use">Which units I should use</string>
@@ -294,6 +313,8 @@
     <string name="toast_recipe_saved">Recipe saved</string>
     <string name="toast_shop_list_deleted">Shopping list deleted</string>
     <string name="toast_shop_list_saved">Shopping list saved</string>
+    <string name="toast_signed_in">Signed in</string>
+    <string name="toast_signed_out">Signed out</string>
 
     <string-array name="spinner_volume_units">
         <item>@string/array_unit_cup_uk</item>

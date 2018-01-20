@@ -304,10 +304,16 @@ public class ConvertManager {
         return recipe;
     }
 
-    public ShopList exportAsShopList(Context context, String name){
+    public ShopList exportAsShopList(Context context, String name, boolean useOriginal){
         ShopList list = new ShopList(name);
         String itemName;
-        for(Ingredient i : original.getIngredients()){
+        Recipe sourceRecipe;
+        if(useOriginal){
+            sourceRecipe = original;
+        }else{
+            sourceRecipe = converted;
+        }
+        for(Ingredient i : sourceRecipe.getIngredients()){
             // add new shop item using ingredient data for new objects
             itemName = Ingredient.roundAmount(i.getAmount()) + "  "
                     + ResourceHelper.getStringFromRes(context, i.getUnit().getRes()) + "  "

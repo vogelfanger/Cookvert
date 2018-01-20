@@ -1,9 +1,14 @@
 package com.cookvert.conversion.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerTabStrip;
@@ -17,6 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +39,11 @@ import com.cookvert.conversion.fragments.ConvertedRecipeFragment;
 import com.cookvert.conversion.fragments.ExportRecipeDialog;
 import com.cookvert.conversion.fragments.ExportShopListDialog;
 import com.cookvert.conversion.fragments.ImportRecipeDialog;
+import com.cookvert.conversion.fragments.SignInDialog;
+import com.cookvert.data.DBHelper;
+import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.help.activities.HelpActivity;
+import com.cookvert.help.activities.SignInOptionsActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.activities.EditRecipeActivity;
 import com.cookvert.recipes.activities.RecipesActivity;
@@ -51,6 +61,19 @@ import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.activities.EditShopListActivity;
 import com.cookvert.shoppinglist.activities.ShopListsActivity;
 import com.cookvert.shoppinglist.model.ShopList;
+import com.cookvert.util.Cookvert;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveClient;
+import com.google.android.gms.drive.DriveResourceClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -67,7 +90,8 @@ public class ConvertActivity extends AppCompatActivity
                     ChangeUnitDialog.OnChangeUnitListener,
                     ExportShopListDialog.OnExportShopListListener,
                     ExportRecipeDialog.OnExportRecipeListener,
-                    ImportRecipeDialog.OnImportRecipeListener{
+                    ImportRecipeDialog.OnImportRecipeListener,
+                    SignInDialog.OnSignInListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -85,6 +109,8 @@ public class ConvertActivity extends AppCompatActivity
     // tags fragment manager
     public static final String TAG_DISPLAY_INSTRUCTIONS = "displayInstructions";
     public static final String TAG_SAVED_STATE_INSTRUCTIONS = "bundleInstructions";
+
+    public static final int SIGN_IN_REQUEST = 1;
 
     private ViewPager mViewPager;
     // page adapter for each page fragment
@@ -110,14 +136,81 @@ public class ConvertActivity extends AppCompatActivity
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
 
+    private GoogleSignInClient googleSignInClient;
+    private boolean signInFlag;
+    private boolean signInDialogFlag;
+    private SignInDialog signInDialog; // dialog that is dismissed when login succeeds
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == SIGN_IN_REQUEST && resultCode == RESULT_OK){
+            GoogleDriveManager.getInstance().googleSignInAccountTask(googleSignInClient.silentSignIn().addOnCompleteListener(new OnCompleteListener<GoogleSignInAccount>() {
+                @Override
+                public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+
+                    // Save signed in account to manager so the info can be used later
+                    Task<GoogleSignInAccount> accountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    try {
+                        GoogleDriveManager.getInstance().setAccount(accountTask.getResult(ApiException.class));
+
+                    } catch (ApiException e) {
+                        // The ApiException status code indicates the detailed failure reason.
+                        Log.w("ConvertActivity", "Account retrieval failed:" + e.getStatusCode());
+                    }
+
+                    SharedPreferences prefs = getSharedPreferences(Cookvert.PREFS_NAME, 0);
+
+                    // If user just signed in with an account for the first time, show toast
+                    if(!prefs.getBoolean(Cookvert.PREF_SIGN_IN_SETTING, false)){
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_signed_in, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(Cookvert.PREF_SIGN_IN_SETTING, true);
+                    editor.putBoolean(Cookvert.PREF_SIGN_IN_SHOW, false);
+                    editor.apply();
+
+                    if(signInDialog != null){
+                        signInDialog.dismiss();
+                    }
+                }
+            }), getApplicationContext(), this);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
+        // Create the database so it can be overwritten with file from Drive.
+        DBHelper.getInstance(this);
+
+        // See if user has some previous sign in setting and set flag.
+        final SharedPreferences prefs = getSharedPreferences(Cookvert.PREFS_NAME, 0);
+        signInFlag = prefs.getBoolean(Cookvert.PREF_SIGN_IN_SETTING, false);
+        signInDialogFlag = prefs.getBoolean(Cookvert.PREF_SIGN_IN_SHOW, true);
+
+        // If user has not signed in with google and dialog flag is on, show dialog
+        if(!GoogleDriveManager.getInstance().signedIn() && signInDialogFlag){
+            SignInDialog signInDialog = SignInDialog.newInstance();
+            signInDialog.show(getSupportFragmentManager(), "signInDialog");
+        }
+
+        // If user has not signed in and auto sign in flag is on, sign in.
+        else if(!GoogleDriveManager.getInstance().signedIn() && signInFlag){
+            GoogleDriveManager.getInstance().buildGoogleSignInClient(this);
+            googleSignInClient = GoogleDriveManager.getInstance().getGoogleSignInClient();
+            startActivityForResult(googleSignInClient.getSignInIntent(), SIGN_IN_REQUEST);
+        }
+
         setContentView(R.layout.activity_convert);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         OriginalRecipeFragment oFrag = OriginalRecipeFragment.newInstance(1);
@@ -231,6 +324,9 @@ public class ConvertActivity extends AppCompatActivity
                     case R.id.navigation_item_shop_lists:
                         startActivity(new Intent(ConvertActivity.this, ShopListsActivity.class));
                         return true;
+                    case R.id.navigation_item_sign_in:
+                        startActivity(new Intent(ConvertActivity.this, SignInOptionsActivity.class));
+                        return true;
                     case R.id.navigation_item_help:
                         startActivity(new Intent(ConvertActivity.this, HelpActivity.class));
                         return true;
@@ -247,14 +343,11 @@ public class ConvertActivity extends AppCompatActivity
         getSupportActionBar().setTitle(R.string.title_activity_convert);
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_convert, menu);
         return true;
-
     }
 
     @Override
@@ -366,10 +459,10 @@ public class ConvertActivity extends AppCompatActivity
     }
 
     @Override
-    public void onExportShopList(String name) {
+    public void onExportShopList(String name, boolean useOriginal) {
         // Set up new shop list in convert manager
         ShopList list = ConvertManager.getInstance().exportAsShopList(
-                getApplicationContext(), name);
+                getApplicationContext(), name, useOriginal);
         // add shop list to shop list manager
         ShopListManager.getInstance().importShopList(list);
         startActivity(new Intent(ConvertActivity.this, EditShopListActivity.class));
@@ -458,6 +551,26 @@ public class ConvertActivity extends AppCompatActivity
     }
 
 
+
+    // Called when user chooses to sign in with Google in SignInDialog.
+    @Override
+    public void onSignIn(boolean notNow, SignInDialog dialog) {
+
+        signInDialog = dialog;
+
+        // User doesn't want to sign in, don't prompt sign in again.
+        if(notNow){
+            SharedPreferences prefs = getSharedPreferences(Cookvert.PREFS_NAME, 0);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(Cookvert.PREF_SIGN_IN_SETTING, false);
+            editor.putBoolean(Cookvert.PREF_SIGN_IN_SHOW, false);
+            editor.apply();
+        }else{
+            GoogleDriveManager.getInstance().buildGoogleSignInClient(this);
+            googleSignInClient = GoogleDriveManager.getInstance().getGoogleSignInClient();
+            startActivityForResult(googleSignInClient.getSignInIntent(), SIGN_IN_REQUEST);
+        }
+    }
 
     @Override
     public void setOriginalRecipeAdapter(MyIngredientRecyclerViewAdapter adapter) {
@@ -655,4 +768,5 @@ public class ConvertActivity extends AppCompatActivity
             return null;
         }
     }
+
 }

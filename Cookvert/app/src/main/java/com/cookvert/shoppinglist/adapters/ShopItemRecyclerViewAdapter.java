@@ -112,7 +112,6 @@ public class ShopItemRecyclerViewAdapter extends
         public void onCreateContextMenu(ContextMenu contextMenu, View view,
                                         ContextMenu.ContextMenuInfo contextMenuInfo) {
             contextMenu.setHeaderTitle(R.string.title_context_menu);
-            contextMenu.add(0, view.getId(), 0, R.string.action_select_shop_item);
             contextMenu.add(0, view.getId(), 0, R.string.action_edit_shop_item);
             contextMenu.add(0, view.getId(), 0, R.string.action_delete);
         }

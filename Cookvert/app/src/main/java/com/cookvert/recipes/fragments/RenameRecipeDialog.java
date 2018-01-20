@@ -4,12 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -50,7 +52,7 @@ public class RenameRecipeDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
-        builder.setTitle(R.string.title_dialog_edit_ingredient);
+        builder.setTitle(R.string.title_dialog_rename_recipe);
 
         builder.setPositiveButton(R.string.all_done, null); //onClickListener is overridden later
         builder.setNegativeButton(R.string.all_cancel, new DialogInterface.OnClickListener() {

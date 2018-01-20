@@ -12,23 +12,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/text_margin"
-        android:layout_marginBottom="@dimen/text_margin"
+        android:text="@string/sign_in_dialog_text"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
 
-    <EditText
-        android:id="@+id/text_edit_name_dialog"
+    <TextView
+        android:id="@+id/text_dialog_message2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
         android:layout_marginBottom="@dimen/text_margin"
-        android:textSize="18sp"
-        android:hint="@string/hint_enter_name"
-        android:inputType="text"
-        android:selectAllOnFocus="true"/>
+        android:text="@string/sign_in_dialog_text2"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
 
-    <Spinner
-        android:id="@+id/spinner_export_recipe_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </Spinner>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/button_google_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+    </com.google.android.gms.common.SignInButton>
 
 </LinearLayout>

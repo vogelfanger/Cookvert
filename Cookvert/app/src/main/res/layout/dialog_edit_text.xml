@@ -1,13 +1,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-    android:paddingBottom="@dimen/text_margin"
-    tools:context="com.cookvert.recipes.fragments.NewCategoryDialog">
+    android:paddingBottom="@dimen/text_margin">
 
     <EditText
         android:id="@+id/text_edit_name_dialog"
@@ -18,6 +16,6 @@
         android:textSize="18sp"
         android:hint="@string/hint_enter_name"
         android:inputType="text"
-        android:selectAllOnFocus="true"/>
+        android:selectAllOnFocus="true" />
 
 </LinearLayout>

@@ -58,6 +58,8 @@ public class HelpManager {
         helpTopics.add(Cookvert.getAppContext().getResources().getString(
                 R.string.title_help_how_to_convert_temperature));
         helpTopics.add(Cookvert.getAppContext().getResources().getString(
+                R.string.title_help_how_to_edit_items));
+        helpTopics.add(Cookvert.getAppContext().getResources().getString(
                 R.string.title_help_how_to_save_recipes));
         helpTopics.add(Cookvert.getAppContext().getResources().getString(
                 R.string.title_help_how_to_scale_recipe));

@@ -6,9 +6,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -86,6 +89,8 @@ public class ScaleRecipeDialog extends DialogFragment {
         return ad;
     }
 
+
+
     /**
      * Custom listener that handles incorrect user inputs in dialog.
      */
@@ -103,14 +108,17 @@ public class ScaleRecipeDialog extends DialogFragment {
             //see if multiplier field is empty and put up a warning if necessary
             if(iMultiplier.getText().toString().length() == 0) {
                 iMultiplier.setError(getContext().getText(R.string.error_no_multiplier));
+                return;
             }
             // see if multiplier is too large
             else if(Double.parseDouble(iMultiplier.getText().toString()) >= 1000.0){
                 iMultiplier.setError(getContext().getText(R.string.error_multiplier_too_large));
+                return;
             }
             // see if multiplier has too many digits after decimal points
             else if(TextValidator.accuracyMoreThanThreeDigits(iMultiplier.getText().toString())){
                 iMultiplier.setError(getContext().getText(R.string.error_multiplier_max_accuracy));
+                return;
             }
             else{
                 //send data from text field to listener Activity and dismiss dialog
@@ -133,5 +141,4 @@ public class ScaleRecipeDialog extends DialogFragment {
     public interface OnScaleRecipeListener {
         void onScaleRecipe(double multiplier);
     }
-
 }

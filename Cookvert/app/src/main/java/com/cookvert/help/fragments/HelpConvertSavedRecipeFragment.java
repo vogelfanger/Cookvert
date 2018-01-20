@@ -12,10 +12,6 @@ import android.widget.TextView;
 import com.cookvert.R;
 import com.cookvert.util.TextEditor;
 
-/**
- * Created by Elmo on 28/09/2017.
- */
-
 public class HelpConvertSavedRecipeFragment extends Fragment{
 
     public HelpConvertSavedRecipeFragment() {

@@ -17,6 +17,7 @@ import com.cookvert.help.HelpManager;
 import com.cookvert.help.fragments.HelpConvertSavedRecipeFragment;
 import com.cookvert.help.fragments.HelpConvertTemperatureFragment;
 import com.cookvert.help.fragments.HelpConvertUnitsFragment;
+import com.cookvert.help.fragments.HelpEditItemsFragment;
 import com.cookvert.help.fragments.HelpSaveRecipesFragment;
 import com.cookvert.help.fragments.HelpScaleSavedRecipeFragment;
 import com.cookvert.help.fragments.HelpUnitsFragment;
@@ -82,6 +83,11 @@ public class HelpContentActivity extends AppCompatActivity {
         else if(key.equals(getResources().getString(
                 R.string.title_help_how_to_convert_temperature))){
             return HelpConvertTemperatureFragment.newInstance();
+        }
+
+        else if(key.equals(getResources().getString(
+                R.string.title_help_how_to_edit_items))){
+            return HelpEditItemsFragment.newInstance();
         }
 
         else if(key.equals(getResources().getString(R.string.title_help_how_to_save_recipes))){

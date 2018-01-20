@@ -32,7 +32,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.TextEditorButton" parent="Base.Widget.AppCompat.Button.Colored">
-        <item name="background">@color/colorAccent</item>
+        <item name="android:background">@color/colorAccentLight</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>

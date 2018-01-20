@@ -9,6 +9,11 @@ import android.content.Context;
 
 public class Cookvert extends Application {
 
+    public static final String PREFS_NAME = "SignInPreferences";
+    public static final String PREF_SIGN_IN_SHOW = "SignInShow";
+    public static final String PREF_SIGN_IN_SETTING = "SignInSetting";
+    public static final String PREFS_DB_LAST_EDITED = "databaseLastEditDate";
+
     private static Context context;
 
     @Override

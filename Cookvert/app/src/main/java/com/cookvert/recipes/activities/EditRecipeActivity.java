@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.conversion.fragments.ExportShopListDialog;
+import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
 import com.cookvert.recipes.fragments.ChangeCategoryDialog;
@@ -117,6 +119,20 @@ public class EditRecipeActivity extends AppCompatActivity implements
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    @Override
+    protected void onStop() {
+        if(GoogleDriveManager.getInstance().signedIn()){
+            try {
+                GoogleDriveManager.getInstance().saveAppDataToDrive(this);
+            }catch (Exception e){
+                Log.e("RecipesActivity", "Saving to Drive failed", e);
+            }
+        }
+        super.onStop();
+    }
+
+
+
     //****************************************************************************************************
     //*****                               FRAGMENT INTERACTION METHODS                               *****
     //****************************************************************************************************
@@ -125,6 +141,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
     @Override
     public void onChangeCategory(int categoryPosition) {
         RecipeManager.getInstance().changeCategory(categoryPosition);
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
@@ -136,17 +153,20 @@ public class EditRecipeActivity extends AppCompatActivity implements
     public void onEditIngredient(Double amount, int unitKey, String name) {
         RecipeManager.getInstance().editIngredient(amount, unitKey, name);
         ingredientListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
     public void onEditInstructions(String instructions){
         RecipeManager.getInstance().editInstructions(instructions);
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
     public void onExportAsShopList(String name) {
         ShopListManager.getInstance().importShopList(
                 RecipeManager.getInstance().exportAsShopList(this, name));
+        GoogleDriveManager.getInstance().setUnsavedData(true);
 
         startActivity(new Intent(EditRecipeActivity.this, EditShopListActivity.class));
 
@@ -181,6 +201,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
             //delete ingredient and update lists
             RecipeManager.getInstance().deleteIngredient();
             ingredientListAdapter.notifyDataSetChanged();
+            GoogleDriveManager.getInstance().setUnsavedData(true);
             return true;
         }
         return false;
@@ -190,6 +211,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
     public void onNewIngredient(Double amount, int unitKey, String name) {
         RecipeManager.getInstance().addIngredient(amount, unitKey, name);
         ingredientListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
@@ -245,6 +267,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
 
             case R.id.action_delete_recipe:
                 RecipeManager.getInstance().deleteRecipe();
+                GoogleDriveManager.getInstance().setUnsavedData(true);
                 startActivity(new Intent(getApplicationContext(), RecipesActivity.class));
                 Toast toast = Toast.makeText(this, R.string.toast_recipe_deleted, Toast.LENGTH_SHORT);
                 toast.show();
@@ -268,6 +291,7 @@ public class EditRecipeActivity extends AppCompatActivity implements
     @Override
     public void onRenameRecipe(String name) {
         RecipeManager.getInstance().renameRecipe(name);
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     //****************************************************************************************************
@@ -295,7 +319,6 @@ public class EditRecipeActivity extends AppCompatActivity implements
                     return OriginalRecipeFragment.newInstance(0);
                 case 1:
                     //editing instructions is enabled
-                    //TODO saved instructions should be loaded as parameter
                     return InstructionFragment.newInstance(2, 1, RecipeManager.getInstance().
                             getFocusedRecipe().getInstructions());
             }

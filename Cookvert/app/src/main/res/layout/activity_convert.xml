@@ -43,7 +43,7 @@
             android:id="@+id/text_multiplier_covert_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/text_margin"
             android:padding="8dp"
             android:gravity="center"

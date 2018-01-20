@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 import com.cookvert.R;
 import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.data.DBHelper;
+import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.help.activities.HelpActivity;
+import com.cookvert.help.activities.SignInOptionsActivity;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.RecipeRecyclerViewAdapter;
 import com.cookvert.recipes.fragments.ChangeCategoryDialog;
@@ -29,6 +32,8 @@ import com.cookvert.recipes.fragments.NewCategoryDialog;
 import com.cookvert.recipes.fragments.NewRecipeDialog;
 import com.cookvert.recipes.fragments.RecipeListFragment;
 import com.cookvert.shoppinglist.activities.ShopListsActivity;
+
+import java.util.logging.Logger;
 
 public class RecipesActivity extends AppCompatActivity
                              implements ChangeCategoryDialog.OnChangeCategoryListener,
@@ -87,6 +92,9 @@ public class RecipesActivity extends AppCompatActivity
                     case R.id.navigation_item_shop_lists:
                         startActivity(new Intent(RecipesActivity.this, ShopListsActivity.class));
                         return true;
+                    case R.id.navigation_item_sign_in:
+                        startActivity(new Intent(RecipesActivity.this, SignInOptionsActivity.class));
+                        return true;
                     case R.id.navigation_item_help:
                         startActivity(new Intent(RecipesActivity.this, HelpActivity.class));
                         return true;
@@ -113,6 +121,20 @@ public class RecipesActivity extends AppCompatActivity
         super.onDestroy();
     }
 
+    @Override
+    protected void onStop() {
+        if(GoogleDriveManager.getInstance().signedIn()){
+            try {
+                GoogleDriveManager.getInstance().saveAppDataToDrive(this);
+            }catch (Exception e){
+                Log.e("RecipesActivity", "Saving to Drive failed", e);
+            }
+        }
+        super.onStop();
+    }
+
+
+
     //****************************************************************************************************
     //                               FRAGMENT INTERACTION METHODS
     //****************************************************************************************************
@@ -123,6 +145,7 @@ public class RecipesActivity extends AppCompatActivity
     public void onChangeCategory(int categoryPosition) {
         RecipeManager.getInstance().changeCategory(categoryPosition);
         recipeAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
@@ -136,6 +159,7 @@ public class RecipesActivity extends AppCompatActivity
         }else{
             RecipeManager.getInstance().deleteCategory();
             recipeAdapter.notifyDataSetChanged();
+            GoogleDriveManager.getInstance().setUnsavedData(true);
         }
     }
 
@@ -143,6 +167,7 @@ public class RecipesActivity extends AppCompatActivity
     public void onDeleteRecipe() {
         RecipeManager.getInstance().deleteRecipe();
         recipeAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
@@ -155,6 +180,7 @@ public class RecipesActivity extends AppCompatActivity
             return;
         }else {
             RecipeManager.getInstance().editCategory(name);
+            GoogleDriveManager.getInstance().setUnsavedData(true);
         }
     }
 
@@ -176,7 +202,7 @@ public class RecipesActivity extends AppCompatActivity
         RecipeManager.getInstance().focusCategory = categoryPosition;
         RecipeManager.getInstance().focusRecipe = recipePosition;
 
-        //start new activity where ingredient data can be edited
+        //start new activity where recipe data can be edited
         startActivity(new Intent(getApplicationContext(), EditRecipeActivity.class));
     }
 
@@ -189,6 +215,7 @@ public class RecipesActivity extends AppCompatActivity
     public void onNewCategory(String name) {
         RecipeManager.getInstance().addCategory(name);
         recipeAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
@@ -197,6 +224,7 @@ public class RecipesActivity extends AppCompatActivity
         //add new recipe to RecipeManager
         RecipeManager.getInstance().addRecipe(name, categoryPosition);
         recipeAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
 
         //start new activity where recipe can be edited
         Intent intent = new Intent(getApplicationContext(), EditRecipeActivity.class);
@@ -215,7 +243,7 @@ public class RecipesActivity extends AppCompatActivity
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
+        Log.d("", "Context item detected");
         // Select recipe
         if(item.getTitle() == getResources().getString(R.string.action_select_recipe)){
             //start new activity where ingredient data can be edited

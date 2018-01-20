@@ -1,13 +1,13 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     android:paddingBottom="18dp"
-    tools:context="com.cookvert.conversion.fragments.ScaleRecipeDialog">
+    tools:context=".conversion.fragments.ScaleRecipeDialog">
 
     <TextView
         android:id="@+id/text_dialog_message"
@@ -21,8 +21,9 @@
         android:id="@+id/text_multiplier_amount_scale_recipe_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:hint="@string/hint_enter_multiplier"
         android:inputType="numberDecimal"
-        app:theme="@style/AppTheme.EditText"/>
+        android:selectAllOnFocus="true"/>
 
 </LinearLayout>

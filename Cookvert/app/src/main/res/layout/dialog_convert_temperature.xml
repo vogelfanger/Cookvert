@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,9 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/text_margin"
+        android:textSize="18sp"
         android:hint="@string/hint_enter_temperature"
         android:inputType="numberDecimal|numberSigned"
-        android:theme="@style/AppTheme.EditText"/>
+        android:selectAllOnFocus="true"/>
 
     <Spinner
         android:id="@+id/spinner_temperature"

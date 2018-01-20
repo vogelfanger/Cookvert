@@ -6,10 +6,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -65,6 +67,24 @@ public class EditIngredientDialog extends DialogFragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnEditIngredientListener");
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        hideKeyboard();
+        super.onDismiss(dialog);
+    }
+
+    // Hides keyboard using separate runnable
+    private void hideKeyboard(){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getActivity().getCurrentFocus().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
     }
 
     @Override

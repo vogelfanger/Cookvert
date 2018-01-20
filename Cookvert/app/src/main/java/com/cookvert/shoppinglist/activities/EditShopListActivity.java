@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.cookvert.R;
 import com.cookvert.data.DBHelper;
+import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.adapters.ShopItemRecyclerViewAdapter;
 import com.cookvert.shoppinglist.fragments.DeleteShopListDialog;
@@ -70,6 +72,18 @@ public class EditShopListActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
+    @Override
+    protected void onStop() {
+        if(GoogleDriveManager.getInstance().signedIn()){
+            try {
+                GoogleDriveManager.getInstance().saveAppDataToDrive(this);
+            }catch (Exception e){
+                Log.e("RecipesActivity", "Saving to Drive failed", e);
+            }
+        }
+        super.onStop();
+    }
+
 
 
     //****************************************************************************************************
@@ -87,6 +101,7 @@ public class EditShopListActivity extends AppCompatActivity implements
     public void onDeleteShopList() {
         startActivity(new Intent(getApplicationContext(), ShopListsActivity.class));
         ShopListManager.getInstance().deleteShopList();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
         Toast toast = Toast.makeText(this, R.string.toast_shop_list_deleted, Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -95,18 +110,21 @@ public class EditShopListActivity extends AppCompatActivity implements
     public void onEditShopItem(String name) {
         ShopListManager.getInstance().editShopItem(name);
         shopItemListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
     public void onNewShopItem(String name) {
         ShopListManager.getInstance().addShopItem(name);
         shopItemListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
     public void onRenameShopList(String name) {
         ShopListManager.getInstance().renameShopList(name);
         shopItemListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override
@@ -129,6 +147,7 @@ public class EditShopListActivity extends AppCompatActivity implements
         ShopListManager.getInstance().selectShopItem(checked);
         holder.mCheckBox.setChecked(checked);
         shopItemListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
 
@@ -152,6 +171,7 @@ public class EditShopListActivity extends AppCompatActivity implements
         else if(item.getTitle() == getResources().getString(R.string.action_delete)){
             ShopListManager.getInstance().deleteShopItem();
             shopItemListAdapter.notifyDataSetChanged();
+            GoogleDriveManager.getInstance().setUnsavedData(true);
             return true;
         }
         return false;

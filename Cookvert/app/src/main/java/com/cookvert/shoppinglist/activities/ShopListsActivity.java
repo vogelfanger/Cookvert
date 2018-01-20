@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,9 @@ import android.widget.Toast;
 import com.cookvert.R;
 import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.data.DBHelper;
+import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.help.activities.HelpActivity;
+import com.cookvert.help.activities.SignInOptionsActivity;
 import com.cookvert.recipes.activities.RecipesActivity;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.adapters.ShopListRecyclerViewAdapter;
@@ -78,6 +81,9 @@ public class ShopListsActivity extends AppCompatActivity implements
                     case R.id.navigation_item_shop_lists:
                         // activity already selected, NOP
                         return true;
+                    case R.id.navigation_item_sign_in:
+                        startActivity(new Intent(ShopListsActivity.this, SignInOptionsActivity.class));
+                        return true;
                     case R.id.navigation_item_help:
                         startActivity(new Intent(ShopListsActivity.this, HelpActivity.class));
                         return true;
@@ -104,6 +110,18 @@ public class ShopListsActivity extends AppCompatActivity implements
         super.onDestroy();
     }
 
+    @Override
+    protected void onStop() {
+        if(GoogleDriveManager.getInstance().signedIn()){
+            try {
+                GoogleDriveManager.getInstance().saveAppDataToDrive(this);
+            }catch (Exception e){
+                Log.e("RecipesActivity", "Saving to Drive failed", e);
+            }
+        }
+        super.onStop();
+    }
+
 
 
     //****************************************************************************************************
@@ -121,6 +139,7 @@ public class ShopListsActivity extends AppCompatActivity implements
     public void onDeleteShopList() {
         ShopListManager.getInstance().deleteShopList();
         shopListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
         Toast toast = Toast.makeText(this, R.string.toast_shop_list_deleted, Toast.LENGTH_SHORT);
         toast.show();
     }
@@ -129,6 +148,7 @@ public class ShopListsActivity extends AppCompatActivity implements
     public void onNewShopList(String name) {
         ShopListManager.getInstance().addShopList(name);
         shopListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
         startActivity(new Intent(ShopListsActivity.this, EditShopListActivity.class));
     }
 
@@ -136,6 +156,7 @@ public class ShopListsActivity extends AppCompatActivity implements
     public void onRenameShopList(String name) {
         ShopListManager.getInstance().renameShopList(name);
         shopListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     @Override

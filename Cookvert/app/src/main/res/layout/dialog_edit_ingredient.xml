@@ -1,4 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -21,7 +23,8 @@
     <Spinner
         android:id="@+id/spinner_edit_ingredient_dialog"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></Spinner>
+        android:layout_height="match_parent">
+    </Spinner>
 
     <EditText
         android:id="@+id/text_name_edit_ingredient_dialog"

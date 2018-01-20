@@ -12,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.cookvert.BuildConfig;
 import com.cookvert.R;
 import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.help.HelpManager;
@@ -38,6 +40,10 @@ public class HelpActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+
+        // Get version name from build config and set it to text view
+        TextView versionName = (TextView)  findViewById(R.id.text_about_version_number);
+        versionName.setText(getResources().getString(R.string.help_about_version) + BuildConfig.VERSION_NAME);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +71,9 @@ public class HelpActivity extends AppCompatActivity
                         return true;
                     case R.id.navigation_item_shop_lists:
                         startActivity(new Intent(HelpActivity.this, ShopListsActivity.class));
+                        return true;
+                    case R.id.navigation_item_sign_in:
+                        startActivity(new Intent(HelpActivity.this, SignInOptionsActivity.class));
                         return true;
                     case R.id.navigation_item_help:
                         // activity already selected, NOP
