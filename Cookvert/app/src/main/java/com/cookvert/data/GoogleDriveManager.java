@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -24,10 +25,14 @@ import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResourceClient;
 import com.google.android.gms.drive.MetadataBuffer;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.google.android.gms.drive.metadata.CustomPropertyKey;
+import com.google.android.gms.drive.query.Filter;
 import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
+import com.google.android.gms.drive.query.internal.zzj;
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +53,9 @@ public class GoogleDriveManager {
     private static GoogleDriveManager manager = new GoogleDriveManager();
 
     public static final String TAG = "GoogleDriveManager";
+    public static final String APP_FOLDER_NAME = "cookvert_data";
+    public static final String CUSTOM_PROPERTY_KEY_APP_FOLDER = "CookvertAppFolder";
+    public static final String CUSTOM_PROPERTY_KEY_DB_FILE = "CookvertDatabaseFile";
 
     private boolean unsavedData; // when true, calling save method sends the data to drive.
 
@@ -57,9 +65,29 @@ public class GoogleDriveManager {
     private GoogleSignInAccount account;
 
     private Query databaseQuery;
+    private Query appFolderQuery;
+
+    // Custom property to identify the folder in queries
+    private CustomPropertyKey appFolderPropertyKey;
+    private CustomPropertyKey DBPropertyKey;
 
     private GoogleDriveManager(){
-        databaseQuery = new Query.Builder().addFilter(Filters.eq(SearchableField.TITLE, "recipes.db")).build();
+        appFolderPropertyKey = new CustomPropertyKey(CUSTOM_PROPERTY_KEY_APP_FOLDER, CustomPropertyKey.PUBLIC);
+        DBPropertyKey = new CustomPropertyKey(CUSTOM_PROPERTY_KEY_DB_FILE, CustomPropertyKey.PUBLIC);
+
+        // Database file query searches for untrashed files with the database name and custom property.
+        databaseQuery = new Query.Builder().addFilter(Filters.and(Filters.eq(SearchableField.TRASHED, false),
+                Filters.and(Filters.eq(SearchableField.TITLE, DBHelper.DATABASE_NAME),
+                Filters.eq(DBPropertyKey, "true"))))
+                .build();
+        // App folder query seaches for untrashed folders with the app folder name and custom property.
+        appFolderQuery = new Query.Builder()
+                .addFilter(Filters.and(Filters.eq(SearchableField.TRASHED, false),
+                        Filters.and(Filters.eq(SearchableField.TITLE, APP_FOLDER_NAME),
+                        Filters.and(Filters.eq(appFolderPropertyKey, "true"),
+                                Filters.eq(SearchableField.MIME_TYPE, "application/vnd.google-apps.folder")))))
+                .build();
+
         unsavedData = false;
 
     }
@@ -117,13 +145,64 @@ public class GoogleDriveManager {
 
 
     /**
+     * Builds a new sign in client.
+     */
+    public void buildGoogleSignInClient(Context context) {
+        GoogleSignInOptions signInOptions =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestScopes(Drive.SCOPE_FILE)
+                        .build();
+        googleSignInClient = GoogleSignIn.getClient(context, signInOptions);
+    }
+
+
+
+    /**
+     * Retrieves Drive clients if sign in task succeeds.
+     * @param task
+     * @param context
+     */
+    public void googleSignInAccountTask(Task<GoogleSignInAccount> task, final Context context, final Activity activity) {
+        task.addOnSuccessListener(
+                new OnSuccessListener<GoogleSignInAccount>() {
+                    @Override
+                    public void onSuccess(GoogleSignInAccount googleSignInAccount) {
+                        Log.i(TAG, "Sign in success");
+                        // Build a drive client.
+                        driveClient = Drive.getDriveClient(context, googleSignInAccount);
+                        // Build a drive resource client.
+                        driveResourceClient =
+                                Drive.getDriveResourceClient(context, googleSignInAccount);
+
+                        // Load or save app data on sign in
+                        try{
+                            loadAppDataFromDrive(activity);
+                        }catch (Exception e){
+                            Log.e(TAG, "Loading data from Drive failed", e);
+                        }
+                    }
+                })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "Sign in failed", e);
+                            }
+                        });
+    }
+
+
+
+    /**
      * Gets app folder and database file from Drive
      * and replaces local database file with the loaded file, if it exists.
+     * If Drive has no new data to load, try saving instead.
      * @param activity
      */
     public void loadAppDataFromDrive(Activity activity){
-        getAppFolderFromDrive(activity, false);
+        getRootFolderFromDrive(activity, false);
     }
+
 
     /**
      * Gets app folder and database file from Drive
@@ -132,7 +211,7 @@ public class GoogleDriveManager {
      */
     public void saveAppDataToDrive(Activity activity){
         if(unsavedData) {
-            getAppFolderFromDrive(activity, true);
+            getRootFolderFromDrive(activity, true);
         }
     }
 
@@ -157,31 +236,57 @@ public class GoogleDriveManager {
     //                                      PRIVATE METHODS
     //*********************************************************************************************
 
+
+
+
     /**
-     * Builds a new sign in client.
+     * Creates an app folder to root and creates new database file into the folder.
+     * @param activity
      */
-    public void buildGoogleSignInClient(Context context) {
-        GoogleSignInOptions signInOptions =
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestScopes(Drive.SCOPE_APPFOLDER)
-                        .build();
-        googleSignInClient = GoogleSignIn.getClient(context, signInOptions);
+    private void createAppFolder(final Activity activity) {
+        getDriveResourceClient()
+                .getRootFolder()
+                .continueWithTask(new Continuation<DriveFolder, Task<DriveFolder>>() {
+                    @Override
+                    public Task<DriveFolder> then(@NonNull Task<DriveFolder> task)
+                            throws Exception {
+                        DriveFolder parentFolder = task.getResult();
+
+                        MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
+                                .setTitle(APP_FOLDER_NAME)
+                                .setMimeType(DriveFolder.MIME_TYPE)
+                                .setStarred(false)
+                                .setCustomProperty(appFolderPropertyKey, "true")
+                                .build();
+                        return getDriveResourceClient().createFolder(parentFolder, changeSet);
+                    }
+                })
+                .addOnSuccessListener(activity, new OnSuccessListener<DriveFolder>() {
+                    @Override
+                    public void onSuccess(DriveFolder driveFolder) {
+                        Log.d(TAG, "App folder created");
+                        createDatabaseInAppFolder(activity, driveFolder);
+                    }
+                })
+                .addOnFailureListener(activity, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Unable to create app folder", e);
+                    }
+                });
+
     }
-
-
 
     /**
      * Creates a new database file to app folder.
      * @param activity
      */
-    private void createDatabaseInAppFolder(final Activity activity) {
-        final Task<DriveFolder> appFolderTask = getDriveResourceClient().getAppFolder();
+    private void createDatabaseInAppFolder(final Activity activity, final DriveFolder appFolder) {
         final Task<DriveContents> createContentsTask = getDriveResourceClient().createContents();
-        Tasks.whenAll(appFolderTask, createContentsTask)
-                .continueWithTask(new Continuation<Void, Task<DriveFile>>() {
+        createContentsTask
+                .continueWithTask(new Continuation<DriveContents, Task<DriveFile>>() {
                     @Override
-                    public Task<DriveFile> then(@NonNull Task<Void> task) throws Exception {
-                        DriveFolder parent = appFolderTask.getResult();
+                    public Task<DriveFile> then(@NonNull Task<DriveContents> task) throws Exception {
                         DriveContents contents = createContentsTask.getResult();
                         java.io.File file = new java.io.File(DBHelper.getDbPath() + DBHelper.DATABASE_NAME);
                         try (OutputStream out = contents.getOutputStream()) {
@@ -199,17 +304,18 @@ public class GoogleDriveManager {
                         MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                                 .setTitle(DBHelper.DATABASE_NAME)
                                 .setMimeType("application/octet-stream")
-                                .setStarred(true)
+                                .setStarred(false)
+                                .setCustomProperty(DBPropertyKey, "true")
                                 .build();
 
-                        return getDriveResourceClient().createFile(parent, changeSet, contents);
+                        return getDriveResourceClient().createFile(appFolder, changeSet, contents);
                     }
                 })
                 .addOnSuccessListener(activity,
                         new OnSuccessListener<DriveFile>() {
                             @Override
                             public void onSuccess(DriveFile driveFile) {
-                                Log.i(TAG, "File created successfully");
+                                Log.d(TAG, "File created successfully");
                                 unsavedData = false;
                             }
                         })
@@ -256,7 +362,7 @@ public class GoogleDriveManager {
                         new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.i(TAG, "Contents was successfully downloaded");
+                                Log.d(TAG, "Contents was successfully downloaded");
                             }
                         })
                 .addOnFailureListener(activity, new OnFailureListener() {
@@ -267,35 +373,79 @@ public class GoogleDriveManager {
                 });
     }
 
-
-
-    private void getAppFolderFromDrive(final Activity activity, final boolean savingFile){
-        final Task<DriveFolder> appFolderTask = driveResourceClient.getAppFolder();
-        appFolderTask.addOnSuccessListener(activity, new OnSuccessListener<DriveFolder>() {
+    /**
+     * Finds the root folder and uses it to search for app folder.
+     * @param activity
+     * @param savingFile
+     */
+    private void getRootFolderFromDrive(final Activity activity, final boolean savingFile){
+        Task<DriveFolder> folderTask = driveResourceClient.getRootFolder();
+        folderTask.addOnSuccessListener(activity, new OnSuccessListener<DriveFolder>() {
             @Override
             public void onSuccess(DriveFolder driveFolder) {
-                Log.i(TAG, "App folder retrieved");
-                getDatabaseFileFromDrive(activity, driveFolder, savingFile);
+                Log.d(TAG, "Root folder retrieved");
+                getAppFolderFromDrive(driveFolder, activity, savingFile);
             }
         });
 
-        appFolderTask.addOnFailureListener(activity, new OnFailureListener() {
+        folderTask.addOnFailureListener(activity, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "App folder retrieval failed");
+                Log.e(TAG, "Root folder retrieval failed", e);
+            }
+        });
+    }
+
+    /**
+     * Searches for app folder from root, if the folder is found, it is used to search for db file,
+     * if folder is not found, creates a new app folder to root.
+     * @param root
+     * @param activity
+     * @param savingFile
+     */
+    private void getAppFolderFromDrive(final DriveFolder root, final Activity activity, final boolean savingFile){
+        Task<MetadataBuffer> queryTask = driveResourceClient.queryChildren(root, appFolderQuery);
+
+        // Search for app folder from root
+        queryTask.addOnSuccessListener(activity, new OnSuccessListener<MetadataBuffer>() {
+            @Override
+            public void onSuccess(MetadataBuffer metadatas) {
+
+                if(metadatas.getCount() > 1){
+                    Log.w(TAG, "Found multiple app folders, can't determine which one to use, file count: " + metadatas.getCount());
+                }
+
+                // App folder found, search for the db file
+                if(metadatas.getCount() > 0){
+                    DriveFolder appFolder = metadatas.get(0).getDriveId().asDriveFolder();
+                    Log.d(TAG, "App folder retrieved");
+                    getDatabaseFileFromDrive(activity, appFolder, savingFile);
+                }
+
+                // Can't find app folder, create one instead
+                else{
+                    Log.d(TAG, "Could not find the app folder");
+                    createAppFolder(activity);
+                }
+                metadatas.release();
             }
         });
     }
 
 
-    private void getDatabaseFileFromDrive(final Activity activity, DriveFolder appFolder, final boolean savingFile){
+    private void getDatabaseFileFromDrive(final Activity activity, final DriveFolder appFolder, final boolean savingFile){
         Task<MetadataBuffer> queryTask = driveResourceClient.queryChildren(appFolder, databaseQuery);
         queryTask.addOnSuccessListener(activity, new OnSuccessListener<MetadataBuffer>() {
             @Override
             public void onSuccess(MetadataBuffer metadatas) {
 
-                if(metadatas.getCount() > 0){
+                // If there are multiple files in the folder...
+                if(metadatas.getCount() > 1){
+                    Log.w(TAG, "Query returns multiple files, can't determine which is the database, file count: " + metadatas.getCount());
+                }
 
+                // There is at least one file in app folder, do save or load.
+                if(metadatas.getCount() > 0){
                     SharedPreferences prefs = activity.getSharedPreferences(Cookvert.PREFS_NAME, 0);
                     long localEditDate = prefs.getLong(Cookvert.PREFS_DB_LAST_EDITED, 0L);
                     long driveEditDate = metadatas.get(0).getModifiedDate().getTime();
@@ -303,22 +453,21 @@ public class GoogleDriveManager {
                     // data is being saved and local db was edited last
                     if(savingFile && localEditDate > driveEditDate){
                         DriveId databaseDriveId = metadatas.get(0).getDriveId();
-                        metadatas.get(0).getModifiedDate();
-                        Log.i(TAG, "Database file retrieved");
+                        Log.d(TAG, "Database file retrieved");
                         saveDatabaseToAppFolder(activity, databaseDriveId.asDriveFile());
                     }
-                    // data is being loaded and drive db was edited last
-                    else if(localEditDate < driveEditDate){
+                    // data is being loaded and Drive db was edited last
+                    else if(!savingFile && localEditDate < driveEditDate){
                         DriveId databaseDriveId = metadatas.get(0).getDriveId();
-                        Log.i(TAG, "Database file retrieved");
+                        Log.d(TAG, "Database file retrieved");
                         copyDatabaseFromDrive(activity, databaseDriveId.asDriveFile());
                     }
                 }
 
                 //No files in app folder, create a new file and write local database into it.
                 else if(metadatas.getCount() == 0){
-                    Log.i(TAG, " No database file found, creating a new one");
-                    createDatabaseInAppFolder(activity);
+                    Log.d(TAG, " No database file found, creating a new one");
+                    //createDatabaseInAppFolder(activity, appFolder);
                 }
                 metadatas.release();
             }
@@ -327,48 +476,13 @@ public class GoogleDriveManager {
         queryTask.addOnFailureListener(activity, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Database file retrieval failed");
+                Log.e(TAG, "Database file retrieval failed", e);
             }
         });
     }
 
 
 
-    /**
-     * Retrieves Drive clients if sign in task succeeds.
-     * @param task
-     * @param context
-     */
-    public void googleSignInAccountTask(Task<GoogleSignInAccount> task, final Context context, final Activity activity) {
-        Log.i("GoogleSignIn", "Update view with sign in account task");
-        task.addOnSuccessListener(
-                new OnSuccessListener<GoogleSignInAccount>() {
-                    @Override
-                    public void onSuccess(GoogleSignInAccount googleSignInAccount) {
-                        Log.i(TAG, "Sign in success");
-                        // Build a drive client.
-                        driveClient = Drive.getDriveClient(context, googleSignInAccount);
-                        // Build a drive resource client.
-                        driveResourceClient =
-                                Drive.getDriveResourceClient(context, googleSignInAccount);
-
-                        // Save or load app data on sign in, depending on the timestamp of last edit.
-                        try{
-                            saveAppDataToDrive(activity);
-                            loadAppDataFromDrive(activity);
-                        }catch (Exception e){
-                            Log.e(TAG, "Loading data from Drive failed", e);
-                        }
-                    }
-                })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Sign in failed", e);
-                            }
-                        });
-    }
 
 
 
@@ -412,7 +526,7 @@ public class GoogleDriveManager {
                         new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.i(TAG, "Database in Drive was updated successfully");
+                                Log.d(TAG, "Database in Drive was updated successfully");
                                 unsavedData = false;
                             }
                         })
@@ -423,9 +537,4 @@ public class GoogleDriveManager {
                     }
                 });
     }
-
-
-
-
-
 }

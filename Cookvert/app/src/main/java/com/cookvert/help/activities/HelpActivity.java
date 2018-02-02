@@ -84,7 +84,7 @@ public class HelpActivity extends AppCompatActivity
         });
 
         // preselect item based on current activity
-        navigationView.getMenu().getItem(3).setChecked(true);
+        navigationView.getMenu().getItem(4).setChecked(true);
     }
 
     @Override

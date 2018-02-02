@@ -84,10 +84,10 @@ public class DBHelper extends SQLiteOpenHelper{
 
             try{
                 copyDB();
-                // Save edited date to shared preferences so that it can be compared to the one in drive.
+                // Set edit date to 0 so that new, empty database is always replaced with Drive database.
                 SharedPreferences prefs = Cookvert.getAppContext().getSharedPreferences(Cookvert.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putLong(Cookvert.PREFS_DB_LAST_EDITED, new Date().getTime());
+                editor.putLong(Cookvert.PREFS_DB_LAST_EDITED, 0);
                 editor.apply();
             } catch (IOException e){
                 throw new Error("Error copying database");
