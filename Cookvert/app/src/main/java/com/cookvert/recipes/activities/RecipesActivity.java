@@ -1,6 +1,5 @@
 package com.cookvert.recipes.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.cookvert.R;
@@ -32,8 +30,6 @@ import com.cookvert.recipes.fragments.NewCategoryDialog;
 import com.cookvert.recipes.fragments.NewRecipeDialog;
 import com.cookvert.recipes.fragments.RecipeListFragment;
 import com.cookvert.shoppinglist.activities.ShopListsActivity;
-
-import java.util.logging.Logger;
 
 public class RecipesActivity extends AppCompatActivity
                              implements ChangeCategoryDialog.OnChangeCategoryListener,

@@ -2,8 +2,6 @@ package com.cookvert.shoppinglist.model;
 
 import android.support.annotation.NonNull;
 
-import com.cookvert.data.DBContract;
-
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;

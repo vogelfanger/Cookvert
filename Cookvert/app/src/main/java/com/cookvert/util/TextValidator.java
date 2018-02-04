@@ -1,8 +1,5 @@
 package com.cookvert.util;
 
-/**
- *
- */
 
 public class TextValidator {
 

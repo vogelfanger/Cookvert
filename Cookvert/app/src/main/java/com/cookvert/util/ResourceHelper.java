@@ -5,9 +5,6 @@ import android.content.Context;
 import com.cookvert.R;
 import com.cookvert.recipes.model.Unit;
 
-/**
- * Created by vogelfanger on 18.9.2016.
- */
 public class ResourceHelper {
 
     private ResourceHelper instance = new ResourceHelper();

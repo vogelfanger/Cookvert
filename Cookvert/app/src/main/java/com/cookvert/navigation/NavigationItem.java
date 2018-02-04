@@ -1,8 +1,5 @@
 package com.cookvert.navigation;
 
-/**
- *
- */
 
 public class NavigationItem {
 

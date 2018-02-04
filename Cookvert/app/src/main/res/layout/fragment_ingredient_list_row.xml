@@ -11,7 +11,7 @@
         android:id="@+id/converted_amount"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight=".15"
+        android:layout_weight=".17"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/converted_name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight=".50"
+        android:layout_weight=".48"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
 

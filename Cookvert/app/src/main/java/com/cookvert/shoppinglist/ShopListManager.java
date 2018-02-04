@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.cookvert.data.DBContract;
 import com.cookvert.data.DBHelper;
-import com.cookvert.recipes.model.Recipe;
+import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.shoppinglist.model.ShopItem;
 import com.cookvert.shoppinglist.model.ShopList;
 import com.cookvert.util.Cookvert;
@@ -163,6 +163,7 @@ public class ShopListManager {
         for(ShopItem i : list.getItems()){
             addShopItem(i.getName());
         }
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     /**

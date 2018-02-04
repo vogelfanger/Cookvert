@@ -1,59 +1,52 @@
 package com.cookvert.data;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
 
-import com.cookvert.conversion.activities.ConvertActivity;
 import com.cookvert.util.Cookvert;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveClient;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.DriveResourceClient;
 import com.google.android.gms.drive.MetadataBuffer;
 import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.drive.metadata.CustomPropertyKey;
-import com.google.android.gms.drive.query.Filter;
 import com.google.android.gms.drive.query.Filters;
 import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.drive.query.SearchableField;
-import com.google.android.gms.drive.query.internal.zzj;
 import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ *  Control object that manages sign in and data transfer with Google Drive.
+ */
 public class GoogleDriveManager {
 
     private static GoogleDriveManager manager = new GoogleDriveManager();
 
     public static final String TAG = "GoogleDriveManager";
-    public static final String APP_FOLDER_NAME = "cookvert_data";
+    public static final String APP_FOLDER_NAME = "cookvert_app_data";
     public static final String CUSTOM_PROPERTY_KEY_APP_FOLDER = "CookvertAppFolder";
     public static final String CUSTOM_PROPERTY_KEY_DB_FILE = "CookvertDatabaseFile";
 
@@ -167,7 +160,7 @@ public class GoogleDriveManager {
                 new OnSuccessListener<GoogleSignInAccount>() {
                     @Override
                     public void onSuccess(GoogleSignInAccount googleSignInAccount) {
-                        Log.i(TAG, "Sign in success");
+                        //Log.i(TAG, "Sign in success");
                         // Build a drive client.
                         driveClient = Drive.getDriveClient(context, googleSignInAccount);
                         // Build a drive resource client.
@@ -178,7 +171,7 @@ public class GoogleDriveManager {
                         try{
                             loadAppDataFromDrive(activity);
                         }catch (Exception e){
-                            Log.e(TAG, "Loading data from Drive failed", e);
+                            //Log.e(TAG, "Loading data from Drive failed", e);
                         }
                     }
                 })
@@ -186,7 +179,7 @@ public class GoogleDriveManager {
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.e(TAG, "Sign in failed", e);
+                                //Log.e(TAG, "Sign in failed", e);
                             }
                         });
     }
@@ -264,14 +257,14 @@ public class GoogleDriveManager {
                 .addOnSuccessListener(activity, new OnSuccessListener<DriveFolder>() {
                     @Override
                     public void onSuccess(DriveFolder driveFolder) {
-                        Log.d(TAG, "App folder created");
+                        //Log.d(TAG, "App folder created");
                         createDatabaseInAppFolder(activity, driveFolder);
                     }
                 })
                 .addOnFailureListener(activity, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "Unable to create app folder", e);
+                        //Log.e(TAG, "Unable to create app folder", e);
                     }
                 });
 
@@ -315,14 +308,14 @@ public class GoogleDriveManager {
                         new OnSuccessListener<DriveFile>() {
                             @Override
                             public void onSuccess(DriveFile driveFile) {
-                                Log.d(TAG, "File created successfully");
+                                //Log.d(TAG, "File created successfully");
                                 unsavedData = false;
                             }
                         })
                 .addOnFailureListener(activity, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("GoogleDriveManager", "Unable to create file", e);
+                        //Log.e("GoogleDriveManager", "Unable to create file", e);
                     }
                 });
     }
@@ -362,13 +355,13 @@ public class GoogleDriveManager {
                         new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Contents was successfully downloaded");
+                                //Log.d(TAG, "Contents was successfully downloaded");
                             }
                         })
                 .addOnFailureListener(activity, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "Unable to download contents", e);
+                        //Log.e(TAG, "Unable to download contents", e);
                     }
                 });
     }
@@ -383,7 +376,7 @@ public class GoogleDriveManager {
         folderTask.addOnSuccessListener(activity, new OnSuccessListener<DriveFolder>() {
             @Override
             public void onSuccess(DriveFolder driveFolder) {
-                Log.d(TAG, "Root folder retrieved");
+                //Log.d(TAG, "Root folder retrieved");
                 getAppFolderFromDrive(driveFolder, activity, savingFile);
             }
         });
@@ -391,7 +384,7 @@ public class GoogleDriveManager {
         folderTask.addOnFailureListener(activity, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Root folder retrieval failed", e);
+                //Log.e(TAG, "Root folder retrieval failed", e);
             }
         });
     }
@@ -409,25 +402,70 @@ public class GoogleDriveManager {
         // Search for app folder from root
         queryTask.addOnSuccessListener(activity, new OnSuccessListener<MetadataBuffer>() {
             @Override
-            public void onSuccess(MetadataBuffer metadatas) {
+            public void onSuccess(final MetadataBuffer metadatas) {
 
+                // If there are multiple app folders, delete older folders.
                 if(metadatas.getCount() > 1){
-                    Log.w(TAG, "Found multiple app folders, can't determine which one to use, file count: " + metadatas.getCount());
+                    //Log.d(TAG, "Query returns multiple app folders, deleting older folders");
+                    long editDate1 = metadatas.get(0).getModifiedDate().getTime();
+                    long editDate2;
+                    int index = 0;
+                    ArrayList<Task<Void>> deleteTasks = new ArrayList<Task<Void>>();
+                    DriveResource res;
+                    Task<Void> deleteTask;
+
+                    for(int i=1; i < metadatas.getCount(); i++){
+                        editDate2 = metadatas.get(i).getModifiedDate().getTime();
+                        if(editDate2 > editDate1){
+                            editDate1 = metadatas.get(i).getModifiedDate().getTime();
+                            res = metadatas.get(index).getDriveId().asDriveResource();
+                            deleteTask = driveResourceClient.delete(res);
+                            deleteTasks.add(deleteTask);
+                            index = i;
+                        }else{
+                            res = metadatas.get(i).getDriveId().asDriveResource();
+                            deleteTask = driveResourceClient.delete(res);
+                            deleteTasks.add(deleteTask);
+                        }
+                    }
+
+                    final int indx = index;
+
+                    Tasks.whenAll(deleteTasks).addOnSuccessListener(activity, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //Log.d(TAG, "Folders deleted");
+                            // Continue searching for db file from the remaining folder
+                            DriveFolder appFolder = metadatas.get(indx).getDriveId().asDriveFolder();
+                            //Log.d(TAG, "App folder retrieved");
+                            getDatabaseFileFromDrive(activity, appFolder, savingFile);
+                            metadatas.release();
+                        }
+                    }).addOnFailureListener(activity, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //Log.d(TAG, "Failed to delete folders");
+                            metadatas.release();
+                        }
+                    });
+
+
                 }
 
                 // App folder found, search for the db file
-                if(metadatas.getCount() > 0){
+                else if(metadatas.getCount() > 0){
                     DriveFolder appFolder = metadatas.get(0).getDriveId().asDriveFolder();
-                    Log.d(TAG, "App folder retrieved");
+                    //Log.d(TAG, "App folder retrieved");
                     getDatabaseFileFromDrive(activity, appFolder, savingFile);
+                    metadatas.release();
                 }
 
                 // Can't find app folder, create one instead
                 else{
-                    Log.d(TAG, "Could not find the app folder");
+                    //Log.d(TAG, "Could not find the app folder");
                     createAppFolder(activity);
+                    metadatas.release();
                 }
-                metadatas.release();
             }
         });
     }
@@ -437,15 +475,72 @@ public class GoogleDriveManager {
         Task<MetadataBuffer> queryTask = driveResourceClient.queryChildren(appFolder, databaseQuery);
         queryTask.addOnSuccessListener(activity, new OnSuccessListener<MetadataBuffer>() {
             @Override
-            public void onSuccess(MetadataBuffer metadatas) {
+            public void onSuccess(final MetadataBuffer metadatas) {
 
-                // If there are multiple files in the folder...
+                // If there are multiple files in the folder, delete older files.
                 if(metadatas.getCount() > 1){
-                    Log.w(TAG, "Query returns multiple files, can't determine which is the database, file count: " + metadatas.getCount());
+                    //Log.d(TAG, "Query returns multiple files, deleting older files");
+
+                    long editDate1 = metadatas.get(0).getModifiedDate().getTime();
+                    long editDate2;
+                    int index = 0;
+                    ArrayList<Task<Void>> deleteTasks = new ArrayList<Task<Void>>();
+                    DriveResource res;
+                    Task<Void> deleteTask;
+
+                    // Iterate through search results and delete older files.
+                    for(int i=1; i < metadatas.getCount(); i++){
+                        editDate2 = metadatas.get(i).getModifiedDate().getTime();
+                        if(editDate2 > editDate1){
+                            editDate1 = metadatas.get(i).getModifiedDate().getTime();
+                            res = metadatas.get(index).getDriveId().asDriveResource();
+                            deleteTask = driveResourceClient.delete(res);
+                            deleteTasks.add(deleteTask);
+                            index = i;
+                        }else{
+                            res = metadatas.get(i).getDriveId().asDriveResource();
+                            deleteTask = driveResourceClient.delete(res);
+                            deleteTasks.add(deleteTask);
+                        }
+                    }
+
+                    final int indx = index;
+
+                    Tasks.whenAll(deleteTasks).addOnSuccessListener(activity, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //Log.d(TAG, "Files deleted");
+                            // Continue saving or loading with the remaining file
+                            SharedPreferences prefs = activity.getSharedPreferences(Cookvert.PREFS_NAME, 0);
+                            long localEditDate = prefs.getLong(Cookvert.PREFS_DB_LAST_EDITED, 0L);
+                            long driveEditDate = metadatas.get(indx).getModifiedDate().getTime();
+
+                            // data is being saved and local db was edited last
+                            if(savingFile && localEditDate > driveEditDate){
+                                DriveId databaseDriveId = metadatas.get(indx).getDriveId();
+                                //Log.d(TAG, "Database file retrieved");
+                                saveDatabaseToAppFolder(activity, databaseDriveId.asDriveFile());
+                                metadatas.release();
+                            }
+                            // data is being loaded and Drive db was edited last
+                            else if(!savingFile && localEditDate < driveEditDate){
+                                DriveId databaseDriveId = metadatas.get(indx).getDriveId();
+                                //Log.d(TAG, "Database file retrieved");
+                                copyDatabaseFromDrive(activity, databaseDriveId.asDriveFile());
+                                metadatas.release();
+                            }
+                        }
+                    }).addOnFailureListener(activity, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //Log.d(TAG, "Failed to delete files");
+                            metadatas.release();
+                        }
+                    });
                 }
 
                 // There is at least one file in app folder, do save or load.
-                if(metadatas.getCount() > 0){
+                else if(metadatas.getCount() > 0){
                     SharedPreferences prefs = activity.getSharedPreferences(Cookvert.PREFS_NAME, 0);
                     long localEditDate = prefs.getLong(Cookvert.PREFS_DB_LAST_EDITED, 0L);
                     long driveEditDate = metadatas.get(0).getModifiedDate().getTime();
@@ -453,30 +548,32 @@ public class GoogleDriveManager {
                     // data is being saved and local db was edited last
                     if(savingFile && localEditDate > driveEditDate){
                         DriveId databaseDriveId = metadatas.get(0).getDriveId();
-                        Log.d(TAG, "Database file retrieved");
+                        //Log.d(TAG, "Database file retrieved");
                         saveDatabaseToAppFolder(activity, databaseDriveId.asDriveFile());
+                        metadatas.release();
                     }
                     // data is being loaded and Drive db was edited last
                     else if(!savingFile && localEditDate < driveEditDate){
                         DriveId databaseDriveId = metadatas.get(0).getDriveId();
-                        Log.d(TAG, "Database file retrieved");
+                        //Log.d(TAG, "Database file retrieved");
                         copyDatabaseFromDrive(activity, databaseDriveId.asDriveFile());
+                        metadatas.release();
                     }
                 }
 
                 //No files in app folder, create a new file and write local database into it.
                 else if(metadatas.getCount() == 0){
-                    Log.d(TAG, " No database file found, creating a new one");
-                    //createDatabaseInAppFolder(activity, appFolder);
+                    //Log.d(TAG, " No database file found, creating a new one");
+                    createDatabaseInAppFolder(activity, appFolder);
+                    metadatas.release();
                 }
-                metadatas.release();
             }
         });
 
         queryTask.addOnFailureListener(activity, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Database file retrieval failed", e);
+                //Log.e(TAG, "Database file retrieval failed", e);
             }
         });
     }
@@ -526,14 +623,14 @@ public class GoogleDriveManager {
                         new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Database in Drive was updated successfully");
+                                //Log.d(TAG, "Database in Drive was updated successfully");
                                 unsavedData = false;
                             }
                         })
                 .addOnFailureListener(activity, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "Unable to update contents", e);
+                        //Log.e(TAG, "Unable to update contents", e);
                     }
                 });
     }

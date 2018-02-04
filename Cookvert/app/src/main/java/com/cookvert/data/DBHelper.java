@@ -26,7 +26,7 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper{
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "recipes.db";
+    public static final String DATABASE_NAME = "cookvert_data.db";
 
     public static final String LOG_TAG = "DBHelper"; // tag for Log entries
 
@@ -138,7 +138,7 @@ public class DBHelper extends SQLiteOpenHelper{
         int length;
         while ((length = in.read(buffer))>0){
             out.write(buffer, 0, length);
-            Log.d(LOG_TAG, "transferring files...");
+            //Log.d(LOG_TAG, "transferring files...");
         }
 
         // close streams
@@ -347,7 +347,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "ingredient inserted, id:" + String.valueOf(ingrID));
+        //Log.d(LOG_TAG, "ingredient inserted, id:" + String.valueOf(ingrID));
         return ingrID;
     }
 
@@ -399,7 +399,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "recipe inserted, id:" + String.valueOf(recipeID));
+        //Log.d(LOG_TAG, "recipe inserted, id:" + String.valueOf(recipeID));
         return recipeID;
     }
 
@@ -430,7 +430,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "category inserted, id:" + rcID);
+        //Log.d(LOG_TAG, "category inserted, id:" + rcID);
         return rcID;
     }
 
@@ -492,7 +492,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "shop item inserted, id:" + siID + ", selected:" + selected.toString());
+        //Log.d(LOG_TAG, "shop item inserted, id:" + siID + ", selected:" + selected.toString());
         return siID;
     }
 
@@ -523,7 +523,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "shopping list inserted, id:" + String.valueOf(slID));
+        //Log.d(LOG_TAG, "shopping list inserted, id:" + String.valueOf(slID));
         return slID;
     }
 
@@ -553,7 +553,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "ingredient deleted, id: " + String.valueOf(ingredientID));
+        //Log.d(LOG_TAG, "ingredient deleted, id: " + String.valueOf(ingredientID));
     }
 
     /**
@@ -591,7 +591,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "recipe deleted, id:" + String.valueOf(recipeID));
+        //Log.d(LOG_TAG, "recipe deleted, id:" + String.valueOf(recipeID));
     }
 
     /**
@@ -616,7 +616,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "category deleted");
+        //Log.d(LOG_TAG, "category deleted");
     }
 
 
@@ -638,7 +638,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "shop item deleted, id:" + String.valueOf(itemID));
+        //Log.d(LOG_TAG, "shop item deleted, id:" + String.valueOf(itemID));
     }
 
     /**
@@ -677,7 +677,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "shopping list deleted, id:" + listID);
+        //Log.d(LOG_TAG, "shopping list deleted, id:" + listID);
     }
 
 
@@ -1071,8 +1071,7 @@ public class DBHelper extends SQLiteOpenHelper{
         // Save edited date to shared preferences so that it can be compared to the one in  google drive.
         updateEditDate();
 
-        Log.d(LOG_TAG, "shop item updated, id:" + String.valueOf(rowID)
-                + ", selected:" + String.valueOf(selected));
+        //Log.d(LOG_TAG, "shop item updated, id:" + String.valueOf(rowID) + ", selected:" + String.valueOf(selected));
     }
 
 

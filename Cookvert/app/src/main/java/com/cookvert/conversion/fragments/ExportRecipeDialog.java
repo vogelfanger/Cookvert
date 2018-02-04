@@ -5,11 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,10 +17,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cookvert.R;
-import com.cookvert.data.DBHelper;
-import com.cookvert.recipes.RecipeManager;
-import com.cookvert.recipes.model.RecipeCategory;
-import com.cookvert.util.ResourceHelper;
 
 /**
  *

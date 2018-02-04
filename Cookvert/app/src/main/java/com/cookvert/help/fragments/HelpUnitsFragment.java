@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cookvert.R;
-import com.cookvert.util.TextEditor;
 
 public class HelpUnitsFragment extends Fragment{
 

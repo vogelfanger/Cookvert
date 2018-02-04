@@ -13,12 +13,6 @@ import com.cookvert.R;
 import com.cookvert.help.HelpManager;
 import com.cookvert.help.adapters.HelpItemRecyclerViewAdapter;
 
-import java.util.ArrayList;
-
-/**
- *
- */
-
 public class HelpListFragment extends Fragment{
     /**
      * A simple {@link Fragment} subclass.

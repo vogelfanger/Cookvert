@@ -6,10 +6,10 @@ import android.util.Log;
 
 import com.cookvert.data.DBContract;
 import com.cookvert.data.DBHelper;
+import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.recipes.model.Ingredient;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.RecipeCategory;
-import com.cookvert.recipes.model.Unit;
 import com.cookvert.shoppinglist.model.ShopItem;
 import com.cookvert.shoppinglist.model.ShopList;
 import com.cookvert.util.Cookvert;
@@ -20,11 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Control object responsible for maintaining and updating recipes in UI.
- * TODO put getters and setters back
  */
 public class RecipeManager {
 
@@ -175,6 +173,7 @@ public class RecipeManager {
         long dbID = DBHelper.getInstance(Cookvert.getAppContext()).insertRecipeCategory(name);
         //put category primary key to map
         categoryMap.put(rc.getId(), dbID);
+        sortRecipes();
     }
 
     /**
@@ -249,7 +248,6 @@ public class RecipeManager {
      * If focused category is not uncategorized, deletes the category and reassigns
      * all contained recipes to uncategorized category.
      * Changes are made in both manager lists and the database.
-     * //TODO trying to remove uncategorized should result in a Toast
      */
     public void deleteCategory(){
         RecipeCategory focusRC = recipeCategories.get(focusCategory);
@@ -298,6 +296,7 @@ public class RecipeManager {
         recipeCategories.get(focusCategory).name = name;
         long dbID = categoryMap.get(recipeCategories.get(focusCategory).getId());
         DBHelper.getInstance(Cookvert.getAppContext()).updateRecipeCategory(name, dbID);
+        sortRecipes();
     }
 
     /**
@@ -351,6 +350,7 @@ public class RecipeManager {
         for(Ingredient i : recipe.getIngredients()){
             addIngredient(i.getAmount(), i.getUnit().getUnitKey(), i.getName());
         }
+        GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
     /**
@@ -362,6 +362,7 @@ public class RecipeManager {
         long dbID = recipeMap.get(getFocusedRecipe().getId());
         DBHelper.getInstance(Cookvert.getAppContext()).updateRecipe(
                 name, getFocusedRecipe().getInstructions(), dbID);
+        sortRecipes();
     }
 
     /**

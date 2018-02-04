@@ -1,7 +1,5 @@
 package com.cookvert.recipes.adapters;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +7,12 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.cookvert.R;
-import com.cookvert.conversion.ConvertManager;
-import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.fragments.RecipeListFragment;
 import com.cookvert.recipes.model.Recipe;
 import com.cookvert.recipes.model.RecipeCategory;
 import com.cookvert.util.Cookvert;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

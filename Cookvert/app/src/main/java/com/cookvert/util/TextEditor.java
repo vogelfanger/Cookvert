@@ -2,12 +2,7 @@ package com.cookvert.util;
 
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.StyleSpan;
-
-/**
- *
- */
 
 public class TextEditor {
 

@@ -12,9 +12,6 @@ import android.widget.TextView;
 import com.cookvert.R;
 import com.cookvert.util.TextEditor;
 
-/**
- *
- */
 
 public class HelpScaleSavedRecipeFragment extends Fragment{
 

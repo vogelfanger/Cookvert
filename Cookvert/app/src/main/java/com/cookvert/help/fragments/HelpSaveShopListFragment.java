@@ -7,13 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cookvert.R;
-
-/**
- * Created by Elmo on 11/10/2017.
- */
 
 public class HelpSaveShopListFragment extends Fragment {
 

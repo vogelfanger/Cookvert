@@ -219,7 +219,7 @@
     <string name="help_units_content_4.3">quart (US dry) = 1101.22095 milliliters</string>
     <string name="help_units_content_4.4">gallon (US dry) = 4404.8838 milliliters</string>
     <string name="help_units_content_5_bold">US liquid volumes:</string>
-    <string name="help_units_content_5.1">cup (UK) = 236.58824 milliliters</string>
+    <string name="help_units_content_5.1">cup (US) = 236.58824 milliliters</string>
     <string name="help_units_content_5.2">dessertspoon (US) = 9.85784 milliliters</string>
     <string name="help_units_content_5.3">gallon (US liquid) = 3785.41178 milliliters</string>
     <string name="help_units_content_5.4">pint (US liquid) = 473.17647 milliliters</string>
@@ -306,6 +306,7 @@
     <string name="title_pager_converted_recipe">CONVERTED INGREDIENTS</string>
     <string name="title_pager_recipe_instructions">INSTRUCTIONS</string>
 
+    <string name="toast_category_changed">Category changed</string>
     <string name="toast_edit_uncategorized">This category can\'t be edited</string>
     <string name="toast_ingredients_removed">Ingredients removed</string>
     <string name="toast_recipe_deleted">Recipe deleted</string>

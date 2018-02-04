@@ -15,9 +15,6 @@ import com.cookvert.recipes.model.Ingredient;
 
 import java.util.List;
 
-/**
- * TODO Change name into IngredientRecycler....
- */
 public class MyIngredientRecyclerViewAdapter extends
         RecyclerView.Adapter<MyIngredientRecyclerViewAdapter.ViewHolder> {
 

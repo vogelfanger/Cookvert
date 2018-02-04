@@ -2,9 +2,7 @@ package com.cookvert.recipes.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,7 +10,6 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +21,6 @@ import android.widget.Toast;
 import com.cookvert.R;
 import com.cookvert.conversion.ConvertManager;
 import com.cookvert.conversion.activities.ConvertActivity;
-import com.cookvert.conversion.fragments.ExportShopListDialog;
 import com.cookvert.data.GoogleDriveManager;
 import com.cookvert.recipes.RecipeManager;
 import com.cookvert.recipes.adapters.MyIngredientRecyclerViewAdapter;
@@ -35,7 +31,6 @@ import com.cookvert.recipes.fragments.InstructionFragment;
 import com.cookvert.recipes.fragments.NewIngredientDialog;
 import com.cookvert.recipes.fragments.OriginalRecipeFragment;
 import com.cookvert.recipes.fragments.RenameRecipeDialog;
-import com.cookvert.recipes.model.Recipe;
 import com.cookvert.shoppinglist.ShopListManager;
 import com.cookvert.shoppinglist.activities.EditShopListActivity;
 
@@ -141,7 +136,10 @@ public class EditRecipeActivity extends AppCompatActivity implements
     @Override
     public void onChangeCategory(int categoryPosition) {
         RecipeManager.getInstance().changeCategory(categoryPosition);
+        Toast toast = Toast.makeText(this, R.string.toast_category_changed, Toast.LENGTH_SHORT);
+        toast.show();
         GoogleDriveManager.getInstance().setUnsavedData(true);
+
     }
 
     @Override

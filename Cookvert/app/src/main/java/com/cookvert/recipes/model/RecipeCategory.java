@@ -2,10 +2,8 @@ package com.cookvert.recipes.model;
 
 import android.support.annotation.NonNull;
 
-import java.text.CollationKey;
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**

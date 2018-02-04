@@ -17,10 +17,6 @@ import android.widget.TextView;
 
 import com.cookvert.R;
 
-/**
- * Created by Elmo on 11/09/2017.
- */
-
 public class ExportAsShopListDialog extends DialogFragment{
 
     private OnExportAsShopListListener mListener;
@@ -94,7 +90,7 @@ public class ExportAsShopListDialog extends DialogFragment{
         handler.post(new Runnable() {
             @Override
             public void run() {
-                InputMethodManager imm = (InputMethodManager) getActivity().getCurrentFocus().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });

@@ -12,10 +12,6 @@ import com.cookvert.R;
 
 import java.util.ArrayList;
 
-/**
- *
- */
-
 public class DrawerListAdapter extends BaseAdapter {
 
     Context context;

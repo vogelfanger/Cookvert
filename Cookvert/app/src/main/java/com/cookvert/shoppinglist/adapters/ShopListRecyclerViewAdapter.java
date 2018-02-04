@@ -14,10 +14,6 @@ import com.cookvert.shoppinglist.model.ShopList;
 
 import java.util.List;
 
-/**
- *
- */
-
 public class ShopListRecyclerViewAdapter extends
         RecyclerView.Adapter<ShopListRecyclerViewAdapter.ViewHolder> {
 
