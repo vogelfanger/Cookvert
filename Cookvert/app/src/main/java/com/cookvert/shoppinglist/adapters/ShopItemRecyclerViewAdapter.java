@@ -1,5 +1,6 @@
 package com.cookvert.shoppinglist.adapters;
 
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cookvert.R;
@@ -81,6 +83,13 @@ public class ShopItemRecyclerViewAdapter extends
             holder.mView.setBackgroundColor(
                     Cookvert.getAppContext().getResources().getColor(R.color.colorDarkGray));
         }
+
+        holder.mRemoveButton.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onShopItemRemoveButtonClick(holder, position);
+            }
+        });
     }
 
     @Override
@@ -93,6 +102,7 @@ public class ShopItemRecyclerViewAdapter extends
         public final View mView;
         public final TextView mNameView;
         public final CheckBox mCheckBox;
+        public final ImageButton mRemoveButton;
         public ShopItem mItem;
 
         public ViewHolder(View view) {
@@ -100,6 +110,7 @@ public class ShopItemRecyclerViewAdapter extends
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.text_shop_item_name);
             mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_shop_item);
+            mRemoveButton = (ImageButton) view.findViewById(R.id.imagebutton_shop_item);
             mNameView.setOnCreateContextMenuListener(this);
         }
 

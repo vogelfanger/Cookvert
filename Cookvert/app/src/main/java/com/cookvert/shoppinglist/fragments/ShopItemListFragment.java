@@ -85,6 +85,8 @@ public class ShopItemListFragment extends Fragment {
         void onShopItemNameClick(ShopItemRecyclerViewAdapter.ViewHolder holder, int itemPosition);
         void onShopItemCheboxClick(ShopItemRecyclerViewAdapter.ViewHolder holder,
                                    int itemPosition, boolean checked);
+        void onShopItemRemoveButtonClick(ShopItemRecyclerViewAdapter.ViewHolder holder,
+                                         int itemPosition);
         void setShopItemListAdapter(ShopItemRecyclerViewAdapter adapter);
         void onContextMenuCreated(int itemPosition);
     }

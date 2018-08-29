@@ -148,7 +148,13 @@ public class EditShopListActivity extends AppCompatActivity implements
         GoogleDriveManager.getInstance().setUnsavedData(true);
     }
 
-
+    @Override
+    public void onShopItemRemoveButtonClick(ShopItemRecyclerViewAdapter.ViewHolder holder, int itemPosition) {
+        ShopListManager.getInstance().setFocusShopItem(itemPosition);
+        ShopListManager.getInstance().deleteShopItem();
+        shopItemListAdapter.notifyDataSetChanged();
+        GoogleDriveManager.getInstance().setUnsavedData(true);
+    }
 
     //****************************************************************************************************
     //                                  MENU INTERACTION METHODS
