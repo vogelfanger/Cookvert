@@ -215,6 +215,10 @@ public class EditRecipeActivity extends AppCompatActivity implements
     @Override
     public void onOriginalListFragmentInteraction(
             MyIngredientRecyclerViewAdapter.ViewHolder item, int itemPosition) {
+
+        //set selected ingredient to focus, so that RecipeManager can edit the correct ingredient
+        RecipeManager.getInstance().setFocusIngredient(itemPosition);
+
         //create dialog using selected ingredient data as arguments
         String argAmount = Double.toString(RecipeManager.getInstance().getFocusedIngredient().getAmount());
         //selected unit's position when spinner contains all units
